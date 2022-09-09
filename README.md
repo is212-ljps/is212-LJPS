@@ -1,3 +1,3 @@
 # is212-LJPS
 
-![Tests](https://github.com/lanceljr/is212-LJPS/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/lanceljr/is212-LJPS/actions/workflows/tests_on_merge.yml/badge.svg)
