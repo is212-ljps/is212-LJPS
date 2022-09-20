@@ -109,6 +109,7 @@ def test_directory():
 def get_all_courses():
     courses = course.query.all()
     print(courses)
+    print('hello')
 
     return "Get All Courses"
 
