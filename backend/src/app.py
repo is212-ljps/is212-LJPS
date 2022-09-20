@@ -110,7 +110,7 @@ def get_all_courses():
     courses = course.query.all()
     print(courses)
     print('hello')
-    print('hehe')
+    print('sure')
 
     return "Get All Courses"
 
