@@ -109,7 +109,8 @@ def test_directory():
 def get_all_courses():
     courses = course.query.all()
     print(courses)
-    print('git test')
+    print('hello')
+    print('hehe')
 
     return "Get All Courses"
 
