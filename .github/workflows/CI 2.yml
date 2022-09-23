@@ -1,0 +1,16 @@
+name: CI
+env: 
+  EB_PACKAGE_S3_BUCKET_NAME : "bucket_name" # bucket name
+  EB_APPLICATION_NAME       : "application_name" # application name
+  EB_ENVIRONMENT_NAME       : "environement_name" # environment name
+  DEPLOY_PACKAGE_NAME       : "app-${{ github.sha }}.zip"
+  AWS_REGION_NAME           : "sg-west-2" 
+on:
+  push:
+    branches:
+      - master
+
+
+
+jobs:
+  build:
