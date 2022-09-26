@@ -17,7 +17,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `job_role` (
 	`Job_Role_ID` int AUTO_INCREMENT,
-    `Job_Role_Name` varchar(25) NOT NULL,
+    `Job_Role_Name` varchar(25) NOT NULL UNIQUE,
     `Job_Role_Description` varchar(500),
     `Job_Department` varchar(25),
     `Is_Active` boolean DEFAULT true,
@@ -26,7 +26,7 @@ CREATE TABLE `job_role` (
 
 CREATE TABLE `skill` (
 	`Skill_ID` int AUTO_INCREMENT,
-    `Skill_Name` varchar(25) NOT NULL,
+    `Skill_Name` varchar(25) NOT NULL UNIQUE,
 	`Skill_Description` varchar(500),
     `Is_Active` boolean DEFAULT true,
     CONSTRAINT `skill_pk` PRIMARY KEY (`Skill_ID`)
