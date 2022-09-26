@@ -19,16 +19,20 @@ export default function CreateSkill() {
       validateLength(skillDescription, 0, 300)
     ) {
       // pass validation
-
-      var successMessage = new bootstrap.Toast(toast.current)
-      successMessage.show()
-
-
-      axios.post("http://localhost:8080/api/updateskill", {
-        skillTitle: skillTitle,
-        skillDescription: skillDescription,
-      })
-      
+      var successMessage = new bootstrap.Toast(toast.current);
+      axios
+        .post("http://localhost:8080/api/updateskill", {
+          skillTitle: skillTitle,
+          skillDescription: skillDescription,
+        })
+        .then(function (response) {
+          if (response.status == 200) {
+            successMessage.show();
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     } else {
       // fail validation
       setErrorMessage(true);
@@ -62,7 +66,7 @@ export default function CreateSkill() {
         className="modal fade"
         ref={modal}
         id="createSkillModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="createSkillModalLabel"
         aria-hidden="true"
       >
@@ -83,7 +87,7 @@ export default function CreateSkill() {
               <div className="modal-body">
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label for="skillTitle" className="col-form-label">
+                    <label htmlFor="skillTitle" className="col-form-label">
                       Skill Title
                     </label>
 
@@ -103,7 +107,7 @@ export default function CreateSkill() {
 
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label for="skillDescription" className="col-form-label">
+                    <label  htmlFor="skillDescription" className="col-form-label">
                       Skill Description
                     </label>
 
@@ -127,20 +131,21 @@ export default function CreateSkill() {
         </div>
 
         <div
-        className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success"
-        ref={toast}
-        role="alert"
-        aria-live="assertive"
-        data-bs-autohide="true"
-        aria-atomic="true"
-      >
-        <div className="d-flex ">
-          <div class="toast-body">New Skill : <span className="fw-bold">{`${skillTitle}`}</span> created</div>
+          className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success"
+          ref={toast}
+          role="alert"
+          aria-live="assertive"
+          data-bs-autohide="true"
+          aria-atomic="true"
+        >
+          <div className="d-flex ">
+            <div className="toast-body">
+              New Skill : <span className="fw-bold">{`${skillTitle}`}</span>{" "}
+              created
+            </div>
+          </div>
         </div>
       </div>
-      </div>
-
-
     </div>
   );
 }

@@ -10,18 +10,28 @@ var connection = mysql.createConnection({
   database: "ljps_db",
 });
 
+//------------- Crud of Skills ---------------------------------------------------------
+
 router.post("/updateskill", function (req, res) {
-  console.log(req.body);
+  
+  let skillTitle = req.body.skillTitle
+  let skillDescription = req.body.skillDescription
+
 
   connection.connect((err) => {
-    var sql = "INSERT into Role VALUES ('2', 'Software Engineer')";
+    var sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillTitle}', '${skillDescription}', TRUE );`
     connection.query(sql, function (err, result) {
-      if (err) throw err;
-      console.log("1 record inserted, ID: " + result.insertId);
+      if (err){
+        throw err
+      }
+      else{
+        res.sendStatus(200);
+
+      }
     });
+
   });
 
-  res.sendStatus(200);
 });
 
 //
