@@ -25,7 +25,7 @@ export default function CreateSkill() {
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="createSkillModalLabel">
-                Modal title
+                Create Skill
               </h5>
               <button
                 type="button"
@@ -34,16 +34,31 @@ export default function CreateSkill() {
                 aria-label="Close"
               ></button>
             </div>
-            <div class="modal-body">...</div>
+            <div class="modal-body">
+              <form>
+                <div class="row mb-3">
+                  <div class="col-12">
+                    <label for="skillTitle" class="col-form-label">
+                      Skill Title
+                    </label>
+
+                    <input type="text" id="skillTitle" class="form-control" />
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <div class="col-12">
+                    <label for="skillDescription" class="col-form-label">
+                      Skill Description
+                    </label>
+
+                    <textarea id="skillDescription" class="form-control" />
+                  </div>
+                </div>
+              </form>
+            </div>
             <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
+              <button type="button" class="btn btn-primary" >
                 Save changes
               </button>
             </div>
