@@ -1,31 +1,29 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-var mysql = require('mysql');
+var mysql = require("mysql");
 
 var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database : 'spm_project'
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "ljps_db",
+});
 
+router.post("/updateskill", function (req, res) {
+  console.log(req.body);
+
+  connection.connect((err) => {
+    var sql = "INSERT into Role VALUES ('2', 'Software Engineer')";
+    connection.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted, ID: " + result.insertId);
+    });
   });
 
-
-
-connection.connect((err) => {
-    if (err) {
-      console.log("Error occurred", err);
-    } else {
-      console.log("Connected to MySQL Server");
-    }
+  res.sendStatus(200);
 });
 
-router.get('/test', function (req, res) {
-    console.log('test')
-    res.sendStatus(200)
-});
-
-
+//
 
 module.exports = router;
