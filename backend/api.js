@@ -18,14 +18,29 @@ router.post("/updateskill", function (req, res) {
   let skillDescription = req.body.skillDescription
 
 
+
   connection.connect((err) => {
-    var sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillTitle}', '${skillDescription}', TRUE );`
-    connection.query(sql, function (err, result) {
+    var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillTitle}', '${skillDescription}', TRUE );`
+    connection.query(insert_sql, function (err, result) {
       if (err){
-        throw err
+        if(err.code=='ER_DUP_ENTRY'){
+          res.send({
+            success:false,
+            message:'Skill Name currently exist, please use a different Skill Name. '
+          })
+        }
+        else{
+          res.send({
+            success: false, 
+            message:"An error occured, please try again."
+          })
+        }
       }
       else{
-        res.sendStatus(200);
+        res.send({
+          success: true,
+          message:"A new skill has been successfully created!"
+        });
 
       }
     });

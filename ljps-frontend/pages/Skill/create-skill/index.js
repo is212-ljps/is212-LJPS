@@ -6,28 +6,43 @@ import { validateLength } from "../../../util/validation/index";
 export default function CreateSkill() {
   const [skillTitle, setSkillTitle] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
-  const [openToast, setOpenToast] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [lengthValidationMessage, setlengthValidationMessage] = useState(false);
+  const [successNotification, setSuccessNotification] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
+
   const modal = useRef();
   const toast = useRef();
 
   function handleSubmit(e) {
+
+    setToastMessage('')
+    setSuccessNotification(false)
     e.preventDefault();
+
 
     if (
       validateLength(skillTitle, 5, 20) &&
       validateLength(skillDescription, 0, 300)
     ) {
-      // pass validation
-      var successMessage = new bootstrap.Toast(toast.current);
+      // pass length validation
+      var myToast = new bootstrap.Toast(toast.current);
       axios
         .post("http://localhost:8080/api/updateskill", {
           skillTitle: skillTitle,
           skillDescription: skillDescription,
         })
         .then(function (response) {
-          if (response.status == 200) {
-            successMessage.show();
+          if (response.data.success) {
+            console.log(`trying to set success toast message: ${response.data.message}`)
+            setToastMessage(response.data.message);
+            setSuccessNotification(true);
+            myToast.show();
+            return;
+          } 
+          else {
+            setToastMessage(response.data.message);
+            myToast.show();
+            return;
           }
         })
         .catch(function (error) {
@@ -35,14 +50,14 @@ export default function CreateSkill() {
         });
     } else {
       // fail validation
-      setErrorMessage(true);
+      setlengthValidationMessage(true);
     }
   }
 
   useEffect(() => {
     if (modal.current) {
       modal.current.addEventListener("hidden.bs.modal", () => {
-        setErrorMessage(false);
+        setlengthValidationMessage(false);
       });
     }
   }, [modal]);
@@ -97,7 +112,7 @@ export default function CreateSkill() {
                       className="form-control"
                       onChange={(event) => setSkillTitle(event.target.value)}
                     />
-                    {errorMessage && (
+                    {lengthValidationMessage && (
                       <p className="text-danger">
                         Skill Title must be between 5-20 characters
                       </p>
@@ -107,7 +122,10 @@ export default function CreateSkill() {
 
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label  htmlFor="skillDescription" className="col-form-label">
+                    <label
+                      htmlFor="skillDescription"
+                      className="col-form-label"
+                    >
                       Skill Description
                     </label>
 
@@ -130,8 +148,10 @@ export default function CreateSkill() {
           </div>
         </div>
 
+        {/* // dynamic rendering not working  */}
+
         <div
-          className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success"
+          className={successNotification ? "toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-primary" : "toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"}
           ref={toast}
           role="alert"
           aria-live="assertive"
@@ -139,10 +159,9 @@ export default function CreateSkill() {
           aria-atomic="true"
         >
           <div className="d-flex ">
-            <div className="toast-body">
-              New Skill : <span className="fw-bold">{`${skillTitle}`}</span>{" "}
-              created
-            </div>
+          <div className="toast-body">{console.log(successNotification)}</div>
+
+            <div className="toast-body">{toastMessage}</div>
           </div>
         </div>
       </div>
