@@ -29,12 +29,11 @@ export default function CreateSkill() {
         })
         .then(function (response) {
           if (response.data.success) {
-            myToast.show();
-            return;
+            e.target.reset()
+            myToast.show();  
           } else {
             setShowError(true);
             setErrorMessage(response.data.message);
-            return;
           }
         })
         .catch(function (error) {
@@ -148,7 +147,7 @@ export default function CreateSkill() {
         >
           <div className="d-flex ">
             <div className="toast-body">
-              A New Skill has been created !
+              A New Skill Has Been Successfully Created !
             </div>
           </div>
         </div>
