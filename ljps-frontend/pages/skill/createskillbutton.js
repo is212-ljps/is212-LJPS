@@ -1,9 +1,9 @@
 import axios from "axios";
 import React from "react";
 import { useState, useRef, useEffect } from "react";
-import { validateLength } from "../../../util/validation/index";
+import { validateLength } from "../../util/validation/index";
 
-export default function CreateSkill() {
+export default function CreateSkillButton() {
   const [skillTitle, setSkillTitle] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
   const [showError, setShowError] = useState(false);
