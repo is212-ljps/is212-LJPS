@@ -6,19 +6,15 @@ import { validateLength } from "../../../util/validation/index";
 export default function CreateSkill() {
   const [skillTitle, setSkillTitle] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
-  const [lengthValidationMessage, setlengthValidationMessage] = useState(false);
-  const [successNotification, setSuccessNotification] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const modal = useRef();
   const toast = useRef();
 
   function handleSubmit(e) {
-
-    setToastMessage('')
-    setSuccessNotification(false)
     e.preventDefault();
-
+    setErrorMessage("")
 
     if (
       validateLength(skillTitle, 5, 20) &&
@@ -33,15 +29,11 @@ export default function CreateSkill() {
         })
         .then(function (response) {
           if (response.data.success) {
-            console.log(`trying to set success toast message: ${response.data.message}`)
-            setToastMessage(response.data.message);
-            setSuccessNotification(true);
             myToast.show();
             return;
-          } 
-          else {
-            setToastMessage(response.data.message);
-            myToast.show();
+          } else {
+            setShowError(true);
+            setErrorMessage(response.data.message);
             return;
           }
         })
@@ -50,14 +42,15 @@ export default function CreateSkill() {
         });
     } else {
       // fail validation
-      setlengthValidationMessage(true);
+      setErrorMessage(" Skill Title must be between 5-20 characters");
+      setShowError(true);
     }
   }
 
   useEffect(() => {
     if (modal.current) {
       modal.current.addEventListener("hidden.bs.modal", () => {
-        setlengthValidationMessage(false);
+        setShowError(false);
       });
     }
   }, [modal]);
@@ -112,11 +105,7 @@ export default function CreateSkill() {
                       className="form-control"
                       onChange={(event) => setSkillTitle(event.target.value)}
                     />
-                    {lengthValidationMessage && (
-                      <p className="text-danger">
-                        Skill Title must be between 5-20 characters
-                      </p>
-                    )}
+                    {showError && <p className="text-danger">{errorMessage}</p>}
                   </div>
                 </div>
 
@@ -148,10 +137,9 @@ export default function CreateSkill() {
           </div>
         </div>
 
-        {/* // dynamic rendering not working  */}
 
         <div
-          className={successNotification ? "toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-primary" : "toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"}
+          className={`toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success`}
           ref={toast}
           role="alert"
           aria-live="assertive"
@@ -159,9 +147,9 @@ export default function CreateSkill() {
           aria-atomic="true"
         >
           <div className="d-flex ">
-          <div className="toast-body">{console.log(successNotification)}</div>
-
-            <div className="toast-body">{toastMessage}</div>
+            <div className="toast-body">
+              A New Skill has been created !
+            </div>
           </div>
         </div>
       </div>
