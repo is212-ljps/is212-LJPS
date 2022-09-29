@@ -10,7 +10,7 @@ export default function DeleteSkillButton({ skillName }) {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  let testData = "Software Engineering";
+  let testData = "Software";
   function handleSubmit(e) {
     e.preventDefault();
     setErrorMessage("")
@@ -75,8 +75,8 @@ export default function DeleteSkillButton({ skillName }) {
       >
         <div className="modal-dialog">
           <div className="modal-content">
-          <div className="modal-header text-center">
-            <h5 className="modal-title text-center" id="exampleModalLabel">
+          <div className="modal-header">
+            <h5 className="modal-title w-100 text-center" id="exampleModalLabel">
               Delete {`${testData}`}
             </h5>
           </div>
