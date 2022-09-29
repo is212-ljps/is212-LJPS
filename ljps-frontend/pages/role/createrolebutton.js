@@ -23,7 +23,7 @@ export default function CreateRoleButton() {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
       axios
-        .post("http://localhost:8080/api/updateskill", {
+        .post("http://localhost:8080/api/createrole", {
           roleName: roleName,
           roleDescription: roleDescription,
         })
