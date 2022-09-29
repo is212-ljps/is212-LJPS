@@ -6,6 +6,7 @@ import { validateLength } from "../../util/validation/index";
 export default function CreateRoleButton() {
   const [roleName, setRoleName] = useState("");
   const [roleDescription, setRoleDescription] = useState("");
+  const [department, setDepartment]=useState("Marketing")
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -14,7 +15,8 @@ export default function CreateRoleButton() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setErrorMessage("")
+    setErrorMessage("");
+
 
     if (
       validateLength(roleName, 5, 20) &&
@@ -26,11 +28,12 @@ export default function CreateRoleButton() {
         .post("http://localhost:8080/api/createrole", {
           roleName: roleName,
           roleDescription: roleDescription,
+          department: department
         })
         .then(function (response) {
           if (response.data.success) {
-            e.target.reset()
-            myToast.show();  
+            e.target.reset();
+            myToast.show();
           } else {
             setShowError(true);
             setErrorMessage(response.data.message);
@@ -65,8 +68,6 @@ export default function CreateRoleButton() {
             data-bs-target="#createRoleModal"
           >
             Create Role <i className="bi bi-plus-lg"></i>
-
-
           </button>
         </div>
       </div>
@@ -83,7 +84,7 @@ export default function CreateRoleButton() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="createRoleModalLabel">
-                Create Role 
+                Create Role
               </h5>
               <button
                 type="button"
@@ -97,7 +98,7 @@ export default function CreateRoleButton() {
                 <div className="row mb-3">
                   <div className="col-12">
                     <label htmlFor="roleName" className="col-form-label">
-                        Role Name
+                      Role Name
                     </label>
 
                     <input
@@ -112,10 +113,27 @@ export default function CreateRoleButton() {
 
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label
-                      htmlFor="roleDescription"
-                      className="col-form-label"
+
+                  <label htmlFor="department" className="col-form-label">
+                      Department
+                    </label>
+                    <select
+                      id="department"
+                      className="form-select"
+                      value = {department}
+                      onChange={(event) => setDepartment(event.target.value)}
+
                     >
+                      <option value="Marketing">Marketing</option>
+                      <option value="Operations">Operations</option>
+                      <option value="HR">HR</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="row mb-3">
+                  <div className="col-12">
+                    <label htmlFor="roleDescription" className="col-form-label">
                       Role Description
                     </label>
 
@@ -137,7 +155,6 @@ export default function CreateRoleButton() {
             </form>
           </div>
         </div>
-
 
         <div
           className={`toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success`}
