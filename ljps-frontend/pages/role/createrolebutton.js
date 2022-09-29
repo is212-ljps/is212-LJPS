@@ -65,6 +65,8 @@ export default function CreateRoleButton() {
             data-bs-target="#createRoleModal"
           >
             Create Role <i className="bi bi-plus-lg"></i>
+
+
           </button>
         </div>
       </div>
@@ -81,7 +83,7 @@ export default function CreateRoleButton() {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="createRoleModalLabel">
-                Create Role
+                Create Role 
               </h5>
               <button
                 type="button"
