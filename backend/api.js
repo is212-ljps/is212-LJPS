@@ -45,9 +45,10 @@ router.post("/createskill", function (req, res) {
 router.post("/deleteskill", function (req, res) {
   let skillName = req.body.skillName;
 
+
   connection.connect((err) => {
-    var delete_sql = `DELETE FROM skill WHERE Skill_Name=${skillName}  ;`;
-    connection.query(insert_sql, function (err, result) {
+    var delete_sql = `DELETE FROM skill WHERE Skill_Name="${skillName}"  ;`;
+    connection.query(delete_sql, function (err, result) {
       if (err) {
         res.send({
           success: false,
