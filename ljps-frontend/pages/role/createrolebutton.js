@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { validateLength } from "../../util/validation/index";
 
 export default function CreateRoleButton() {
-  const [roleTitle, setRoleTitle] = useState("");
+  const [roleName, setRoleName] = useState("");
   const [roleDescription, setRoleDescription] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,14 +17,14 @@ export default function CreateRoleButton() {
     setErrorMessage("")
 
     if (
-      validateLength(roleTitle, 5, 20) &&
+      validateLength(roleName, 5, 20) &&
       validateLength(roleDescription, 0, 300)
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
       axios
         .post("http://localhost:8080/api/updateskill", {
-          roleTitle: roleTitle,
+          roleName: roleName,
           roleDescription: roleDescription,
         })
         .then(function (response) {
@@ -41,7 +41,7 @@ export default function CreateRoleButton() {
         });
     } else {
       // fail validation
-      setErrorMessage(" Role Title must be between 5-20 characters");
+      setErrorMessage(" Role Name must be between 5-20 characters");
       setShowError(true);
     }
   }
@@ -94,15 +94,15 @@ export default function CreateRoleButton() {
               <div className="modal-body">
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label htmlFor="roleTitle" className="col-form-label">
-                        Role Title
+                    <label htmlFor="roleName" className="col-form-label">
+                        Role Name
                     </label>
 
                     <input
                       type="text"
-                      id="roleTitle"
+                      id="roleName"
                       className="form-control"
-                      onChange={(event) => setRoleTitle(event.target.value)}
+                      onChange={(event) => setRoleName(event.target.value)}
                     />
                     {showError && <p className="text-danger">{errorMessage}</p>}
                   </div>
