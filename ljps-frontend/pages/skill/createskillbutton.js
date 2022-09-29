@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { validateLength } from "../../util/validation/index";
 
 export default function CreateSkillButton() {
-  const [skillTitle, setSkillTitle] = useState("");
+  const [skillName, setSkillName] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,14 +17,14 @@ export default function CreateSkillButton() {
     setErrorMessage("")
 
     if (
-      validateLength(skillTitle, 5, 20) &&
+      validateLength(skillName, 5, 20) &&
       validateLength(skillDescription, 0, 300)
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
       axios
-        .post("http://localhost:8080/api/updateskill", {
-          skillTitle: skillTitle,
+        .post("http://localhost:8080/api/createskill", {
+          skillName: skillName,
           skillDescription: skillDescription,
         })
         .then(function (response) {
@@ -41,7 +41,7 @@ export default function CreateSkillButton() {
         });
     } else {
       // fail validation
-      setErrorMessage(" Skill Title must be between 5-20 characters");
+      setErrorMessage(" Skill Name must be between 5-20 characters");
       setShowError(true);
     }
   }
@@ -94,15 +94,15 @@ export default function CreateSkillButton() {
               <div className="modal-body">
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label htmlFor="skillTitle" className="col-form-label">
-                      Skill Title
+                    <label htmlFor="skillName" className="col-form-label">
+                      Skill Name
                     </label>
 
                     <input
                       type="text"
-                      id="skillTitle"
+                      id="skillName"
                       className="form-control"
-                      onChange={(event) => setSkillTitle(event.target.value)}
+                      onChange={(event) => setSkillName(event.target.value)}
                     />
                     {showError && <p className="text-danger">{errorMessage}</p>}
                   </div>

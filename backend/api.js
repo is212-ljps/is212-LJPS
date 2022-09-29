@@ -12,15 +12,15 @@ var connection = mysql.createConnection({
 
 //------------- Crud of Skills ---------------------------------------------------------
 
-router.post("/updateskill", function (req, res) {
+router.post("/createskill", function (req, res) {
   
-  let skillTitle = req.body.skillTitle
+  let skillName = req.body.skillName
   let skillDescription = req.body.skillDescription
 
 
 
   connection.connect((err) => {
-    var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillTitle}', '${skillDescription}', TRUE );`
+    var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`
     connection.query(insert_sql, function (err, result) {
       if (err){
         if(err.code=='ER_DUP_ENTRY'){
