@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useCallback } from "react";
 import { useState, useRef, useEffect } from "react";
 import { validateLength } from "../../util/validation/index";
 
@@ -12,9 +12,8 @@ export default function CreateSkillButton() {
   const modal = useRef();
   const toast = useRef();
 
-  function handleSubmit(e) {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    setErrorMessage("")
 
     if (
       validateLength(skillName, 5, 20) &&
@@ -29,8 +28,10 @@ export default function CreateSkillButton() {
         })
         .then(function (response) {
           if (response.data.success) {
-            e.target.reset()
-            myToast.show();  
+            setErrorMessage("");
+
+            e.target.reset();
+            myToast.show();
           } else {
             setShowError(true);
             setErrorMessage(response.data.message);
@@ -44,7 +45,7 @@ export default function CreateSkillButton() {
       setErrorMessage(" Skill Name must be between 5-20 characters");
       setShowError(true);
     }
-  }
+  });
 
   useEffect(() => {
     if (modal.current) {
@@ -135,7 +136,6 @@ export default function CreateSkillButton() {
             </form>
           </div>
         </div>
-
 
         <div
           className={`toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success`}
