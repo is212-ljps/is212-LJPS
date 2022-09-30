@@ -1,22 +1,20 @@
 import axios from "axios";
-import React from "react";
+import React, { useCallback } from "react";
 import { useState, useRef, useEffect } from "react";
 import { validateLength } from "../../util/validation/index";
 
 export default function CreateRoleButton() {
   const [roleName, setRoleName] = useState("");
   const [roleDescription, setRoleDescription] = useState("");
-  const [department, setDepartment]=useState("Marketing")
+  const [department, setDepartment] = useState("Marketing");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const modal = useRef();
   const toast = useRef();
 
-  function handleSubmit(e) {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    setErrorMessage("");
-
 
     if (
       validateLength(roleName, 5, 20) &&
@@ -28,10 +26,11 @@ export default function CreateRoleButton() {
         .post("http://localhost:8080/api/createrole", {
           roleName: roleName,
           roleDescription: roleDescription,
-          department: department
+          department: department,
         })
         .then(function (response) {
           if (response.data.success) {
+            setErrorMessage("");
             e.target.reset();
             myToast.show();
           } else {
@@ -47,7 +46,7 @@ export default function CreateRoleButton() {
       setErrorMessage(" Role Name must be between 5-20 characters");
       setShowError(true);
     }
-  }
+  });
 
   useEffect(() => {
     if (modal.current) {
@@ -113,16 +112,14 @@ export default function CreateRoleButton() {
 
                 <div className="row mb-3">
                   <div className="col-12">
-
-                  <label htmlFor="department" className="col-form-label">
+                    <label htmlFor="department" className="col-form-label">
                       Department
                     </label>
                     <select
                       id="department"
                       className="form-select"
-                      value = {department}
+                      value={department}
                       onChange={(event) => setDepartment(event.target.value)}
-
                     >
                       <option value="Marketing">Marketing</option>
                       <option value="Operations">Operations</option>
