@@ -7,24 +7,37 @@ var connection = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database : 'spm_project'
+    database : 'ljps_db'
 
   });
 
 
 
-connection.connect((err) => {
-    if (err) {
-      console.log("Error occurred", err);
-    } else {
-      console.log("Connected to MySQL Server");
-    }
+//------------- Crud of Roles ---------------------------------------------------------
+
+router.post("/deleterole", function (req, res) {
+  let roleName = req.body.roleName;
+
+
+  connection.connect((err) => {
+    var delete_sql = `DELETE FROM job_role WHERE Job_Role_Name="${roleName}" ;`;
+    connection.query(delete_sql, function (err, result) {
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+        });
+      }
+    });
+  });
 });
 
-router.get('/test', function (req, res) {
-    console.log('test')
-    res.sendStatus(200)
-});
+
 
 
 
