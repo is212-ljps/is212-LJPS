@@ -1,23 +1,22 @@
 import axios from "axios";
 import React from "react";
 import { useState, useRef, useEffect } from "react";
-import { validateLength } from "../../util/validation/index";
 
 // skillTitle will be passed as a prop to delete skill
 export default function DeleteSkillButton({ skillName }) {
   const modal = useRef();
   const toast = useRef();
+  const closeButton = useRef();
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  // remove later
   let testData = "Software";
   function handleSubmit(e) {
-    e.preventDefault();
-    setErrorMessage("")
+    setErrorMessage("");
 
     var myToast = new bootstrap.Toast(toast.current);
-    var myModal = new bootstrap.Modal(modal.current);
-
+    var myModal = bootstrap.Modal.getInstance(modal.current)
 
     axios
       .post("http://localhost:8080/api/deleteskill", {
@@ -25,20 +24,17 @@ export default function DeleteSkillButton({ skillName }) {
         skillName: testData,
       })
       .then(function (response) {
-        console.log(response.data)
+        console.log(response.data);
         if (response.data.success) {
-          myToast.show();
-          myModal.hide();
-
-        }
-        else{
-            setErrorMessage(response.data.message)
+          myModal.hide()
+          myToast.show()
+        } else {
+          setErrorMessage(response.data.message);
         }
       })
       .catch(function (error) {
         console.log(error);
       });
-
   }
 
   useEffect(() => {
@@ -64,27 +60,31 @@ export default function DeleteSkillButton({ skillName }) {
         </div>
       </div>
 
-      
-
       <div
-        className="modal fade"
+        className="modal"
         id="deleteSkillModal"
         tabIndex="-1"
         aria-labelledby="deleteSkillModalLabel"
+        data-backdrop="static"
         ref={modal}
       >
         <div className="modal-dialog">
           <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title w-100 text-center" id="exampleModalLabel">
-              Delete {`${testData}`}
-            </h5>
-          </div>
+            <div className="modal-header">
+              <h5
+                className="modal-title w-100 text-center"
+                id="exampleModalLabel"
+              >
+                Delete {`${testData}`}
+              </h5>
+            </div>
             <div className="modal-body text-center p-4">
               Are you sure you want to delete this skill ?
             </div>
 
-            {errorMessage.length>0 && <p className="text-danger text-center">{errorMessage}</p>}
+            {errorMessage.length > 0 && (
+              <p className="text-danger text-center">{errorMessage}</p>
+            )}
 
             <div className="modal-footer d-flex justify-content-center">
               <button
@@ -98,29 +98,29 @@ export default function DeleteSkillButton({ skillName }) {
                 type="button"
                 className="btn btn-danger"
                 data-bs-dismiss="modal"
+                ref={closeButton}
               >
                 No
               </button>
             </div>
           </div>
         </div>
-
       </div>
 
       <div
-          className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success"
-          ref={toast}
-          role="alert"
-          aria-live="assertive"
-          data-bs-autohide="true"
-          aria-atomic="true"
-        >
-          <div className="d-flex ">
-            <div className="toast-body">
-              A skill has been successfully deleted
-            </div>
+        className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success"
+        ref={toast}
+        role="alert"
+        aria-live="assertive"
+        data-bs-autohide="true"
+        aria-atomic="true"
+      >
+        <div className="d-flex ">
+          <div className="toast-body">
+            A skill has been successfully deleted
           </div>
         </div>
+      </div>
     </div>
   );
 }
