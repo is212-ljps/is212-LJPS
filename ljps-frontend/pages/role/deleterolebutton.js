@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 // roleName will be passed as a prop to delete role
 export default function DeleteRoleButton({ roleName }) {
@@ -12,9 +12,8 @@ export default function DeleteRoleButton({ roleName }) {
 
   // remove later
   let testData = "Software Engineer";
-  function handleSubmit(e) {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    setErrorMessage("");
 
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current)
@@ -25,8 +24,8 @@ export default function DeleteRoleButton({ roleName }) {
         roleName: testData,
       })
       .then(function (response) {
-        console.log(response.data);
         if (response.data.success) {
+          setErrorMessage("");
           myModal.hide()
           myToast.show()
         } else {
@@ -36,7 +35,8 @@ export default function DeleteRoleButton({ roleName }) {
       .catch(function (error) {
         console.log(error);
       });
-  }
+  })
+
 
   useEffect(() => {
     if (modal.current) {
