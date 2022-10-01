@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 // skillTitle will be passed as a prop to delete skill
 export default function DeleteSkillButton({ skillName }) {
@@ -12,8 +12,7 @@ export default function DeleteSkillButton({ skillName }) {
 
   // remove later
   let testData = "Software";
-  function handleSubmit(e) {
-    setErrorMessage("");
+  const handleSubmit = useCallback(e =>{
 
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current)
@@ -26,6 +25,7 @@ export default function DeleteSkillButton({ skillName }) {
       .then(function (response) {
         console.log(response.data);
         if (response.data.success) {
+          setErrorMessage("");
           myModal.hide()
           myToast.show()
         } else {
@@ -35,7 +35,7 @@ export default function DeleteSkillButton({ skillName }) {
       .catch(function (error) {
         console.log(error);
       });
-  }
+  })
 
   useEffect(() => {
     if (modal.current) {
