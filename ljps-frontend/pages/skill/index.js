@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import CreateSkillButton from "./createskillbutton"
 
 export default function skillsPage() {
     const [skills, setSkills] = useState([])
@@ -11,6 +12,7 @@ export default function skillsPage() {
     }, [])
 
     return <div className="container-fluid">
+        <div className="ml-auto my-2"><CreateSkillButton /></div>
         <table className="table table-borderless">
             <thead>
                 <tr className=" rounded">
@@ -32,7 +34,6 @@ export default function skillsPage() {
                         </td>
                     </tr>
                 })}
-
             </tbody>
         </table>
     </div>
