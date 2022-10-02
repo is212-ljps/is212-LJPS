@@ -3,15 +3,13 @@ import React from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // roleName will be passed as a prop to delete role
-export default function DeleteRoleButton({ roleName }) {
+export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
   const modal = useRef();
   const toast = useRef();
   const closeButton = useRef();
-
   const [errorMessage, setErrorMessage] = useState("");
 
-  // remove later
-  let testData = "Software Engineer";
+
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
 
@@ -20,14 +18,14 @@ export default function DeleteRoleButton({ roleName }) {
 
     axios
       .post("http://localhost:8080/api/deleterole", {
-        // testData will be replaced with roleName that is passed from props
-        roleName: testData,
+        roleName: roleName,
       })
       .then(function (response) {
         if (response.data.success) {
           setErrorMessage("");
           myModal.hide()
           myToast.show()
+          onRolesUpdate()
         } else {
           setErrorMessage(response.data.message);
         }
@@ -48,25 +46,21 @@ export default function DeleteRoleButton({ roleName }) {
 
   return (
     <div>
-      <div className="row">
-        <div className="col-12 d-flex flex-row-reverse">
-          <button
-            type="button"
-            className="btn btn-light"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteRoleModal"
-          >
-            Delete Role
-          </button>
-        </div>
-      </div>
+
+      <button
+        type="button"
+        className="btn btn-light mx-1"
+        data-bs-toggle="modal"
+        data-bs-target={"#deleteRoleModal-" + roleId}
+      >
+        Delete Role
+      </button>
 
       <div
         className="modal"
-        id="deleteRoleModal"
+        id={"deleteRoleModal-" + roleId}
         tabIndex="-1"
         aria-labelledby="deleteRoleModalLabel"
-        data-backdrop="static"
         ref={modal}
       >
         <div className="modal-dialog">
@@ -76,7 +70,7 @@ export default function DeleteRoleButton({ roleName }) {
                 className="modal-title w-100 text-center"
                 id="exampleModalLabel"
               >
-                Delete {`${testData}`}
+                Delete {`${roleName}`}
               </h5>
             </div>
             <div className="modal-body text-center p-4">

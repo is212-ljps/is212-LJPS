@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
 import CreateRoleButton from './createrolebutton'
+import DeleteRoleButton from './deleterolebutton'
 
 export default function JobRolesPage() {
     const [roles, setRoles] = useState([])
@@ -36,7 +37,7 @@ export default function JobRolesPage() {
                         <td>{role.Job_Department}</td>
                         <td>
                             <button className="btn btn-light mx-1">Edit</button>
-                            <button className="btn btn-light mx-1">Delete</button>
+                            <DeleteRoleButton roleName={role.Job_Role_Name} roleId={role.Job_Role_ID} onRolesUpdate={onRolesUpdate} />
                         </td>
                     </tr>
                 })}
