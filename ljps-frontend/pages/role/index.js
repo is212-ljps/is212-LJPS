@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
+import CreateRoleButton from './createrolebutton'
 
 export default function JobRolesPage() {
     const [roles, setRoles] = useState([])
@@ -15,6 +16,7 @@ export default function JobRolesPage() {
     }, [])
 
     return <div className="container-fluid">
+        <div className="ml-auto my-2"><CreateRoleButton onRolesUpdate={onRolesUpdate} /></div>
         <table className="table table-borderless">
             <thead>
                 <tr className=" rounded">
