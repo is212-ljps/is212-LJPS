@@ -7,9 +7,7 @@ export default function skillsPage() {
     const [skills, setSkills] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:8080/api/skills').then(res => {
-            setSkills(res.data.data)
-        })
+        onSkillsUpdate()
     }, [])
 
     const onSkillsUpdate = useCallback(() => {
