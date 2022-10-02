@@ -3,7 +3,7 @@ import axios from "axios"
 import CreateSkillButton from "./createskillbutton"
 import DeleteSkillButton from "./deleteskillbutton"
 
-export default function skillsPage() {
+export default function SkillsPage() {
     const [skills, setSkills] = useState([])
 
     useEffect(() => {
