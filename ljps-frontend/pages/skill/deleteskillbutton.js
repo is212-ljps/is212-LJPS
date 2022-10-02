@@ -9,8 +9,6 @@ export default function DeleteSkillButton({ skillName, onSkillsUpdate }) {
   const closeButton = useRef();
 
   const [errorMessage, setErrorMessage] = useState("");
-  console.log(skillName)
-  // remove later
   const handleSubmit = useCallback(e => {
 
     var myToast = new bootstrap.Toast(toast.current);
@@ -21,7 +19,6 @@ export default function DeleteSkillButton({ skillName, onSkillsUpdate }) {
         skillName: skillName,
       })
       .then(function (response) {
-        console.log(response.data);
         if (response.data.success) {
           setErrorMessage("");
           myModal.hide()

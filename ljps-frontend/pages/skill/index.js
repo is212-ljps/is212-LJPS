@@ -29,7 +29,6 @@ export default function skillsPage() {
             </thead>
             <tbody>
                 {skills?.map((skill, index) => {
-                    console.log(skill.Skill_Name)
                     return <tr key={index}>
                         <th scope="row">{skill.Skill_ID}</th>
                         <td>{skill.Skill_Name}</td>
