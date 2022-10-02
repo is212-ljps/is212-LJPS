@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
 import CreateSkillButton from "./createskillbutton"
+import DeleteSkillButton from "./deleteskillbutton"
 
 export default function skillsPage() {
     const [skills, setSkills] = useState([])
@@ -30,13 +31,14 @@ export default function skillsPage() {
             </thead>
             <tbody>
                 {skills?.map((skill, index) => {
+                    console.log(skill.Skill_Name)
                     return <tr key={index}>
                         <th scope="row">{skill.Skill_ID}</th>
                         <td>{skill.Skill_Name}</td>
                         <td>{skill.Skill_Description}</td>
                         <td>
                             <button className="btn btn-light mx-1">Edit</button>
-                            <button className="btn btn-light mx-1">Delete</button>
+                            <DeleteSkillButton skillName={skill.Skill_Name} onSkillsUpdate={onSkillsUpdate} />
                         </td>
                     </tr>
                 })}
