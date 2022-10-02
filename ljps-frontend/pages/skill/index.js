@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
 import CreateSkillButton from "./createskillbutton"
 
@@ -11,8 +11,14 @@ export default function skillsPage() {
         })
     }, [])
 
+    const onSkillsUpdate = useCallback(() => {
+        axios.get('http://localhost:8080/api/skills').then(res => {
+            setSkills(res.data.data)
+        })
+    }, [])
+
     return <div className="container-fluid">
-        <div className="ml-auto my-2"><CreateSkillButton /></div>
+        <div className="ml-auto my-2"><CreateSkillButton onSkillsUpdate={onSkillsUpdate} /></div>
         <table className="table table-borderless">
             <thead>
                 <tr className=" rounded">

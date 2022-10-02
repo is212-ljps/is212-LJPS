@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { useState, useRef, useEffect } from "react";
 import { validateLength } from "../../util/validation/index";
 
-export default function CreateSkillButton() {
+export default function CreateSkillButton({onCreate, ...props}) {
   const [skillName, setSkillName] = useState("");
   const [skillDescription, setSkillDescription] = useState("");
   const [showError, setShowError] = useState(false);
@@ -32,6 +32,7 @@ export default function CreateSkillButton() {
 
             e.target.reset();
             myToast.show();
+            onSkillsUpdate()
           } else {
             setShowError(true);
             setErrorMessage(response.data.message);
