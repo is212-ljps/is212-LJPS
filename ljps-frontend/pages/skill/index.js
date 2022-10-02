@@ -35,7 +35,7 @@ export default function SkillsPage() {
                         <td>{skill.Skill_Description}</td>
                         <td>
                             <button className="btn btn-light mx-1">Edit</button>
-                            <DeleteSkillButton skillName={skill.Skill_Name} onSkillsUpdate={onSkillsUpdate} />
+                            <DeleteSkillButton skillName={skill.Skill_Name} skillId={skill.Skill_ID} onSkillsUpdate={onSkillsUpdate} />
                         </td>
                     </tr>
                 })}

@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // skillTitle will be passed as a prop to delete skill
-export default function DeleteSkillButton({ skillName, onSkillsUpdate }) {
+export default function DeleteSkillButton({ skillName, skillId, onSkillsUpdate }) {
   const modal = useRef();
   const toast = useRef();
   const closeButton = useRef();
@@ -48,7 +48,7 @@ export default function DeleteSkillButton({ skillName, onSkillsUpdate }) {
         type="button"
         className="btn btn-light mx-1"
         data-bs-toggle="modal"
-        data-bs-target={"#deleteSkillModal-" + skillName}
+        data-bs-target={"#deleteSkillModal-" + skillId}
       >
         Delete
       </button>
@@ -56,7 +56,7 @@ export default function DeleteSkillButton({ skillName, onSkillsUpdate }) {
 
       <div
         className="modal"
-        id={"deleteSkillModal-" + skillName}
+        id={"deleteSkillModal-" + skillId}
         tabIndex="-1"
         aria-labelledby="deleteSkillModalLabel"
         data-backdrop="static"
