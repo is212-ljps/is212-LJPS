@@ -2,27 +2,28 @@ import axios from "axios";
 import React from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
-// roleName will be passed as a prop to delete role
-export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
+// skillTitle will be passed as a prop to delete skill
+export default function DeleteSkillButton({ skillName, skillId, onSkillsUpdate }) {
   const modal = useRef();
   const toast = useRef();
   const closeButton = useRef();
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = useCallback((e) => {
-    e.preventDefault();
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleSubmit = useCallback(e => {
 
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current)
-
     axios
-      .delete(`http://localhost:8080/api/roles/${roleId}`)
+      .post("http://localhost:8080/api/deleteskill", {
+        // testData will be replaced with skillName that is passed from props
+        skillName: skillName,
+      })
       .then(function (response) {
         if (response.data.success) {
           setErrorMessage("");
           myModal.hide()
           myToast.show()
-          onRolesUpdate()
+          onSkillsUpdate()
         } else {
           setErrorMessage(response.data.message);
         }
@@ -31,7 +32,6 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
         console.log(error);
       });
   })
-
 
   useEffect(() => {
     if (modal.current) {
@@ -48,16 +48,18 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
         type="button"
         className="btn btn-light mx-1"
         data-bs-toggle="modal"
-        data-bs-target={"#deleteRoleModal-" + roleId}
+        data-bs-target={"#deleteSkillModal-" + skillId}
       >
         Delete
       </button>
 
+
       <div
         className="modal"
-        id={"deleteRoleModal-" + roleId}
+        id={"deleteSkillModal-" + skillId}
         tabIndex="-1"
-        aria-labelledby="deleteRoleModalLabel"
+        aria-labelledby="deleteSkillModalLabel"
+        data-backdrop="static"
         ref={modal}
       >
         <div className="modal-dialog">
@@ -67,11 +69,11 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
                 className="modal-title w-100 text-center"
                 id="exampleModalLabel"
               >
-                Delete {`${roleName}`}
+                Delete {`${skillName}`}
               </h5>
             </div>
             <div className="modal-body text-center p-4">
-              Are you sure you want to delete this role ?
+              Are you sure you want to delete this skill ?
             </div>
 
             {errorMessage.length > 0 && (
@@ -109,7 +111,7 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
       >
         <div className="d-flex ">
           <div className="toast-body">
-          The role has been successfully deleted
+            A skill has been successfully deleted
           </div>
         </div>
       </div>

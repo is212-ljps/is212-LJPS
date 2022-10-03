@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { useState, useRef, useEffect } from "react";
 import { validateLength } from "../../util/validation/index";
 
-export default function CreateRoleButton() {
+export default function CreateRoleButton({onRolesUpdate}) {
   const [roleName, setRoleName] = useState("");
   const [roleDescription, setRoleDescription] = useState("");
   const [department, setDepartment] = useState("Marketing");
@@ -33,6 +33,7 @@ export default function CreateRoleButton() {
             setErrorMessage("");
             e.target.reset();
             myToast.show();
+            onRolesUpdate()
           } else {
             setShowError(true);
             setErrorMessage(response.data.message);
