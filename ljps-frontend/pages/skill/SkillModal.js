@@ -91,7 +91,6 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
                   className="form-control"
                   ref={nameInput}
                 />
-                {console.log(nameErrorMsg)}
                 {!!errorMsg.length && <p className="text-danger">{errorMsg}</p>}
               </div>
             </div>

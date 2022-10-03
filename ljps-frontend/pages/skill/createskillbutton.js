@@ -1,5 +1,4 @@
 import React from "react";
-import SkillModal from "./SkillModal";
 
 export default function CreateSkillButton({ onCreate, resetSelectedSkill, ...props }) {
   return (
