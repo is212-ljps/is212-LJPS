@@ -23,12 +23,12 @@ export default function SkillsPage() {
     })
 
     const resetSelectedSkill = useCallback(() => {
-        setSelectedSkill({ skillName: '', skillDescription: '', skillID: null })
+        setSelectedSkill({ skillName: '', skillDescription: '', skillID:  })
     })
 
     return <div className="container-fluid">
         <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} />
-        <div className="ml-auto my-2"><CreateSkillButton onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill} /></div>
+        <div className="ml-auto my-2"><CreateSkillButton onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill}  /></div>
         <table className="table table-borderless">
             <thead>
                 <tr className=" rounded">

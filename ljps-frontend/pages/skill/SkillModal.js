@@ -7,7 +7,6 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
   const [nameErrorMsg, setNameErrorMsg] = useState('')
   const [descErrorMsg, setDescErrorMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
-
   const { skillName, skillDescription, skillID } = selectedSkill
   const modal = useRef()
   const toast = useRef()
@@ -27,12 +26,12 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
     e.preventDefault();
 
     if (
-      validateLength(skillName, 5, 20) &&
-      validateLength(skillDescription, 0, 300)
+      validateLength(nameInput.current.value, 5, 20) &&
+      validateLength(descriptionInput.current.value, 0, 300)
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
-      const url = 'http://localhost:8080/api/skills/' + skillID 
+      const url = skillID ? 'http://localhost:8080/api/skills/' + skillID : 'http://localhost:8080/api/skills'
       const axiosFn = skillID ? axios.put : axios.post
       axiosFn(url, {
         skillName: nameInput.current.value,
@@ -55,15 +54,15 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
         });
     } else {
       // fail validation
-      if (validateLength(skillName, 5, 20)) {
+      if (validateLength(nameInput.current.value, 5, 20)) {
         setNameErrorMsg('Skill Name must be between 5-20 characters')
       }
-      if (validateLength(skillDescription, 0, 300)) {
+      if (validateLength(descriptionInput.current.value, 0, 300)) {
         setDescErrorMsg('Skill Description cannot be more than 300 characters')
       }
     }
   });
-  return <div className="modal fade" ref={modal} id="skill-modal" tabindex="-1" aria-hidden="true">
+  return <div className="modal fade" ref={modal} id="skill-modal" tabIndex="-1" aria-hidden="true">
     <div className="modal-dialog">
       <div className="modal-content">
         <div className="modal-header">
@@ -91,7 +90,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
                   className="form-control"
                   ref={nameInput}
                 />
-                {!!errorMsg.length && <p className="text-danger">{errorMsg}</p>}
+                {!!nameErrorMsg.length && <p className="text-danger">{errorMsg}</p>}
               </div>
             </div>
 
