@@ -19,10 +19,7 @@ export default function DeleteRoleButton({ roleID }) {
     var myModal = bootstrap.Modal.getInstance(modal.current)
 
     axios
-      .post("http://localhost:8080/api/deleterole", {
-        // testData will be replaced with roleName that is passed from props
-        roleName: testData,
-      })
+      .delete(`http://localhost:8080/api/roles/${testData}`)
       .then(function (response) {
         if (response.data.success) {
           setErrorMessage("");
