@@ -64,7 +64,7 @@ router.delete("/skills/:skillID", function (req, res) {
   });
 });
 
-router.post("/createrole", function (req, res) {
+router.post("/roles", function (req, res) {
   let roleName = req.body.roleName;
   let roleDescription = req.body.roleDescription;
   let department = req.body.department;
