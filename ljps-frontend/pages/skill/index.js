@@ -23,7 +23,7 @@ export default function SkillsPage() {
     })
 
     const resetSelectedSkill = useCallback(() => {
-        setSelectedSkill({ skillName: '', skillDescription: '', skillID:  })
+        setSelectedSkill({ skillName: '', skillDescription: '', skillID:''  })
     })
 
     return <div className="container-fluid">
