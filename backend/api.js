@@ -130,6 +130,27 @@ router.post("/deleterole", function (req, res) {
   });
 });
 
+router.get('/roles', (req, res) => {
+  connection.connect(err => {
+    const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
+    connection.query(getRoles, (err, result) =>{
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      } 
+    })
+  })
+})
 
 router.get('/skills', (req, res) => {
   connection.connect(err => {
