@@ -2,9 +2,11 @@ import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
 import CreateSkillButton from "./createskillbutton"
 import DeleteSkillButton from "./deleteskillbutton"
+import SkillModal from "./SkillModal"
 
 export default function SkillsPage() {
     const [skills, setSkills] = useState([])
+    const [selectedSkill, setSelectedSkill] = useState({ skillName: '', skillDescription: '', skillID: null })
 
     useEffect(() => {
         onSkillsUpdate()
@@ -16,7 +18,16 @@ export default function SkillsPage() {
         })
     }, [])
 
+    const parseSkillObj = useCallback((skillObj) => {
+        setSelectedSkill(skillObj)
+    })
+
+    const resetSelectedSkill = useCallback(() => {
+        setSelectedSkill({ skillName: '', skillDescription: '', skillID: null })
+    })
+
     return <div className="container-fluid">
+        <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} />
         <div className="ml-auto my-2"><CreateSkillButton onSkillsUpdate={onSkillsUpdate} /></div>
         <table className="table table-borderless">
             <thead>
@@ -29,13 +40,19 @@ export default function SkillsPage() {
             </thead>
             <tbody>
                 {skills?.map((skill, index) => {
+                    const skillID = skill.Skill_ID
+                    const skillName = skill.Skill_Name
+                    const skillDescription = skill.Skill_Description
                     return <tr key={index}>
-                        <th scope="row">{skill.Skill_ID}</th>
-                        <td>{skill.Skill_Name}</td>
-                        <td>{skill.Skill_Description}</td>
+                        <th scope="row">{skillID}</th>
+                        <td>{skillName}</td>
+                        <td>{skillDescription}</td>
                         <td>
-                            <button className="btn btn-light mx-1">Edit</button>
-                            <DeleteSkillButton skillName={skill.Skill_Name} skillId={skill.Skill_ID} onSkillsUpdate={onSkillsUpdate} />
+                            <button type="button" className="btn btn-light mx-1" data-bs-toggle="modal" data-bs-target="#skill-modal"
+                                onClick={() => parseSkillObj({ skillID, skillName, skillDescription })}>
+                                Edit
+                            </button>
+                            <DeleteSkillButton skillName={skillName} skillId={skillID} onSkillsUpdate={onSkillsUpdate} />
                         </td>
                     </tr>
                 })}
