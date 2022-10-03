@@ -13,9 +13,8 @@ var connection = mysql.createConnection({
 //------------- Crud of Skills ---------------------------------------------------------
 
 router.post("/createskill", function (req, res) {
-
-  let skillName = req.body.skillName
-  let skillDescription = req.body.skillDescription
+  let skillName = req.body.skillName;
+  let skillDescription = req.body.skillDescription;
 
   connection.connect((err) => {
     var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`;
@@ -43,36 +42,27 @@ router.post("/createskill", function (req, res) {
   });
 });
 
-router.post("/deleteskill", function (req, res) {
-  let skillName = req.body.skillName;
-
+router.delete("/skills/:skillID", function (req, res) {
+  let skillID = req.params.skillID;
 
   connection.connect((err) => {
-    var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`
-    connection.query(insert_sql, function (err, result) {
+    var update_sql = `UPDATE Skill SET Is_Active=${false} WHERE Skill_ID=${skillID};`;
+    console.log(update_sql);
+    connection.query(update_sql, function (err, result) {
       if (err) {
-        if (err.code == 'ER_DUP_ENTRY') {
-          res.send({
-            success: false,
-            message: 'Skill Name currently exist, please use a different Skill Name. '
-          })
-        }
-        else {
-          res.send({
-            success: false,
-            message: "An error occured, please try again."
-          })
-        }
-      }
-      else {
+        res.send({
+          success: false,
+          message: "An error occured, please try again.",
+        });
+      } else {
         res.send({
           success: true,
-          message: "A new skill has been successfully created!"
+          message: "The skill has been successfully deleted!",
         });
       }
     });
-  })
-})
+  });
+});
 
 router.post("/createrole", function (req, res) {
   let roleName = req.body.roleName;
@@ -105,16 +95,14 @@ router.post("/createrole", function (req, res) {
   });
 });
 
-
 //------------- Crud of Roles ---------------------------------------------------------
 
-router.post("/deleterole", function (req, res) {
-  let roleName = req.body.roleName;
-
-
+router.delete("/roles/:roleID", function (req, res) {
+  let roleID = req.params.roleID;
+  
   connection.connect((err) => {
-    var delete_sql = `DELETE FROM job_role WHERE Job_Role_Name="${roleName}" ;`;
-    connection.query(delete_sql, function (err, result) {
+    var update_sql = `UPDATE job_role SET Is_Active=${false} WHERE Job_Role_ID=${roleID}`;
+    connection.query(update_sql, function (err, result) {
       if (err) {
         res.send({
           success: false,
@@ -130,6 +118,27 @@ router.post("/deleterole", function (req, res) {
   });
 });
 
+router.get('/roles', (req, res) => {
+  connection.connect(err => {
+    const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
+    connection.query(getRoles, (err, result) =>{
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      } 
+    })
+  })
+})
 
 router.get('/skills', (req, res) => {
   connection.connect(err => {

@@ -14,10 +14,7 @@ export default function DeleteSkillButton({ skillName, skillId, onSkillsUpdate }
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current)
     axios
-      .post("http://localhost:8080/api/deleteskill", {
-        // testData will be replaced with skillName that is passed from props
-        skillName: skillName,
-      })
+      .delete(`http://localhost:8080/api/skills/${skillId}`)
       .then(function (response) {
         if (response.data.success) {
           setErrorMessage("");
