@@ -18,10 +18,7 @@ export default function DeleteSkillButton({ skillID }) {
     var myModal = bootstrap.Modal.getInstance(modal.current)
 
     axios
-      .post("http://localhost:8080/api/deleteskill", {
-        // testData will be replaced with skillName that is passed from props
-        skillID: testData,
-      })
+      .delete(`http://localhost:8080/api/skills/${skillID}`)
       .then(function (response) {
         console.log(response.data);
         if (response.data.success) {

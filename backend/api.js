@@ -42,8 +42,8 @@ router.post("/createskill", function (req, res) {
   });
 });
 
-router.post("/deleteskill", function (req, res) {
-  let skillID = req.body.skillID;
+router.post("/skills/:skillID", function (req, res) {
+  let skillID = req.params.skillID;
 
   connection.connect((err) => {
     var update_sql = `UPDATE Skill SET Is_Active=${false} WHERE Skill_ID=${skillID};`;
