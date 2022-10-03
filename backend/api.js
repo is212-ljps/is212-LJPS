@@ -42,7 +42,7 @@ router.post("/createskill", function (req, res) {
   });
 });
 
-router.post("/skills/:skillID", function (req, res) {
+router.delete("/skills/:skillID", function (req, res) {
   let skillID = req.params.skillID;
 
   connection.connect((err) => {
