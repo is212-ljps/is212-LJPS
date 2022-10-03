@@ -108,13 +108,12 @@ router.post("/createrole", function (req, res) {
 
 //------------- Crud of Roles ---------------------------------------------------------
 
-router.post("/deleterole", function (req, res) {
-  let roleName = req.body.roleName;
-
-
+router.delete("/roles/:roleID", function (req, res) {
+  let roleID = req.params.roleID;
+  
   connection.connect((err) => {
-    var delete_sql = `DELETE FROM job_role WHERE Job_Role_Name="${roleName}" ;`;
-    connection.query(delete_sql, function (err, result) {
+    var update_sql = `UPDATE job_role SET Is_Active=${false} WHERE Job_Role_ID=${roleID}`;
+    connection.query(update_sql, function (err, result) {
       if (err) {
         res.send({
           success: false,

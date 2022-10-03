@@ -9,7 +9,6 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
   const closeButton = useRef();
   const [errorMessage, setErrorMessage] = useState("");
 
-
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
 
@@ -17,9 +16,7 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
     var myModal = bootstrap.Modal.getInstance(modal.current)
 
     axios
-      .post("http://localhost:8080/api/deleterole", {
-        roleName: roleName,
-      })
+      .delete(`http://localhost:8080/api/roles/${roleId}`)
       .then(function (response) {
         if (response.data.success) {
           setErrorMessage("");
@@ -53,7 +50,7 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
         data-bs-toggle="modal"
         data-bs-target={"#deleteRoleModal-" + roleId}
       >
-        Delete Role
+        Delete
       </button>
 
       <div
@@ -112,7 +109,7 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
       >
         <div className="d-flex ">
           <div className="toast-body">
-            A role has been successfully deleted
+          The role has been successfully deleted
           </div>
         </div>
       </div>
