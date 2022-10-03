@@ -97,4 +97,70 @@ router.post("/createrole", function (req, res) {
 
 //------------- Crud of Roles ---------------------------------------------------------
 
+router.delete("/roles/:roleID", function (req, res) {
+  let roleID = req.params.roleID;
+  
+  connection.connect((err) => {
+    var update_sql = `UPDATE job_role SET Is_Active=${false} WHERE Job_Role_ID=${roleID}`;
+    connection.query(update_sql, function (err, result) {
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+        });
+      }
+    });
+  });
+});
+
+router.get('/roles', (req, res) => {
+  connection.connect(err => {
+    const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
+    connection.query(getRoles, (err, result) =>{
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      } 
+    })
+  })
+})
+
+router.get('/skills', (req, res) => {
+  connection.connect(err => {
+    const getSkills = `SELECT * FROM skill WHERE Is_Active=TRUE`
+    connection.query(getSkills, (err, result) =>{
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      } 
+    })
+  })
+})
+
+
 module.exports = router;

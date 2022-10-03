@@ -3,28 +3,24 @@ import React from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // skillTitle will be passed as a prop to delete skill
-export default function DeleteSkillButton({ skillID }) {
+export default function DeleteSkillButton({ skillName, skillId, onSkillsUpdate }) {
   const modal = useRef();
   const toast = useRef();
   const closeButton = useRef();
 
   const [errorMessage, setErrorMessage] = useState("");
-
-  // remove later
-  let testData = 1;
-  const handleSubmit = useCallback(e =>{
+  const handleSubmit = useCallback(e => {
 
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current)
-
     axios
-      .delete(`http://localhost:8080/api/skills/${skillID}`)
+      .delete(`http://localhost:8080/api/skills/${skillId}`)
       .then(function (response) {
-        console.log(response.data);
         if (response.data.success) {
           setErrorMessage("");
           myModal.hide()
           myToast.show()
+          onSkillsUpdate()
         } else {
           setErrorMessage(response.data.message);
         }
@@ -44,22 +40,20 @@ export default function DeleteSkillButton({ skillID }) {
 
   return (
     <div>
-      <div className="row">
-        <div className="col-12 d-flex flex-row-reverse">
-          <button
-            type="button"
-            className="btn btn-light"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteSkillModal"
-          >
-            Delete Skill
-          </button>
-        </div>
-      </div>
+
+      <button
+        type="button"
+        className="btn btn-light mx-1"
+        data-bs-toggle="modal"
+        data-bs-target={"#deleteSkillModal-" + skillId}
+      >
+        Delete
+      </button>
+
 
       <div
         className="modal"
-        id="deleteSkillModal"
+        id={"deleteSkillModal-" + skillId}
         tabIndex="-1"
         aria-labelledby="deleteSkillModalLabel"
         data-backdrop="static"
@@ -72,7 +66,7 @@ export default function DeleteSkillButton({ skillID }) {
                 className="modal-title w-100 text-center"
                 id="exampleModalLabel"
               >
-                Delete {`${testData}`}
+                Delete {`${skillName}`}
               </h5>
             </div>
             <div className="modal-body text-center p-4">
