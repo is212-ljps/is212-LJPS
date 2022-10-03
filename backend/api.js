@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 
 //------------- Crud of Skills ---------------------------------------------------------
 
-router.post("/createskill", function (req, res) {
+router.post("/skills", function (req, res) {
   let skillName = req.body.skillName;
   let skillDescription = req.body.skillDescription;
 
