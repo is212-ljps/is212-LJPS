@@ -48,8 +48,9 @@ router.post("/deleteskill", function (req, res) {
 
 
   connection.connect((err) => {
-    var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`
-    connection.query(insert_sql, function (err, result) {
+    var update_sql = `UPDATE Skill SET Is_Active=${false} WHERE Skill_Name='${skillName}';`
+    console.log(update_sql)
+    connection.query(update_sql, function (err, result) {
       if (err) {
         if (err.code == 'ER_DUP_ENTRY') {
           res.send({
@@ -67,7 +68,7 @@ router.post("/deleteskill", function (req, res) {
       else {
         res.send({
           success: true,
-          message: "A new skill has been successfully created!"
+          message: "The skill has been successfully deleted!"
         });
       }
     });
@@ -107,29 +108,6 @@ router.post("/createrole", function (req, res) {
 
 
 //------------- Crud of Roles ---------------------------------------------------------
-
-router.post("/deleterole", function (req, res) {
-  let roleName = req.body.roleName;
-
-
-  connection.connect((err) => {
-    var delete_sql = `DELETE FROM job_role WHERE Job_Role_Name="${roleName}" ;`;
-    connection.query(delete_sql, function (err, result) {
-      if (err) {
-        res.send({
-          success: false,
-          message: "An error occured, please try again ",
-        });
-      } else {
-        res.send({
-          success: true,
-          message: "",
-        });
-      }
-    });
-  });
-});
-
 
 
 

@@ -11,7 +11,7 @@ export default function DeleteSkillButton({ skillName }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   // remove later
-  let testData = "Software";
+  let testData = "Software lance";
   const handleSubmit = useCallback(e =>{
 
     var myToast = new bootstrap.Toast(toast.current);
