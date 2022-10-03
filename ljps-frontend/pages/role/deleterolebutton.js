@@ -11,7 +11,7 @@ export default function DeleteRoleButton({ roleName }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   // remove later
-  let testData = "Software Engineer";
+  let testData = "Software Developer";
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
 
@@ -118,7 +118,7 @@ export default function DeleteRoleButton({ roleName }) {
       >
         <div className="d-flex ">
           <div className="toast-body">
-            A role has been successfully deleted
+          The role has been successfully deleted
           </div>
         </div>
       </div>

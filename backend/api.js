@@ -86,8 +86,8 @@ router.post("/deleterole", function (req, res) {
 
 
   connection.connect((err) => {
-    var delete_sql = `DELETE FROM job_role WHERE Job_Role_Name="${roleName}" ;`;
-    connection.query(delete_sql, function (err, result) {
+    var update_sql = `UPDATE job_role SET Is_Active=${false} WHERE Job_Role_Name='${roleName}'`;
+    connection.query(update_sql, function (err, result) {
       if (err) {
         res.send({
           success: false,
