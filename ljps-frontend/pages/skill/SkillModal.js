@@ -3,8 +3,6 @@ import { validateLength } from '../../util/validation'
 import axios from 'axios'
 
 
-const apis = { update: 'http://localhost:8080/api/skills/', create: 'http://localhost:8080/api/createskill/' }
-
 export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) {
   const [nameErrorMsg, setNameErrorMsg] = useState('')
   const [descErrorMsg, setDescErrorMsg] = useState('')
@@ -32,7 +30,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
-      const url = skillID ? apis.update + skillID : apis.create
+      const url = 'http://localhost:8080/api/skills/' + skillID 
       const axiosFn = skillID ? axios.put : axios.post
       axiosFn(url, {
         skillName: nameInput.current.value,
