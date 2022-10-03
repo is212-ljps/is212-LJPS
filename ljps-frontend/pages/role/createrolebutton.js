@@ -3,9 +3,10 @@ import React, { useCallback } from "react";
 import { useState, useRef, useEffect } from "react";
 import { validateLength } from "../../util/validation/index";
 
-export default function CreateSkillButton({onCreate, ...props}) {
-  const [skillName, setSkillName] = useState("");
-  const [skillDescription, setSkillDescription] = useState("");
+export default function CreateRoleButton({onRolesUpdate}) {
+  const [roleName, setRoleName] = useState("");
+  const [roleDescription, setRoleDescription] = useState("");
+  const [department, setDepartment] = useState("Marketing");
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -16,22 +17,23 @@ export default function CreateSkillButton({onCreate, ...props}) {
     e.preventDefault();
 
     if (
-      validateLength(skillName, 5, 20) &&
-      validateLength(skillDescription, 0, 300)
+      validateLength(roleName, 5, 20) &&
+      validateLength(roleDescription, 0, 300)
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
       axios
-        .post("http://localhost:8080/api/createskill", {
-          skillName: skillName,
-          skillDescription: skillDescription,
+        .post("http://localhost:8080/api/createrole", {
+          roleName: roleName,
+          roleDescription: roleDescription,
+          department: department,
         })
         .then(function (response) {
           if (response.data.success) {
             setErrorMessage("");
             e.target.reset();
             myToast.show();
-            onSkillsUpdate()
+            onRolesUpdate()
           } else {
             setShowError(true);
             setErrorMessage(response.data.message);
@@ -42,7 +44,7 @@ export default function CreateSkillButton({onCreate, ...props}) {
         });
     } else {
       // fail validation
-      setErrorMessage(" Skill Name must be between 5-20 characters");
+      setErrorMessage(" Role Name must be between 5-20 characters");
       setShowError(true);
     }
   });
@@ -63,9 +65,9 @@ export default function CreateSkillButton({onCreate, ...props}) {
             type="button"
             className="btn btn-light"
             data-bs-toggle="modal"
-            data-bs-target="#createSkillModal"
+            data-bs-target="#createRoleModal"
           >
-            Create Skill <i className="bi bi-plus-lg"></i>
+            Create Role <i className="bi bi-plus-lg"></i>
           </button>
         </div>
       </div>
@@ -73,16 +75,16 @@ export default function CreateSkillButton({onCreate, ...props}) {
       <div
         className="modal fade"
         ref={modal}
-        id="createSkillModal"
+        id="createRoleModal"
         tabIndex="-1"
-        aria-labelledby="createSkillModalLabel"
+        aria-labelledby="createRoleModalLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="createSkillModalLabel">
-                Create Skill
+              <h5 className="modal-title" id="createRoleModalLabel">
+                Create Role
               </h5>
               <button
                 type="button"
@@ -95,15 +97,15 @@ export default function CreateSkillButton({onCreate, ...props}) {
               <div className="modal-body">
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label htmlFor="skillName" className="col-form-label">
-                      Skill Name
+                    <label htmlFor="roleName" className="col-form-label">
+                      Role Name
                     </label>
 
                     <input
                       type="text"
-                      id="skillName"
+                      id="roleName"
                       className="form-control"
-                      onChange={(event) => setSkillName(event.target.value)}
+                      onChange={(event) => setRoleName(event.target.value)}
                     />
                     {showError && <p className="text-danger">{errorMessage}</p>}
                   </div>
@@ -111,18 +113,33 @@ export default function CreateSkillButton({onCreate, ...props}) {
 
                 <div className="row mb-3">
                   <div className="col-12">
-                    <label
-                      htmlFor="skillDescription"
-                      className="col-form-label"
+                    <label htmlFor="department" className="col-form-label">
+                      Department
+                    </label>
+                    <select
+                      id="department"
+                      className="form-select"
+                      value={department}
+                      onChange={(event) => setDepartment(event.target.value)}
                     >
-                      Skill Description
+                      <option value="Marketing">Marketing</option>
+                      <option value="Operations">Operations</option>
+                      <option value="HR">HR</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="row mb-3">
+                  <div className="col-12">
+                    <label htmlFor="roleDescription" className="col-form-label">
+                      Role Description
                     </label>
 
                     <textarea
-                      id="skillDescription"
+                      id="roleDescription"
                       className="form-control"
                       onChange={(event) =>
-                        setSkillDescription(event.target.value)
+                        setRoleDescription(event.target.value)
                       }
                     />
                   </div>
@@ -147,7 +164,7 @@ export default function CreateSkillButton({onCreate, ...props}) {
         >
           <div className="d-flex ">
             <div className="toast-body">
-              A New Skill Has Been Successfully Created !
+              A New Role Has Been Successfully Created !
             </div>
           </div>
         </div>
