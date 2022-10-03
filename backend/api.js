@@ -162,5 +162,34 @@ router.get('/skills', (req, res) => {
   })
 })
 
+router.put('/roles/:roleID', (req, res) => {
+  const roleID = req.params.roleID
+  const roleName = req.body.roleName
+  const roleDescription = req.body.roleDescription
+  const jobDepartment = req.body.jobDepartment
+  connection.connect(err => {
+    const updateRole =
+      `UPDATE job_role SET Job_Role_Name='${roleName}', 
+      Job_Role_Description='${roleDescription}',
+      Job_Department='${jobDepartment}'
+      WHERE Job_Role_ID=${roleID}`
+
+    connection.query(updateRole, (err, result) => {
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "Role updated"
+        });
+      }
+    })
+  })
+})
 
 module.exports = router;
