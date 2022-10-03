@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // skillTitle will be passed as a prop to delete skill
-export default function DeleteSkillButton({ skillName }) {
+export default function DeleteSkillButton({ skillID }) {
   const modal = useRef();
   const toast = useRef();
   const closeButton = useRef();
@@ -11,7 +11,7 @@ export default function DeleteSkillButton({ skillName }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   // remove later
-  let testData = "Software lance";
+  let testData = 1;
   const handleSubmit = useCallback(e =>{
 
     var myToast = new bootstrap.Toast(toast.current);
@@ -20,7 +20,7 @@ export default function DeleteSkillButton({ skillName }) {
     axios
       .post("http://localhost:8080/api/deleteskill", {
         // testData will be replaced with skillName that is passed from props
-        skillName: testData,
+        skillID: testData,
       })
       .then(function (response) {
         console.log(response.data);

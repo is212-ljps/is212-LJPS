@@ -44,11 +44,11 @@ router.post("/createskill", function (req, res) {
 });
 
 router.post("/deleteskill", function (req, res) {
-  let skillName = req.body.skillName;
+  let skillID = req.body.skillID;
 
 
   connection.connect((err) => {
-    var update_sql = `UPDATE Skill SET Is_Active=${false} WHERE Skill_Name='${skillName}';`
+    var update_sql = `UPDATE Skill SET Is_Active=${false} WHERE Skill_ID=${skillID};`
     console.log(update_sql)
     connection.query(update_sql, function (err, result) {
       if (err) {
