@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useRef, useEffect, useCallback } from "react";
 
 // roleName will be passed as a prop to delete role
-export default function DeleteRoleButton({ roleName }) {
+export default function DeleteRoleButton({ roleID }) {
   const modal = useRef();
   const toast = useRef();
   const closeButton = useRef();
@@ -11,7 +11,7 @@ export default function DeleteRoleButton({ roleName }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   // remove later
-  let testData = "Software Developer";
+  let testData = 1;
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
 
