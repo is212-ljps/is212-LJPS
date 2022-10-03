@@ -143,7 +143,7 @@ router.get('/roles', (req, res) => {
 router.get('/skills', (req, res) => {
   connection.connect(err => {
     const getSkills = `SELECT * FROM skill WHERE Is_Active=TRUE`
-    connection.query(getSkills, (err, result) =>{
+    connection.query(getSkills, (err, result) => {
       console.log(err)
       console.log(result)
       if (err) {
@@ -157,10 +157,37 @@ router.get('/skills', (req, res) => {
           message: "",
           data: result
         });
-      } 
+      }
     })
   })
 })
 
+router.put('/skills/:skillID', (req, res) => {
+  const skillID = req.params.skillID
+  const skillName = req.body.skillName
+  const skillDescription = req.body.skillDescription
+  connection.connect(err => {
+    const updateSkill =
+      `UPDATE skill SET Skill_Name='${skillName}', 
+      Skill_Description='${skillDescription}'
+      WHERE Skill_ID=${skillID}`
+    console.log(updateSkill)
+    connection.query(updateSkill, (err, result) => {
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "Skill updated"
+        });
+      }
+    })
+  })
+})
 
 module.exports = router;
