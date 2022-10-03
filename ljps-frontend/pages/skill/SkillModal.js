@@ -6,6 +6,8 @@ import axios from 'axios'
 export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) {
   const [nameErrorMsg, setNameErrorMsg] = useState('')
   const [descErrorMsg, setDescErrorMsg] = useState('')
+  const [errorMsg, setErrorMsg] = useState('')
+
   const { skillName, skillDescription, skillID } = selectedSkill
   const modal = useRef()
   const toast = useRef()
@@ -45,8 +47,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
             myToast.show();
             onSkillsUpdate()
           } else {
-            setNameErrorMsg(response.data.message.name)
-            setDescErrorMsg(response.data.message.description)
+            setErrorMsg(response.data.message)
           }
         })
         .catch(function (error) {
@@ -90,7 +91,8 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
                   className="form-control"
                   ref={nameInput}
                 />
-                {!!nameErrorMsg.length && <p className="text-danger">{nameErrorMsg}</p>}
+                {console.log(nameErrorMsg)}
+                {!!errorMsg.length && <p className="text-danger">{errorMsg}</p>}
               </div>
             </div>
 
