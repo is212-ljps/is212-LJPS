@@ -12,7 +12,7 @@ var connection = mysql.createConnection({
 
 //------------- Crud of Skills ---------------------------------------------------------
 
-router.post("/createskill", function (req, res) {
+router.post("/skills", function (req, res) {
   
   let skillName = req.body.skillName
   let skillDescription = req.body.skillDescription
@@ -26,7 +26,7 @@ router.post("/createskill", function (req, res) {
         if(err.code=='ER_DUP_ENTRY'){
           res.send({
             success:false,
-            message:'Skill Name currently exist, please use a different Skill Name. '
+            message:'Skill Name currently exist, please use a different Skill Name.',
           })
         }
         else{

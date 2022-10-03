@@ -29,7 +29,6 @@ export default function CreateSkillButton() {
         .then(function (response) {
           if (response.data.success) {
             setErrorMessage("");
-
             e.target.reset();
             myToast.show();
           } else {
