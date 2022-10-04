@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function CreateSkillButton({ onCreate, resetSelectedSkill, ...props }) {
+export default function CreateSkillButton({ resetSelectedSkill, ...props }) {
   return (
     <div>
       <div className="row">
