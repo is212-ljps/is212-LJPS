@@ -54,10 +54,10 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
         });
     } else {
       // fail validation
-      if (validateLength(nameInput.current.value, 5, 20)) {
+      if (!validateLength(nameInput.current.value, 5, 20)) {
         setNameErrorMsg('Skill Name must be between 5-20 characters')
       }
-      if (validateLength(descriptionInput.current.value, 0, 300)) {
+      if (!validateLength(descriptionInput.current.value, 0, 300)) {
         setDescErrorMsg('Skill Description cannot be more than 300 characters')
       }
     }
@@ -90,7 +90,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
                   className="form-control"
                   ref={nameInput}
                 />
-                {!!nameErrorMsg.length && <p className="text-danger">{errorMsg}</p>}
+                {!!nameErrorMsg.length && <p className="text-danger">{nameErrorMsg}</p>}
               </div>
             </div>
 
