@@ -67,7 +67,7 @@ router.delete("/skills/:skillID", function (req, res) {
 router.post("/roles", function (req, res) {
   let roleName = req.body.roleName;
   let roleDescription = req.body.roleDescription;
-  let department = req.body.department;
+  let department = req.body.jobDepartment;
 
   connection.connect((err) => {
     var insert_sql = `INSERT into job_role (Job_Role_Name, Job_Role_Description, Job_Department, Is_Active) VALUES ('${roleName}', '${roleDescription}', '${department}' , TRUE );`;
