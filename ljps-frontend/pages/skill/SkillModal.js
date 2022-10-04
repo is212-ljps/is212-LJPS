@@ -21,6 +21,17 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
     descriptionInput.current.value = skillDescription
   }, [skillName, skillDescription, skillID, nameInput, descriptionInput])
 
+  useEffect(() => { 
+    if(modal.current){
+      modal.current.addEventListener("hidden.bs.modal", function(event){
+        nameInput.current.value=""
+        descriptionInput.current.value =""
+        setNameErrorMsg("")
+        setDescErrorMsg("")
+      })
+    }
+  },[modal.current])
+
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
