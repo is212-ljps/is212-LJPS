@@ -1,8 +1,7 @@
 import React from "react";
 
 export default function CreateRoleButton({
-  onRolesUpdate,
-  resetSelectedSkill,
+  resetSelectedRole,
   ...props
 }) {
   return (
@@ -14,6 +13,7 @@ export default function CreateRoleButton({
             className="btn btn-light"
             data-bs-toggle="modal"
             data-bs-target="#role-modal"
+            onClick={resetSelectedRole}
           >
             Create Role <i className="bi bi-plus-lg"></i>
           </button>
