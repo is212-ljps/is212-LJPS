@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
-import CreateSkillButton from "./createskillbutton"
-import DeleteSkillButton from "./deleteskillbutton"
-import SkillModal from "./SkillModal"
+import CreateSkillButton from '../../components/SkillsComponent/createrskillbutton'
+import DeleteSkillButton from '../../components/SkillsComponent/deleteskillbutton'
+import SkillModal from "../../components/SkillsComponent/SkillModal"
 
 export default function SkillsPage() {
     const [skills, setSkills] = useState([])
