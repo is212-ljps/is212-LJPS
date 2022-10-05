@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
-import CreateRoleButton from './createrolebutton'
-import DeleteRoleButton from './deleterolebutton'
-import RoleModal from "./RoleModal"
+import CreateRoleButton from '../../components/RolesComponent/createrolebutton'
+import DeleteRoleButton from '../../components/RolesComponent/deleterolebutton'
+import RoleModal from "../../components/RolesComponent/RoleModal"
 
 export default function JobRolesPage() {
     const [roles, setRoles] = useState([])
