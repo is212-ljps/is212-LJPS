@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-var connection = require('../../database/database')
+var connection = require('../../../database/database')
 
 router.post("/", function (req, res) {
   let roleName = req.body.roleName;

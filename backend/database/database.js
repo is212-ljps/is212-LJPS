@@ -6,4 +6,3 @@ var connection = mysql.createConnection({
   database: "ljps_db",
 });
 
-export default connection
