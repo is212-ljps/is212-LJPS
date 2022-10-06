@@ -30,26 +30,30 @@ export default function SelectRole() {
         </div>
       </div>
 
-      
-      <div className="row">
+      <div className="container" style={{ maxHeight: '400px' , overflowY:'auto' }}>
+        <div className="row mx-4">
+          {roles.length == 0 && (
+            <h4 className="text-center"> No Roles Available</h4>
+          )}
 
-        {roles.length==0 && (
-          <h4 className="text-center"> No Roles Available</h4>
-        )}
-        {roles.length > 0 &&
-          roles.map((role) => (
-            <div className="col-6 col-md-3">
-              <button
-                type="button"
-                className="btn btn-outline-primary m-4 w-100"
+          {roles.length > 0 &&
+            roles.map((role) => (
+              <div
+                className="col-6 col-md-3"
+                style={{ overflowWrap: "break-word" }}
               >
-                {role.Job_Role_Name}
-              </button>
-            </div>
-          ))}
+                <button
+                  type="button"
+                  className="btn btn-outline-primary my-3 w-100"
+                >
+                  {role.Job_Role_Name}
+                </button>
+              </div>
+            ))}
+        </div>
       </div>
 
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-end m-3">
         <button type="button" className="btn btn-primary">
           {" "}
           Next{" "}
