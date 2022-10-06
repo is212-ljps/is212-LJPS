@@ -3,7 +3,6 @@ const router = express.Router();
 
 var connection = require('../../../database/database')
 
-
 router.post("/", function (req, res) {
   let roleName = req.body.roleName;
   let roleDescription = req.body.roleDescription;

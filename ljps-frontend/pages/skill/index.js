@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react"
 import axios from "axios"
-import CreateSkillButton from '../../components/SkillsComponent/createrskillbutton'
+import CreateSkillButton from '../../components/SkillsComponent/createskillbutton'
 import DeleteSkillButton from '../../components/SkillsComponent/deleteskillbutton'
 import SkillModal from "../../components/SkillsComponent/SkillModal"
 
