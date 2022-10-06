@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-var connection = require('../../database/database')
+var connection = require('../../../database/database')
+
 
 router.post("/", function (req, res) {
   let roleName = req.body.roleName;
@@ -59,8 +60,6 @@ router.get('/', (req, res) => {
   connection.connect(err => {
     const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
     connection.query(getRoles, (err, result) =>{
-      console.log(err)
-      console.log(result)
       if (err) {
         res.send({
           success: false,
