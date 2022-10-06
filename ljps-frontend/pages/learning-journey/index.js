@@ -30,10 +30,15 @@ export default function SelectRole() {
         </div>
       </div>
 
-      <div className="container">
-        <div className="row">
-          {roles.map((role) => (
-            <div className="col-lg-3 col-xs-6">
+      
+      <div className="row">
+
+        {roles.length==0 && (
+          <h4 className="text-center"> No Roles Available</h4>
+        )}
+        {roles.length > 0 &&
+          roles.map((role) => (
+            <div className="col-6 col-md-3">
               <button
                 type="button"
                 className="btn btn-outline-primary m-4 w-100"
@@ -42,7 +47,13 @@ export default function SelectRole() {
               </button>
             </div>
           ))}
-        </div>
+      </div>
+
+      <div className="d-flex justify-content-end">
+        <button type="button" className="btn btn-primary">
+          {" "}
+          Next{" "}
+        </button>
       </div>
     </div>
   );
