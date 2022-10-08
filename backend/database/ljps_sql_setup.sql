@@ -76,3 +76,5 @@ CREATE TABLE `course_skill` (
     CONSTRAINT `course_skill_fk1` FOREIGN KEY (`Job_Role_ID`) REFERENCES job_role(`Job_Role_ID`),
     CONSTRAINT `course_skill_fk2` FOREIGN KEY (`Course_ID`) REFERENCES course(`Course_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+LOAD DATA INFILE 'C:/wamp64/tmp/LMSRawData/courses.csv' INTO TABLE course FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
