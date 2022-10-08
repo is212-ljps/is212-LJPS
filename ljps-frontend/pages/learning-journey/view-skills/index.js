@@ -58,7 +58,7 @@ export default function ViewSkills() {
             Select a skill to kickstart your Learning Journey as a{" "}
             <span className="text-primary fw-bold">{roleName}</span>
           </h3>
-          <span class="badge text-white bg-dark w-25 mt-3">
+          <span className="badge text-white bg-dark w-25 mt-3">
             {roleDepartment}
           </span>
         </div>

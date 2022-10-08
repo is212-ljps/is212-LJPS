@@ -30,7 +30,10 @@ export default function SelectRole() {
       var myToast = new bootstrap.Toast(toast.current);
       myToast.show();
     } else {
-      router.push({ pathname: '/learning-journey/view-skills', query: selectedRole})
+      router.push({
+        pathname: "/learning-journey/view-skills",
+        query: {selectedRole},
+      });
     }
   };
 
