@@ -76,7 +76,6 @@ export default function ViewSkills() {
           <h3>
             {" "}
             Select a skill to kickstart your Learning Journey as a{" "}
-            {console.log(roleDetails.roleName)}
             <span className="text-primary fw-bold">{roleDetails.roleName}</span>
           </h3>
           <span className="badge text-white bg-dark w-25 mt-3">
