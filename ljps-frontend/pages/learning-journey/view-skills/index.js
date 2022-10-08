@@ -6,14 +6,16 @@ import Image from "next/image";
 export default function ViewSkills() {
   var router = useRouter();
   var roleID = router.query["selectedRole"];
-  const toast = useRef()
+  const toast = useRef();
 
-  const [roleDescription, setRoleDescription] = useState("");
-  const [roleDepartment, setRoleDepartment] = useState("");
-  const [roleName, setRoleName] = useState("");
+  const [roleDetails, setRoleDetails] = useState({
+    roleName: "",
+    roleDepartment: "",
+    roleDescription: "",
+  });
+
   const [skills, setSkills] = useState([]);
   const [selectedSkill, setSelectedSkill] = useState("");
-
 
   useEffect(() => {
     if (roleID) {
@@ -22,9 +24,12 @@ export default function ViewSkills() {
       axiosFn(url)
         .then(function (response) {
           if (response.data.success) {
-            setRoleDescription(response.data.data[0].Job_Role_Description);
-            setRoleDepartment(response.data.data[0].Job_Department);
-            setRoleName(response.data.data[0].Job_Role_Name);
+            let newRoleDetails = {
+              roleName: response.data.data[0].Job_Role_Name,
+              roleDepartment: response.data.data[0].Job_Department,
+              roleDescription: response.data.data[0].Job_Role_Description,
+            };
+            setRoleDetails(newRoleDetails)
           } else {
           }
         })
@@ -43,9 +48,8 @@ export default function ViewSkills() {
         .catch(function (error) {
           console.log(error);
         });
-    }
-    else{
-      router.push("/learning-journey")
+    } else {
+      router.push("/learning-journey");
     }
   }, []);
 
@@ -72,10 +76,11 @@ export default function ViewSkills() {
           <h3>
             {" "}
             Select a skill to kickstart your Learning Journey as a{" "}
-            <span className="text-primary fw-bold">{roleName}</span>
+            {console.log(roleDetails.roleName)}
+            <span className="text-primary fw-bold">{roleDetails.roleName}</span>
           </h3>
           <span className="badge text-white bg-dark w-25 mt-3">
-            {roleDepartment}
+            {roleDetails.roleDepartment}
           </span>
         </div>
 
@@ -106,15 +111,13 @@ export default function ViewSkills() {
               </button>
             </div>
           ))}
-
       </div>
 
       <div className="d-flex justify-content-end m-3">
-
-          <button type="button" className="btn btn-primary" onClick={checkSubmit}>
-            {" "}
-            Next{" "}
-          </button>
+        <button type="button" className="btn btn-primary" onClick={checkSubmit}>
+          {" "}
+          Next{" "}
+        </button>
       </div>
 
       <div
