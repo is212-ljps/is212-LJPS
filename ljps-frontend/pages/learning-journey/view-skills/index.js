@@ -11,8 +11,8 @@ export default function ViewSkills() {
   const [roleDepartment, setRoleDepartment] = useState("");
   const [roleName, setRoleName] = useState("");
   const [skills, setSkills] = useState([]);
+  const [selectedSkill, setSelectedSkill] = useState("");
 
-  // get role id and description based on role id
 
   useEffect(() => {
     if (roleID) {
@@ -45,6 +45,10 @@ export default function ViewSkills() {
     }
   }, []);
 
+  const toggleButton = (e) => {
+    setSelectedSkill(e.target.id);
+  };
+
   return (
     <div>
       <div className="row m-4">
@@ -75,13 +79,26 @@ export default function ViewSkills() {
                 type="button"
                 id={skill.Skill_ID}
                 key={skill.Skill_ID}
-                className= "btn btn-outline-primary my-3 w-100"
+                className={
+                  skill.Skill_ID === Number(selectedSkill)
+                    ? "btn btn-outline-primary my-3 w-100 active"
+                    : "btn btn-outline-primary my-3 w-100"
+                }
+                onClick={toggleButton}
               >
                 {skill.Skill_Name}
               </button>
             </div>
           ))}
-        {console.log(skills)}
+
+      </div>
+
+      <div className="d-flex justify-content-end m-3">
+
+          <button type="button" className="btn btn-primary">
+            {" "}
+            Next{" "}
+          </button>
       </div>
     </div>
   );
