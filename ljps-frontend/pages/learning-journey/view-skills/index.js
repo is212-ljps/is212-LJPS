@@ -64,7 +64,23 @@ export default function ViewSkills() {
         </div>
       </div>
 
-      <div>
+      <div className="row mx-4">
+        {skills.length > 0 &&
+          skills.map((skill) => (
+            <div
+              className="col-6 col-md-3"
+              style={{ overflowWrap: "break-word" }}
+            >
+              <button
+                type="button"
+                id={skill.Skill_ID}
+                key={skill.Skill_ID}
+                className= "btn btn-outline-primary my-3 w-100"
+              >
+                {skill.Skill_Name}
+              </button>
+            </div>
+          ))}
         {console.log(skills)}
       </div>
     </div>
