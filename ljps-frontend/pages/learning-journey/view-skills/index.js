@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -6,6 +6,7 @@ import Image from "next/image";
 export default function ViewSkills() {
   var router = useRouter();
   var roleID = router.query["selectedRole"];
+  const toast = useRef()
 
   const [roleDescription, setRoleDescription] = useState("");
   const [roleDepartment, setRoleDepartment] = useState("");
@@ -47,6 +48,18 @@ export default function ViewSkills() {
 
   const toggleButton = (e) => {
     setSelectedSkill(e.target.id);
+  };
+
+  const checkSubmit = () => {
+    if (selectedSkill == "") {
+      var myToast = new bootstrap.Toast(toast.current);
+      myToast.show();
+    } else {
+      // router.push({
+      //   pathname: "/learning-journey/view-skills",
+      //   query: {selectedSkill},
+      // });
+    }
   };
 
   return (
@@ -95,10 +108,23 @@ export default function ViewSkills() {
 
       <div className="d-flex justify-content-end m-3">
 
-          <button type="button" className="btn btn-primary">
+          <button type="button" className="btn btn-primary" onClick={checkSubmit}>
             {" "}
             Next{" "}
           </button>
+      </div>
+
+      <div
+        className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
+        ref={toast}
+        role="alert"
+        aria-live="assertive"
+        data-bs-autohide="true"
+        aria-atomic="true"
+      >
+        <div className="d-flex ">
+          <div className="toast-body">Please select a Skill first !</div>
+        </div>
       </div>
     </div>
   );
