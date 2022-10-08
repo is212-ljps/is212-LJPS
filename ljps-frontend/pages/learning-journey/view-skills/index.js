@@ -16,7 +16,7 @@ export default function ViewSkills() {
 
   useEffect(() => {
     if (roleID) {
-      const url = `http://localhost:8080/api/roles/roledetails/` + roleID;
+      const url = `http://localhost:8080/api/roles`+ roleID;
       const axiosFn = axios.get;
       axiosFn(url)
         .then(function (response) {
@@ -36,11 +36,14 @@ export default function ViewSkills() {
   return (
     <div>
       <div className="row m-4">
-        <div className="col-md-5 col-sm-12 d-flex justify-content-center align-items-center">
-          <h3 className="p-5">
+        <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
+          <h3>
             {" "}
             Select a skill to kickstart your Learning Journey as a <span className="text-primary fw-bold">{roleName}</span>
           </h3>
+          <span class="badge text-white bg-dark w-25 mt-3">{roleDepartment}</span>
+
+
         </div>
 
         <div className="col-md-7 col-sm-12 d-flex justify-content-center">
