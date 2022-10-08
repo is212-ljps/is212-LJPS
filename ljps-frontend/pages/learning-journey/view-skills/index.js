@@ -44,6 +44,9 @@ export default function ViewSkills() {
           console.log(error);
         });
     }
+    else{
+      router.push("/learning-journey")
+    }
   }, []);
 
   const toggleButton = (e) => {
