@@ -78,7 +78,7 @@ router.get('/', (req, res) => {
 router.get('/:roleID', (req, res) => {
   let role_id = req.params.roleID
   connection.connect(err => {
-    const getRoles = `SELECT * FROM job_role WHERE Job_Role_ID=${role_id} AND job_role.Is_Active= TRUE`
+    const getRoles = `SELECT * FROM job_role WHERE Job_Role_ID=${role_id} AND Is_Active= TRUE`
     connection.query(getRoles, (err, result) =>{
       if (err) {
         res.send({
@@ -133,7 +133,7 @@ router.put('/roles/:roleID', (req, res) => {
       Job_Role_Description='${roleDescription}',
       Job_Department='${jobDepartment}'
       WHERE Job_Role_ID=${roleID}
-      AND job_role.Is_Active= TRUE`
+      AND Is_Active= TRUE`
 
     connection.query(updateRole, (err, result) => {
       console.log(err)
