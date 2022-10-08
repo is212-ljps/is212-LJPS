@@ -1,13 +1,27 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
+
 
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
 
+  const [selectedRole, setSelectedRole] = useState('')
+
+
   useEffect(() => {
     onRolesUpdate();
   }, []);
+
+
+  const toggleButton = (e) => {
+    setSelectedRole(e.target.id)
+  }
+
+
+
+
 
   const onRolesUpdate = useCallback(() => {
     axios.get("http://localhost:8080/api/roles").then((res) => {
@@ -44,7 +58,10 @@ export default function SelectRole() {
               >
                 <button
                   type="button"
-                  className="btn btn-outline-primary my-3 w-100"
+                  id = {role.Job_Role_ID}
+                  className= { role.Job_Role_ID === selectedRole  ? "btn btn-outline-primary my-3 w-100 active" : "btn btn-outline-primary my-3 w-100"}
+
+                  onClick={toggleButton}
                 >
                   {role.Job_Role_Name}
                 </button>
@@ -54,10 +71,15 @@ export default function SelectRole() {
       </div>
 
       <div className="d-flex justify-content-end m-3">
+        <Link href={{
+          pathname:"/learning-journey/view-skills",
+          query: { selectedRole }
+        }}>
         <button type="button" className="btn btn-primary">
           {" "}
           Next{" "}
         </button>
+        </Link>
       </div>
     </div>
   );
