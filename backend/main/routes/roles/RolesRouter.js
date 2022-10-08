@@ -75,6 +75,28 @@ router.get('/', (req, res) => {
   })
 })
 
+router.get('/roledetails/:roleID', (req, res) => {
+  let role_id = req.params.roleID
+  connection.connect(err => {
+    const getRoles = `SELECT * FROM job_role WHERE Job_Role_ID=${role_id}`
+    connection.query(getRoles, (err, result) =>{
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      } 
+    })
+  })
+})
+
+
 router.put('/roles/:roleID', (req, res) => {
   const roleID = req.params.roleID
   const roleName = req.body.roleName
