@@ -1,12 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
 
-  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedRole, setSelectedRole] = useState("");
+  const router = useRouter();
+
+  const toast = useRef();
 
   useEffect(() => {
     onRolesUpdate();
@@ -21,6 +24,15 @@ export default function SelectRole() {
       setRoles(res.data.data);
     });
   }, []);
+
+  const checkSubmit = () => {
+    if (selectedRole == "") {
+      var myToast = new bootstrap.Toast(toast.current);
+      myToast.show();
+    } else {
+      router.push({ pathname: '/learning-journey/view-skills', query: selectedRole})
+    }
+  };
 
   return (
     <div>
@@ -55,7 +67,7 @@ export default function SelectRole() {
                 <button
                   type="button"
                   id={role.Job_Role_ID}
-                  key ={role.Job_Role_ID}
+                  key={role.Job_Role_ID}
                   className={
                     role.Job_Role_ID === Number(selectedRole)
                       ? "btn btn-outline-primary my-3 w-100 active"
@@ -63,7 +75,6 @@ export default function SelectRole() {
                   }
                   onClick={toggleButton}
                 >
-
                   {role.Job_Role_Name}
                 </button>
               </div>
@@ -72,17 +83,23 @@ export default function SelectRole() {
       </div>
 
       <div className="d-flex justify-content-end m-3">
-        <Link
-          href={{
-            pathname: "/learning-journey/view-skills",
-            query: { selectedRole },
-          }}
-        >
-          <button type="button" className="btn btn-primary">
-            {" "}
-            Next{" "}
-          </button>
-        </Link>
+        <button type="button" className="btn btn-primary" onClick={checkSubmit}>
+          {" "}
+          Next{" "}
+        </button>
+      </div>
+
+      <div
+        className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
+        ref={toast}
+        role="alert"
+        aria-live="assertive"
+        data-bs-autohide="true"
+        aria-atomic="true"
+      >
+        <div className="d-flex ">
+          <div className="toast-body">Please select a Role first !</div>
+        </div>
       </div>
     </div>
   );
