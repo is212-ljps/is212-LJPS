@@ -132,8 +132,7 @@ router.put('/roles/:roleID', (req, res) => {
       `UPDATE job_role SET Job_Role_Name='${roleName}', 
       Job_Role_Description='${roleDescription}',
       Job_Department='${jobDepartment}'
-      WHERE Job_Role_ID=${roleID}
-      AND Is_Active= TRUE`
+      WHERE Job_Role_ID=${roleID}`
 
     connection.query(updateRole, (err, result) => {
       console.log(err)
