@@ -99,8 +99,11 @@ router.get('/:roleID', (req, res) => {
 router.get('/:roleID/skills', (req, res) => {
   let roleID = req.params.roleID
   connection.connect(err => {
-    const getSkills = `SELECT Skill_ID FROM job_role_skill WHERE Job_Role_ID=${roleID};`
-    console.log(getSkills)
+    const getSkills = `SELECT  job_role_skill.Job_Role_ID ,skill.Skill_ID , skill.Skill_Name, skill.Skill_Description
+    FROM job_role_skill
+    INNER JOIN skill ON skill.Skill_ID=job_role_skill.Skill_ID
+    WHERE skill.Is_Active= FALSE AND Job_Role_ID=${roleID};`
+    
     connection.query(getSkills, (err, result) =>{
       if (err) {
         res.send({
