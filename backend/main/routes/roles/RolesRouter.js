@@ -154,9 +154,10 @@ router.put('/:roleID', (req, res) => {
 
     connection.query(updateRole, (err, result) => {
       if (err) {
+        const errMsg = err.code === "ER_DUP_ENTRY" ? "Role Name currently exist, please use a different Skill Name. " :"An error occured, please try again "
         res.send({
           success: false,
-          message: "An error occured, please try again ",
+          message: errMsg,
         });
       } else {
         var deleteSkillsSql = `DELETE FROM job_role_skill WHERE Job_Role_ID=${roleID}`
