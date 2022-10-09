@@ -7,9 +7,10 @@ router.post("/", function (req, res) {
   let roleName = req.body.roleName;
   let roleDescription = req.body.roleDescription;
   let department = req.body.jobDepartment;
+  const assignedSkills = req.body.skills
 
   connection.connect((err) => {
-    var insert_sql = `INSERT into job_role (Job_Role_Name, Job_Role_Description, Job_Department, Is_Active) VALUES ('${roleName}', '${roleDescription}', '${department}' , TRUE );`;
+    var insert_sql = `INSERT into job_role (Job_Role_Name, Job_Role_Description, Job_Department, Is_Active) VALUES ('${roleName}', '${roleDescription}', '${department}' , TRUE );`
     connection.query(insert_sql, function (err, result) {
       if (err) {
         if (err.code == "ER_DUP_ENTRY") {
@@ -25,12 +26,30 @@ router.post("/", function (req, res) {
           });
         }
       } else {
-        res.send({
-          success: true,
-          message: "A new role has been successfully created!",
-        });
+        console.log(result)
+        console.log(result.insertId)
+        var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
+        assignedSkills.forEach((item) => {
+          assignSkillsSql += `(${result.insertId}, ${item}), `
+        }) 
+        assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
+        connection.query(assignSkillsSql, (err, result) =>{
+          if(err){
+            res.send({
+              success: false,
+              message: "An error occured, please try again.",
+            });
+            return
+          }
+          res.send({
+            success: true,
+            message: "A new role has been successfully created!",
+          });
+        })
+
       }
     });
+
   });
 });
 
