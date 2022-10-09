@@ -7,11 +7,13 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
   const [descErrorMsg, setDescErrorMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const { roleName, roleDescription, roleID, roleDepartment } = selectedRole;
+  const [skills, setSkills] = useState([])
   const modal = useRef();
   const toast = useRef();
   const nameInput = useRef();
   const descriptionInput = useRef();
   const departmentInput = useRef();
+  const [skillSearch, setSkillSearch] = useState("")
 
   useEffect(() => {
     if (
@@ -23,9 +25,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
 
     nameInput.current.value = roleName;
     descriptionInput.current.value = roleDescription;
-    departmentInput.current.value = roleDepartment
-      ? roleDepartment
-      : "Marketing";
+    departmentInput.current.value = roleDepartment ? roleDepartment : "Marketing";
   }, [
     roleName,
     roleDescription,
@@ -40,14 +40,19 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
       modal.current.addEventListener("hidden.bs.modal", function (event) {
         nameInput.current.value = "";
         descriptionInput.current.value = "";
-        departmentInput.current.value = roleDepartment
-          ? roleDepartment
-          : "Marketing";
+        departmentInput.current.value = roleDepartment ? roleDepartment : "Marketing";
         setNameErrorMsg("");
         setDescErrorMsg("");
       });
     }
   }, [modal.current]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/skills').then((res) => {
+      setSkills(res.data.data)
+      console.log(res.data.data)
+    })
+  }, [])
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
@@ -92,6 +97,16 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
       }
     }
   });
+
+  const skillsFilter = useCallback((item) => {
+    console.log(item)
+    const skillName = item.Skill_Name.toLowerCase()
+    if (skillName.includes(skillSearch)) {
+      return true
+    }
+    return false
+  }, [skillSearch])
+
   return (
     <div
       className="modal fade"
@@ -152,6 +167,26 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
 
               <div className="row mb-3">
                 <div className="col-12">
+                  <label htmlFor="Assign Skills" className="col-form-label">
+                    Assign Skills
+                  </label>
+                </div>
+                <div class="col-12">
+                  <input type="text" placeholder="Search Skills" className="form-control my-1" onChange={(e) => setSkillSearch(e.target.value.toLowerCase())} />
+                </div>
+                <div className="col-12" style={{ height: "100px", overflowY: "auto" }}>
+                  <div className="row">
+
+                    {skills.filter(skillsFilter).map((item, index) => {
+                      const { Skill_Name, Skill_ID } = item
+                      return <div className="col-6" key={Skill_ID}>{Skill_Name}</div>
+                    })}
+                  </div>
+                </div>
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-12">
                   <label htmlFor="roleDescription" className="col-form-label">
                     Role Description
                   </label>
@@ -174,7 +209,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
             </div>
           </form>
         </div>
-      </div>
+      </div >
 
       <div
         className={`toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success`}
@@ -192,6 +227,6 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
