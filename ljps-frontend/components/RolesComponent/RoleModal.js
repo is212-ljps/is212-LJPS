@@ -82,6 +82,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
 
           if (!roleID) {
             e.target.reset();
+            resetSkillsSelected()
           }
           myToast.show();
           onRolesUpdate();
