@@ -122,7 +122,7 @@ router.get('/:roleID/skills', (req, res) => {
 })
 
 
-router.put('/roles/:roleID', (req, res) => {
+router.put('/:roleID', (req, res) => {
   const roleID = req.params.roleID
   const roleName = req.body.roleName
   const roleDescription = req.body.roleDescription
