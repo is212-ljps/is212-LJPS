@@ -43,6 +43,23 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
     })
   }, [])
 
+  useEffect(() => {
+    console.log(roleID)
+    if (!roleID) return
+    axios.get(`http://localhost:8080/api/roles/${roleID}/skills`).then((res) => {
+      const skillIds = Object.values(res.data.data)
+      console.log(skillIds)
+      const newState = { ...skills }
+      skillIds.forEach(item => {
+        const id = "skill-checkbox-" + item.Skill_ID
+        newState[id].isChecked = true
+      })
+      setSkills(newState)
+      console.log(skills)
+    })
+  }, [roleID])
+
+
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     console.log(skills)
@@ -57,7 +74,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
         roleName: nameInput.current.value,
         roleDescription: descriptionInput.current.value,
         jobDepartment: departmentInput.current.value,
-        skills : getSelectedSkillIds()
+        skills: getSelectedSkillIds()
       }).then(function (response) {
         if (response.data.success) {
           setNameErrorMsg("");
