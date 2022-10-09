@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useEffect, useState } from "react";
 import { validateLength } from "../../util/validation";
 import axios from "axios";
 
-export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
+export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRole, ...props }) {
   const [nameErrorMsg, setNameErrorMsg] = useState("");
   const [descErrorMsg, setDescErrorMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -14,8 +14,9 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
   const descriptionInput = useRef();
   const departmentInput = useRef();
   const [skillSearch, setSkillSearch] = useState("")
-
+  console.log(selectedRole)
   useEffect(() => {
+    console.log(roleID)
     if (!nameInput.current || !descriptionInput.current || !departmentInput.current)
       return;
 
@@ -33,6 +34,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
         setNameErrorMsg("");
         setDescErrorMsg("");
         resetSkillsSelected()
+        resetSelectedRole();
       });
     }
   }, [modal.current]);
