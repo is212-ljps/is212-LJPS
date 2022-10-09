@@ -14,9 +14,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
   const descriptionInput = useRef();
   const departmentInput = useRef();
   const [skillSearch, setSkillSearch] = useState("")
-  console.log(selectedRole)
   useEffect(() => {
-    console.log(roleID)
     if (!nameInput.current || !descriptionInput.current || !departmentInput.current)
       return;
 
@@ -46,32 +44,27 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
   }, [])
 
   useEffect(() => {
-    console.log(roleID)
     if (!roleID) return
     axios.get(`http://localhost:8080/api/roles/${roleID}/skills`).then((res) => {
       const skillIds = Object.values(res.data.data)
-      console.log(skillIds)
       const newState = { ...skills }
       skillIds.forEach(item => {
         const id = "skill-checkbox-" + item.Skill_ID
         newState[id].isChecked = true
       })
       setSkills(newState)
-      console.log(skills)
     })
   }, [roleID])
 
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    console.log(skills)
     if (
       validateLength(nameInput.current.value, 5, 20) && validateLength(descriptionInput.current.value, 0, 300)) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
       const url = roleID ? "http://localhost:8080/api/roles/" + roleID : "http://localhost:8080/api/roles";
       const axiosFn = roleID ? axios.put : axios.post;
-      console.log(getSelectedSkillIds())
       axiosFn(url, {
         roleName: nameInput.current.value,
         roleDescription: descriptionInput.current.value,

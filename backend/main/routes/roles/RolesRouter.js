@@ -26,8 +26,6 @@ router.post("/", function (req, res) {
           });
         }
       } else {
-        console.log(result)
-        console.log(result.insertId)
         var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
         assignedSkills.forEach((item) => {
           assignSkillsSql += `(${result.insertId}, ${item}), `
@@ -155,8 +153,6 @@ router.put('/:roleID', (req, res) => {
       WHERE Job_Role_ID=${roleID}`
 
     connection.query(updateRole, (err, result) => {
-      console.log(err)
-      console.log(result)
       if (err) {
         res.send({
           success: false,
@@ -165,8 +161,6 @@ router.put('/:roleID', (req, res) => {
       } else {
         var deleteSkillsSql = `DELETE FROM job_role_skill WHERE Job_Role_ID=${roleID}`
         connection.query(deleteSkillsSql, (err, result) => {
-          console.log(result)
-          console.log(err)
           if (err) {
             res.send({
               success: false,
@@ -179,10 +173,7 @@ router.put('/:roleID', (req, res) => {
               assignSkillsSql += `(${roleID}, ${item}), `
             })
             assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
-            console.log(assignSkillsSql)
             connection.query(assignSkillsSql, (err, result) => {
-              console.log(result)
-              console.log(err)
               if (err) {
                 res.send({
                   success: false,
@@ -203,23 +194,3 @@ router.put('/:roleID', (req, res) => {
 })
 
 module.exports = router;
-
-
-// var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
-// assignedSkills.forEach((item) => {
-//   assignSkillsSql += `(${result.insertId}, ${item}), `
-// })
-// assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
-// connection.query(assignSkillsSql, (err, result) =>{
-//   if(err){
-//     res.send({
-//       success: false,
-//       message: "An error occured, please try again.",
-//     });
-//     return
-//   }
-//   res.send({
-//     success: true,
-//     message: "A new role has been successfully created!",
-//   });
-// })
