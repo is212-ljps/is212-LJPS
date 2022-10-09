@@ -76,7 +76,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
             myToast.show();
             onRolesUpdate();
           } else {
-            setErrorMsg(response.data.message);
+            setNameErrorMsg(response.data.message);
           }
         })
         .catch(function (error) {
