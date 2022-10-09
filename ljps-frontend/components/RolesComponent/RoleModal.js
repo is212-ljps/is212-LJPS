@@ -16,24 +16,13 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
   const [skillSearch, setSkillSearch] = useState("")
 
   useEffect(() => {
-    if (
-      !nameInput.current ||
-      !descriptionInput.current ||
-      !departmentInput.current
-    )
+    if (!nameInput.current || !descriptionInput.current || !departmentInput.current)
       return;
 
     nameInput.current.value = roleName;
     descriptionInput.current.value = roleDescription;
     departmentInput.current.value = roleDepartment ? roleDepartment : "Marketing";
-  }, [
-    roleName,
-    roleDescription,
-    roleID,
-    nameInput,
-    descriptionInput,
-    departmentInput,
-  ]);
+  }, [roleName, roleDescription, roleID, nameInput, descriptionInput, departmentInput]);
 
   useEffect(() => {
     if (modal.current) {
@@ -43,50 +32,48 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
         departmentInput.current.value = roleDepartment ? roleDepartment : "Marketing";
         setNameErrorMsg("");
         setDescErrorMsg("");
+        resetSkillsSelected()
       });
     }
   }, [modal.current]);
 
   useEffect(() => {
     axios.get('http://localhost:8080/api/skills').then((res) => {
-      setSkills(res.data.data)
-      console.log(res.data.data)
+      setSkills(parseSkillsObj(res.data.data))
     })
   }, [])
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-
+    console.log(skills)
     if (
-      validateLength(nameInput.current.value, 5, 20) &&
-      validateLength(descriptionInput.current.value, 0, 300)
-    ) {
+      validateLength(nameInput.current.value, 5, 20) && validateLength(descriptionInput.current.value, 0, 300)) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
-      const url = roleID
-        ? "http://localhost:8080/api/roles/" + roleID
-        : "http://localhost:8080/api/roles";
+      const url = roleID ? "http://localhost:8080/api/roles/" + roleID : "http://localhost:8080/api/roles";
       const axiosFn = roleID ? axios.put : axios.post;
+      console.log(getSelectedSkillIds())
       axiosFn(url, {
         roleName: nameInput.current.value,
         roleDescription: descriptionInput.current.value,
         jobDepartment: departmentInput.current.value,
-      })
-        .then(function (response) {
-          if (response.data.success) {
-            setNameErrorMsg("");
-            setDescErrorMsg("");
+        skills : getSelectedSkillIds()
+      }).then(function (response) {
+        if (response.data.success) {
+          setNameErrorMsg("");
+          setDescErrorMsg("");
 
+          if (!roleID) {
             e.target.reset();
-            myToast.show();
-            onRolesUpdate();
-          } else {
-            setNameErrorMsg(response.data.message);
           }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+          myToast.show();
+          onRolesUpdate();
+          return
+        }
+        setNameErrorMsg(response.data.message);
+      }).catch(function (error) {
+        console.log(error);
+      });
     } else {
       // fail validation
       if (!validateLength(nameInput.current.value, 5, 20)) {
@@ -99,13 +86,36 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
   });
 
   const skillsFilter = useCallback((item) => {
-    console.log(item)
     const skillName = item.Skill_Name.toLowerCase()
     if (skillName.includes(skillSearch)) {
       return true
     }
     return false
   }, [skillSearch])
+
+  const setSkillChecked = useCallback((e) => {
+    const newState = { ...skills }
+    newState[e.target.id].isChecked = !newState[e.target.id].isChecked
+    setSkills(newState)
+  }, [skills])
+
+  const getSelectedSkillIds = useCallback(() => {
+    const values = Object.values(skills)
+    const selectedSkills = values.map((item) => {
+      const { isChecked, Skill_ID } = item
+      return isChecked ? Skill_ID : null
+    })
+    return selectedSkills.filter(Number)
+  }, [skills])
+
+  const resetSkillsSelected = useCallback(() => {
+    const newState = { ...skills }
+    const keys = Object.keys(newState)
+    keys.forEach(key => {
+      newState[key].isChecked = false
+    })
+    setSkills(newState)
+  }, [skills])
 
   return (
     <div
@@ -171,15 +181,17 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
                     Assign Skills
                   </label>
                 </div>
-                <div class="col-12">
+                <div className="col-12">
                   <input type="text" placeholder="Search Skills" className="form-control my-1" onChange={(e) => setSkillSearch(e.target.value.toLowerCase())} />
                 </div>
                 <div className="col-12" style={{ height: "100px", overflowY: "auto" }}>
                   <div className="row">
-
-                    {skills.filter(skillsFilter).map((item, index) => {
-                      const { Skill_Name, Skill_ID } = item
-                      return <div className="col-6" key={Skill_ID}>{Skill_Name}</div>
+                    {Object.values(skills).filter(skillsFilter).map((item, index) => {
+                      const { Skill_Name, Skill_ID, isChecked } = item
+                      return <div className="col-6" key={Skill_ID}>
+                        <input type="checkbox" id={"skill-checkbox-" + Skill_ID} onChange={setSkillChecked} checked={isChecked} value={Skill_ID} />
+                        <label htmlFor={"skill-checkbox-" + Skill_ID}>{Skill_Name}</label>
+                      </div>
                     })}
                   </div>
                 </div>
@@ -229,4 +241,13 @@ export default function RoleModal({ selectedRole, onRolesUpdate, ...props }) {
       </div>
     </div >
   );
+}
+
+function parseSkillsObj(skills) {
+  const obj = {}
+  skills.forEach((item, index) => {
+    const { Skill_ID, Skill_Name } = item
+    obj["skill-checkbox-" + Skill_ID] = { Skill_ID, Skill_Name, isChecked: false }
+  })
+  return obj
 }
