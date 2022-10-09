@@ -5,6 +5,7 @@ import axios from "axios";
 export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRole, ...props }) {
   const [nameErrorMsg, setNameErrorMsg] = useState("");
   const [descErrorMsg, setDescErrorMsg] = useState("");
+  const [skillsErrorMsg, setSkillsErrorMsg] = useState("")
   const [errorMsg, setErrorMsg] = useState("");
   const { roleName, roleDescription, roleID, roleDepartment } = selectedRole;
   const [skills, setSkills] = useState([])
@@ -59,9 +60,11 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
 
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
-    if (
-      validateLength(nameInput.current.value, 5, 20) && validateLength(descriptionInput.current.value, 0, 300)) {
-      // pass length validation
+    const selectedSkills = getSelectedSkillIds()
+    if (validateLength(nameInput.current.value, 5, 20) && validateLength(descriptionInput.current.value, 0, 300) && selectedSkills.length >0) {
+      setNameErrorMsg("");
+      setDescErrorMsg("");
+      setSkillsErrorMsg("")
       var myToast = new bootstrap.Toast(toast.current);
       const url = roleID ? "http://localhost:8080/api/roles/" + roleID : "http://localhost:8080/api/roles";
       const axiosFn = roleID ? axios.put : axios.post;
@@ -69,11 +72,9 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
         roleName: nameInput.current.value,
         roleDescription: descriptionInput.current.value,
         jobDepartment: departmentInput.current.value,
-        skills: getSelectedSkillIds()
+        skills: selectedSkills
       }).then(function (response) {
         if (response.data.success) {
-          setNameErrorMsg("");
-          setDescErrorMsg("");
 
           if (!roleID) {
             e.target.reset();
@@ -94,6 +95,9 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
       }
       if (!validateLength(descriptionInput.current.value, 0, 300)) {
         setDescErrorMsg("Role Description cannot be more than 300 characters");
+      }
+      if( selectedSkills.length == 0){
+        setSkillsErrorMsg("Please select at least 1 skill")
       }
     }
   });
@@ -209,6 +213,9 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
                   </div>
                 </div>
               </div>
+              {!!skillsErrorMsg.length && (
+                <p className="text-danger">{skillsErrorMsg}</p>
+              )}
 
               <div className="row mb-3">
                 <div className="col-12">
