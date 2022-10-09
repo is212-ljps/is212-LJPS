@@ -18,10 +18,6 @@ export default function JobRolesPage() {
         })
     }, [])
 
-    const parseRoleObj = useCallback((roleObj) => {
-        setSelectedRole(roleObj)
-    })
-
     const resetSelectedRole = useCallback(() => {
         setSelectedRole({ roleName: '', roleDescription: '', roleID: '' })
     })
@@ -52,7 +48,7 @@ export default function JobRolesPage() {
                         <td>{roleDepartment}</td>
                         <td>
                             <button type="button" className="btn btn-light mx-1" data-bs-toggle="modal" data-bs-target="#role-modal"
-                                onClick={() => parseRoleObj({ roleID, roleName, roleDescription, roleDepartment })}>
+                                onClick={() => setSelectedRole({ roleID, roleName, roleDescription, roleDepartment })}>
                                 Edit
                             </button>
                             <DeleteRoleButton roleName={roleName} roleId={roleID} onRolesUpdate={onRolesUpdate} />
