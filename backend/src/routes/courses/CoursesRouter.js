@@ -3,7 +3,6 @@ const router = express.Router();
 
 var connection = require('../../../database/database')
 
-
 router.post("/", function (req, res) {
   let roleName = req.body.roleName;
   let roleDescription = req.body.roleDescription;
@@ -75,6 +74,53 @@ router.get('/', (req, res) => {
     })
   })
 })
+
+router.get('/:roleID', (req, res) => {
+  let role_id = req.params.roleID
+  connection.connect(err => {
+    const getRoles = `SELECT * FROM job_role WHERE Job_Role_ID=${role_id} AND Is_Active= TRUE`
+    connection.query(getRoles, (err, result) =>{
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      } 
+    })
+  })
+})
+
+router.get('/:roleID/skills', (req, res) => {
+  let roleID = req.params.roleID
+  connection.connect(err => {
+    const getSkills = `SELECT  job_role_skill.Job_Role_ID ,skill.Skill_ID , skill.Skill_Name, skill.Skill_Description
+    FROM job_role_skill
+    INNER JOIN skill ON skill.Skill_ID=job_role_skill.Skill_ID
+    WHERE skill.Is_Active= TRUE AND Job_Role_ID=${roleID};`
+    
+    connection.query(getSkills, (err, result) =>{
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      } 
+    })
+  })
+})
+
 
 router.put('/roles/:roleID', (req, res) => {
   const roleID = req.params.roleID
