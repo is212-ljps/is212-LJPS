@@ -32,6 +32,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
         departmentInput.current.value = roleDepartment ? roleDepartment : "Marketing";
         setNameErrorMsg("");
         setDescErrorMsg("");
+        setSkillsErrorMsg("");
         resetSkillsSelected()
         resetSelectedRole();
       });
