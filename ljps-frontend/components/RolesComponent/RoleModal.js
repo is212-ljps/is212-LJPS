@@ -236,7 +236,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
             </div>
             <div className="modal-footer">
               <button type="submit" className="btn btn-primary">
-                Save changes
+                Save
               </button>
             </div>
           </form>
