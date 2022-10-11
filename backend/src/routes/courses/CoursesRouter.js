@@ -23,10 +23,10 @@ router.get('/', (req, res) => {
   })
 })
 
-router.get('/:skillID', (req, res) => {
-  let skilId = req.params.skillID
+router.get('/skill/:skillID', (req, res) => {
+  let skillId = req.params.skillID
   connection.connect(err => {
-    const getCoursesBasedOnSkill = `SELECT * FROM course_skill WHERE Course_ID in (SELECT Course_ID FROM course WHERE Is_Active=TRUE)`
+    const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE Skill_ID=${skillId});`
     connection.query(getCoursesBasedOnSkill, (err, result) =>{
       if (err) {
         res.send({

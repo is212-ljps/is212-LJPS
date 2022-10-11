@@ -17,9 +17,8 @@ export default function ViewCourses() {
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    console.log(skillId)
     if (skillID) {
-      const url = `http://localhost:8080/api/skills/${skillId}`
+      const url = `http://localhost:8080/api/skills/${skillID}`
       const axiosFn = axios.get;
       axiosFn(url)
         .then(function (response) {
@@ -36,7 +35,7 @@ export default function ViewCourses() {
         .catch(function (error) {
           console.log(error);
         });
-      const skillUrl = `http://localhost:8080/api/courses/${skillId}`;
+      const skillUrl = `http://localhost:8080/api/courses/skill/${skillID}`;
       axiosFn(skillUrl)
         .then(function (response) {
           if (response.data.success) {
