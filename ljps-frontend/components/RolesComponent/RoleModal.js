@@ -206,15 +206,19 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
                 <div className="col-12">
                   <input type="text" placeholder="Search Skills" className="form-control my-1" onChange={(e) => setSkillSearch(e.target.value.toLowerCase())} />
                 </div>
-                <div className="col-12" style={{ height: "100px", overflowY: "auto" }}>
-                  <div className="row">
-                    {Object.values(skills).filter(skillsFilter).map((item, index) => {
-                      const { Skill_Name, Skill_ID, isChecked } = item
-                      return <div className="col-6" key={Skill_ID}>
-                        <input type="checkbox" id={"skill-checkbox-" + Skill_ID} onChange={setSkillChecked} checked={isChecked} value={Skill_ID} />
-                        <label htmlFor={"skill-checkbox-" + Skill_ID}>{Skill_Name}</label>
-                      </div>
-                    })}
+                <div className="col-12">
+                  <div className="bg-light p-2 rounded-2" style={{ height: "100px", overflowY: "auto", overflowX: "hidden" }}>
+                    <div className="row" >
+                      {Object.values(skills).filter(skillsFilter).map((item, index) => {
+                        const { Skill_Name, Skill_ID, isChecked } = item
+                        return <div className="col-6" key={Skill_ID}>
+                          <div className="form-check">
+                            <input className="form-check-input" type="checkbox" id={"skill-checkbox-" + Skill_ID} onChange={setSkillChecked} checked={isChecked} value={Skill_ID} />
+                            <label className="form-check-label" htmlFor={"skill-checkbox-" + Skill_ID}>{Skill_Name}</label>
+                          </div>
+                        </div>
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
