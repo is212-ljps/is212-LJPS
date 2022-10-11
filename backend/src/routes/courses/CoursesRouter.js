@@ -5,7 +5,7 @@ var connection = require('../../../database/database')
 
 router.get('/', (req, res) => {
   connection.connect(err => {
-    const getCourses = `SELECT * FROM course WHERE Is_Active=TRUE`
+    const getCourses = `SELECT * FROM course`
     connection.query(getCourses, (err, result) =>{
       if (err) {
         res.send({
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 router.get('/skill/:skillID', (req, res) => {
   let skillId = req.params.skillID
   connection.connect(err => {
-    const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE Skill_ID=${skillId});`
+    const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_Status="Active" AND Course_ID in (SELECT Course_ID FROM course_skill WHERE Skill_ID=${skillId});`
     connection.query(getCoursesBasedOnSkill, (err, result) =>{
       if (err) {
         res.send({
