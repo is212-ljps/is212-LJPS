@@ -6,91 +6,54 @@ import CreateRoleButton from '../../components/RolesComponent/createrolebutton'
 import DeleteRoleButton from '../../components/RolesComponent/deleterolebutton'
 import RoleModal from "../../components/RolesComponent/RoleModal"
 
-export default function JobRolesPage() {
-    const [roles, setRoles] = useState([])
-    const [selectedRole, setSelectedRole] = useState({ roleName: '', roleDescription: '', roleDepartment: '', roleID: null })
+export default function ViewCourseDetails(){
+    const [course, setCourse] = useState([])
+    const [selectedCourse, setSelectedCourse] = useState({courseID:' ', courseName: '', courseDesc: '', courseStatus:'', courseType:'', courseCategory:''})
+
+    const getCourseDetails = useCallback(() => {
+        axios.get('http"//localhost:8080/api/course/MGT002').then(res => {
+            setCourse(res.data)
+            console.log(res.data)
+        })
+    })
 
     useEffect(() => {
-        onRolesUpdate()
-    }, [])
-
-    const onRolesUpdate = useCallback(() => {
-        axios.get('http://localhost:8080/api/roles').then(res => {
-            setRoles(res.data.data)
-        })
-    }, [])
-
-    const parseRoleObj = useCallback((roleObj) => {
-        setSelectedRole(roleObj)
+        getCourseDetails()
     })
 
-    const resetSelectedRole = useCallback(() => {
-        setSelectedRole({ roleName: '', roleDescription: '', roleID: '' })
-    })
 
-    
+
     return <div className="container-fluid">
-        <RoleModal selectedRole={selectedRole} onRolesUpdate={onRolesUpdate} /> 
-        <div className="ml-auto my-2"><CreateRoleButton onRolesUpdate={onRolesUpdate} resetSelectedRole={resetSelectedRole} /></div>
-        
-        <h1 style={{color:"darkblue", textAlign:"center"}}>Select Course related to Data Structures & Algorithms to kickstart your learning Journey</h1>
-        
-        <div className="row"> 
-            <div className="col-md-6"> Course 1 </div>
-            <div className="col-md-6"> Course 2 </div>
+    
+    <div className="row">
+        <div className="col-md-8"> 
+            <h1 style={{color:"darkblue"}}>Select course related to Data Structures & Algorithms to kickstart your learning journey</h1>
         </div>
 
-        <div className="row"> 
-            <div className="col-md-6"> Course 3 </div>
-            <div className="col-md-6"> Course 4 </div>
+        <div className="col-md-4">
+            <img src="./landing_page_img.png"></img>
         </div>
-
-
-        <table className="table table-borderless">
-            <thead>
-                <tr className=" rounded">
-                    <th scope="col" style={{ ...styles.tableHeaderBg, ...styles.tableBorderRadiusLeft }}>Course ID</th>
-                    <th scope="col" style={{ ...styles.tableHeaderBg }}>Course Name</th>
-                    <th scope="col" style={{ ...styles.tableHeaderBg }}>Course Description</th>
-                    <th scope="col" style={{ ...styles.tableHeaderBg }}>Course Category</th>
-                    <th scope="col" style={{ ...styles.tableHeaderBg, ...styles.tableBorderRadiusRight }}></th>
-                </tr>
-            </thead>
-            <tbody>
-                {roles?.map((role, index) => {
-                    const roleID = role.Job_Role_ID
-                    const roleName = role.Job_Role_Name
-                    const roleDescription = role.Job_Role_Description
-                    const roleDepartment = role.Job_Department
-                    return <tr key={index}>
-                        <th scope="row">{roleID}</th>
-                        <td>{roleName}</td>
-                        <td>{roleDescription}</td>
-                        <td>{roleDepartment}</td>
-                        <td>
-                            <button type="button" className="btn btn-light mx-1" data-bs-toggle="modal" data-bs-target="#role-modal"
-                                onClick={() => parseRoleObj({ roleID, roleName, roleDescription, roleDepartment })}>
-                                Edit
-                            </button>
-                            <DeleteRoleButton roleName={roleName} roleId={roleID} onRolesUpdate={onRolesUpdate} />
-                        </td>
-                    </tr>
-                })}
-            </tbody>
-        </table>
     </div>
+
+    //Course cards here 
+
+    <div className="card text-left">
+        <div className="card-header">
+            <h2>Course Title here</h2>
+        </div>
+        <div className="card-body">
+            <div className="row">
+                <div className="col-md-10">Course ID</div>
+                <div className="col-md-2 "> Technical </div>
+            </div>
+            <p> Course Description </p>
+        </div>
+    
+    </div> 
+
+    </div>
+
 }
 
-const styles = {
-    tableHeaderBg: {
-        background: "#F0F0F0"
-    },
-    tableBorderRadiusLeft: {
-        borderTopLeftRadius: "10px",
-        borderBottomLeftRadius: "10px"
-    },
-    tableBorderRadiusRight: {
-        borderTopRightRadius: "10px",
-        borderBottomRightRadius: "10px"
-    }
-}
+
+
