@@ -7,7 +7,7 @@ export default function ViewCourses() {
   var router = useRouter();
   var skillID = router.query["selectedSkill"];
   const toast = useRef();
-
+  
 
   const [skillDetails, setSkillDetails] = useState({
     skillName: "",
@@ -91,6 +91,8 @@ export default function ViewCourses() {
           <Image src="/view-skill-learner.svg" height={350} width={350} />
         </div>
       </div>
+
+      
 
       <div className="row mx-4">
         {courses.length > 0 &&
