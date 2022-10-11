@@ -27,6 +27,29 @@ router.get('/', (req, res) => {
   })
 })
 
+router.get('/:skillID', (req, res) => {
+  var skillID = req.params.skillID
+  connection.connect(err => {
+    const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
+    connection.query(getSkill, (err, result) => {
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      }
+    })
+  })
+})
+
 router.post("/", function (req, res) {
   let skillName = req.body.skillName;
   let skillDescription = req.body.skillDescription;

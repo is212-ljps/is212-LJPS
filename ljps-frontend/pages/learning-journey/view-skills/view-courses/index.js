@@ -15,6 +15,7 @@ export default function ViewCourses() {
   });
 
   const [courses, setCourses] = useState([]);
+  const [selectedCourses, setSelectedCourses] = useState([]);
 
   useEffect(() => {
     if (skillID) {
@@ -49,11 +50,16 @@ export default function ViewCourses() {
     } else {
       // router.push("/learning-journey");
     }
-  }, [skillId]);
+  }, [skillID]);
 
-  // const toggleButton = (e) => {
-  //   setCourses(()=> [...courses, e.target.id])
-  // };
+  const toggleButton = (e) => {
+    var id = e.target.id;
+    if (!selectedCourses.includes(id)){
+      setSelectedCourses(()=> [...selectedCourses, id])
+    } else {
+      setSelectedCourses((currentCourses)=> currentCourses.filter((course)=> course != id))
+    }
+  };
 
   // const checkSubmit = () => {
   //   if (selectedSkill == "") {
@@ -73,7 +79,7 @@ export default function ViewCourses() {
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
             {" "}
-            Select courses to kickstart your Learning Journey as a{" "}
+            Select courses to fulfill your selected skill as {" "}
             <span className="text-primary fw-bold">{skillDetails.skillName}</span>
           </h3>
           <span className="badge text-white bg-dark w-25 mt-3">
@@ -97,13 +103,12 @@ export default function ViewCourses() {
                 type="button"
                 id={course.Course_ID}
                 key={course.Course_ID}
-                // TODO: LJPS-34
-                // className={
-                //   course.Course_ID === Number(selectedSkill)
-                //     ? "btn btn-outline-primary my-3 w-100 active"
-                //     : "btn btn-outline-primary my-3 w-100"
-                // }
-                // onClick={toggleButton}
+                className={
+                  selectedCourses.includes(course.Course_ID)
+                    ? "btn btn-outline-primary my-3 w-100 active"
+                    : "btn btn-outline-primary my-3 w-100"
+                }
+                onClick={toggleButton}
               >
                 {course.Course_Name}
               </button>
