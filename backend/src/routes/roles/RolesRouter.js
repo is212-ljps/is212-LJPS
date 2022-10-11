@@ -82,6 +82,7 @@ router.get('/', (req, res) => {
           message: "An error occured, please try again ",
         });
       } else {
+        console.log(result)
         res.send({
           success: true,
           message: "",

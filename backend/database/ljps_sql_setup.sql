@@ -70,10 +70,10 @@ CREATE TABLE `learning_journey_course` (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `course_skill` (
-	`Job_Role_ID` int, 
+	`Skill_ID` int, 
 	`Course_ID` varchar(20), 
-    CONSTRAINT `course_skill_pk` PRIMARY KEY (`Job_Role_ID`, `Course_ID`),
-    CONSTRAINT `course_skill_fk1` FOREIGN KEY (`Job_Role_ID`) REFERENCES job_role(`Job_Role_ID`),
+    CONSTRAINT `course_skill_pk` PRIMARY KEY (`Skill_ID`, `Course_ID`),
+    CONSTRAINT `course_skill_fk1` FOREIGN KEY (`Skill_ID`) REFERENCES skill(`Skill_ID`),
     CONSTRAINT `course_skill_fk2` FOREIGN KEY (`Course_ID`) REFERENCES course(`Course_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
