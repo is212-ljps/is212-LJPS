@@ -92,6 +92,33 @@ export default function ViewCourses() {
         </div>
       </div>
 
+      <div className="row m-5">
+          <div className="accordion" id="accordion1">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingOne">
+                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="collapseOne" aria-expanded="true" aria-controls="collapseOne">Course Name #1</button>
+              </h2>
+              <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion1">
+                <div className="accordion-body"> 
+                  <strong> Course Description </strong>
+                </div>
+              </div>
+            </div>
+
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingTwo">
+                <button className="accordion-button collapsed" type="button" data-bs-toggleButton="collpased" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Course Name #2 </button>
+              </h2>
+              <div id="collapseTwo" className="accordion-colllapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion1">
+                <div className="accordion-body">
+                  <strong>Course Description: </strong>
+                </div>
+              </div>
+            </div>
+
+          </div>
+      </div> 
+
       
 
       <div className="row mx-4">
