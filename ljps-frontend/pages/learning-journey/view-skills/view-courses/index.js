@@ -73,7 +73,7 @@ export default function ViewCourses() {
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
             {" "}
-            Select a skill to kickstart your Learning Journey as a{" "}
+            Select courses to kickstart your Learning Journey as a{" "}
             <span className="text-primary fw-bold">{skillDetails.skillName}</span>
           </h3>
           <span className="badge text-white bg-dark w-25 mt-3">
