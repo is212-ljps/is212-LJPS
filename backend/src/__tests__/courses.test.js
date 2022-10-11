@@ -16,6 +16,6 @@ describe("GET /api/courses", () => {
     } catch(err) {
       console.log(err)
     }
-  
+
   })
 })

@@ -45,7 +45,7 @@ const server = http.createServer(app);
 
 server.listen(port, () => console.log(`One step closer to graduating ! localhost:${port}`));
 
-exports.server = server;
+module.exports = server;
 
 
 
