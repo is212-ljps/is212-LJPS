@@ -3,5 +3,12 @@
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "mysql": "^2.18.1"
+  },
+  "scripts": {
+    "test": "jest --forceExit"
+  },
+  "devDependencies": {
+    "jest": "^29.1.2",
+    "supertest": "^6.3.0"
   }
 }
