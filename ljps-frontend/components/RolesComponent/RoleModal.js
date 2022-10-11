@@ -2,11 +2,16 @@ import React, { useCallback, useRef, useEffect, useState } from "react";
 import { validateLength } from "../../util/validation";
 import axios from "axios";
 
+
+const errorDefaultVal = {
+  name: "",
+  description: "",
+  assignedSkills: ""
+}
+
 export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRole, ...props }) {
-  const [nameErrorMsg, setNameErrorMsg] = useState("");
-  const [descErrorMsg, setDescErrorMsg] = useState("");
-  const [skillsErrorMsg, setSkillsErrorMsg] = useState("")
-  const [errorMsg, setErrorMsg] = useState("");
+  const [errors, setErrors] = useState(errorDefaultVal)
+
   const { roleName, roleDescription, roleID, roleDepartment } = selectedRole;
   const [skills, setSkills] = useState([])
   const modal = useRef();
@@ -30,9 +35,8 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
         nameInput.current.value = "";
         descriptionInput.current.value = "";
         departmentInput.current.value = roleDepartment ? roleDepartment : "Marketing";
-        setNameErrorMsg("");
-        setDescErrorMsg("");
-        setSkillsErrorMsg("");
+        setErrors(errorDefaultVal)
+
         resetSkillsSelected()
         resetSelectedRole();
       });
@@ -62,10 +66,8 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     const selectedSkills = getSelectedSkillIds()
-    if (validateLength(nameInput.current.value, 5, 20) && validateLength(descriptionInput.current.value, 0, 300) && selectedSkills.length >0) {
-      setNameErrorMsg("");
-      setDescErrorMsg("");
-      setSkillsErrorMsg("")
+    if (validateLength(nameInput.current.value, 5, 20) && validateLength(descriptionInput.current.value, 0, 300) && selectedSkills.length > 0) {
+      setErrors(errorDefaultVal)
       var myToast = new bootstrap.Toast(toast.current);
       const url = roleID ? "http://localhost:8080/api/roles/" + roleID : "http://localhost:8080/api/roles";
       const axiosFn = roleID ? axios.put : axios.post;
@@ -85,21 +87,23 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
           onRolesUpdate();
           return
         }
-        setNameErrorMsg(response.data.message);
+        setErrors({ ...errorDefaultVal, name: response.data.message });
       }).catch(function (error) {
         console.log(error);
       });
     } else {
       // fail validation
+      const err = { ...errorDefaultVal }
       if (!validateLength(nameInput.current.value, 5, 20)) {
-        setNameErrorMsg("Role Name must be between 5-20 characters");
+        err.name = "Role Name must be between 5-20 characters"
       }
       if (!validateLength(descriptionInput.current.value, 0, 300)) {
-        setDescErrorMsg("Role Description cannot be more than 300 characters");
+        err.desc = "Role Description cannot be more than 300 characters"
       }
-      if( selectedSkills.length == 0){
-        setSkillsErrorMsg("Please select at least 1 skill")
+      if (selectedSkills.length == 0) {
+        err.assignedSkills = "Please select at least 1 skill"
       }
+      setErrors(err)
     }
   });
 
@@ -170,8 +174,8 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
                     className="form-control"
                     ref={nameInput}
                   />
-                  {!!nameErrorMsg.length && (
-                    <p className="text-danger">{nameErrorMsg}</p>
+                  {!!errors.name.length && (
+                    <p className="text-danger">{errors.name}</p>
                   )}
                 </div>
               </div>
@@ -214,8 +218,8 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
                   </div>
                 </div>
               </div>
-              {!!skillsErrorMsg.length && (
-                <p className="text-danger">{skillsErrorMsg}</p>
+              {!!errors.assignedSkills.length && (
+                <p className="text-danger">{errors.assignedSkills}</p>
               )}
 
               <div className="row mb-3">
@@ -229,8 +233,8 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
                     className="form-control"
                     ref={descriptionInput}
                   />
-                  {!!descErrorMsg.length && (
-                    <p className="text-danger">{descErrorMsg}</p>
+                  {!!errors.description.length && (
+                    <p className="text-danger">{errors.description}</p>
                   )}
                 </div>
               </div>
