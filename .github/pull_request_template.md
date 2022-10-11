@@ -26,6 +26,7 @@ JIRA ticket: https://g4t7.atlassian.net/jira/software/c/projects/LJPS/issues/LJP
 
 - [ ] My branch is up-to-date with the `main` branch
 - [ ] Unit test written
+- [ ] Acceptance Criteria considered and implemented
 
 ## Test Instruction
 
