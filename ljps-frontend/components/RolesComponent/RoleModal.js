@@ -98,7 +98,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
         err.name = "Role Name must be between 5-20 characters"
       }
       if (!validateLength(descriptionInput.current.value, 0, 300)) {
-        err.desc = "Role Description cannot be more than 300 characters"
+        err.description = "Role Description cannot be more than 300 characters"
       }
       if (selectedSkills.length == 0) {
         err.assignedSkills = "Please select at least 1 skill"
@@ -270,7 +270,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
 
 function parseSkillsObj(skills) {
   const obj = {}
-  skills.forEach((item, index) => {
+  skills?.forEach((item, index) => {
     const { Skill_ID, Skill_Name } = item
     obj["skill-checkbox-" + Skill_ID] = { Skill_ID, Skill_Name, isChecked: false }
   })
