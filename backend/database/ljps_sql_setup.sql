@@ -85,7 +85,7 @@ CREATE TABLE `learning_journey_skill` (
 	CONSTRAINT `learning_journey_skill_pk` PRIMARY KEY (`Learning_Journey_ID`, `Skill_ID`),
     CONSTRAINT `learning_journey_skill_fk1` FOREIGN KEY (`Learning_Journey_ID`) REFERENCES learning_journey(`Learning_Journey_ID`),
     CONSTRAINT `learning_journey_skill_fk2` FOREIGN KEY (`Skill_ID`) REFERENCES skill(`Skill_ID`) 
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `registration` (
 	`Reg_ID` int,
@@ -96,7 +96,7 @@ CREATE TABLE `registration` (
     CONSTRAINT `registration_pk` PRIMARY KEY (`Reg_ID`),
     CONSTRAINT `registration_fk1` FOREIGN KEY (`Course_ID`) REFERENCES course(`Course_ID`),
     CONSTRAINT `registration_fk2` FOREIGN KEY (`Staff_ID`) REFERENCES staff(`Staff_ID`)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 LOAD DATA INFILE 'C:/wamp64/tmp/LMSRawData/courses.csv' INTO TABLE course FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
