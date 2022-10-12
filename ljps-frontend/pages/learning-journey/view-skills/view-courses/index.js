@@ -92,7 +92,7 @@ export default function ViewCourses() {
         </div>
       </div>
 
-      <div className="row mx-4">
+      {/* <div className="row mx-4">
         {courses.length > 0 &&
           courses.map((course) => (
             <div
@@ -114,7 +114,7 @@ export default function ViewCourses() {
               </button>
             </div>
           ))}
-      </div>
+      </div> */}
 
       {/* <table className="table">
         <thead className="thead-dark">
@@ -180,11 +180,11 @@ export default function ViewCourses() {
         <div className="row"> {courses.length > 0 && courses.map((course)=>(
           <div className="col-sm-6">
             <div className="card">
-              <div className="card-header bg-info"> <b>{course.Course_Name}</b> </div>
+              <div className="card-header" style={{"backgroundColor":"lightblue"}}> <b>{course.Course_Name}</b> </div>
               <div className="card-body"></div>
               <div className="row">
                 <div className="col-4">
-                  <p>Skills here</p>
+                  <p className="mx-3">Skill: {skillDetails.skillName}</p>
                 </div>
                 <div className="col-8">
                   <div className="col-3 badge bg-light text-black" style={{"marginLeft":300}}> {course.Course_Category} </div>
@@ -192,11 +192,11 @@ export default function ViewCourses() {
                 
               </div>
               <div className="row">
-                <div className="col-9"> <b>Course ID: {course.Course_ID}</b></div> 
+                <div className="col-9 mx-3"> <b>Course ID: {course.Course_ID}</b></div> 
                 
                 {/* <h6> <span className=" col-sm-2 badge badge-secondary">{course.Course_Category}</span></h6> */}
               </div>
-              <div className="row">
+              <div className="row mx-1">
                 <div className="col-10"> <p>{course.Course_Desc}</p> </div>
                 <div className="col-2"> 
                 <div><input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input> </div>
