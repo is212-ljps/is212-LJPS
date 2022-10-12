@@ -79,7 +79,7 @@ export default function ViewCourses() {
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
             {" "}
-            Select courses to fulfill your selected skill as {" "}
+            Select courses to fulfill your selected skill for {" "}
             <span className="text-primary fw-bold">{skillDetails.skillName}</span>
           </h3>
           <span className="badge text-white bg-dark w-25 mt-3">
@@ -116,7 +116,7 @@ export default function ViewCourses() {
           ))}
       </div>
 
-      <table className="table">
+      {/* <table className="table">
         <thead className="thead-dark">
           <tr>
             <th scope="col">Course ID</th>
@@ -140,36 +140,78 @@ export default function ViewCourses() {
         ))}
 
         </tbody>
-      </table>
+      </table> */}
 
       
 
-      <h4 className="mx-4">Card here</h4>
-      //Need to use rows and columns here
 
-      <div className="card">
-        <div className="card-header">Course ID #1</div>
-        <div className="card-body">
-          <h5 className="card-title">Course Name </h5>
-          <p className="card-text">Course Description</p>
-          <input type={"checkbox"}></input>
+      {/* <div className="container mx-4"> {courses.length > 0 && courses.map((course)=>(
+        <div className="row">
+        <div className="col-5">
+          <div className="card">
+            <div className="card-header bg-info">Course ID: {course.Course_ID}</div>
+            <div className="card-body"></div>
+              <div className="row">
+                <div className="col-sm-10"> <b>{course.Course_Name}</b></div> 
+                <div className="col-sm-2"> {course.Course_Category} </div>
+              </div>
+
+              <div className="row">
+                <div className="col-sm-10">
+                  <p>{course.Course_Desc}</p>
+                </div>
+                
+                <div className="col-sm-2">
+                <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input>
+                </div>
+              </div>
+      
+              <small>Course taught by All-in-one</small>
+
+          </div>
+        </div>
+
+      </div>
+        
+      )) }
+      </div> */}
+
+      <div className="container mx-4">
+        <div className="row"> {courses.length > 0 && courses.map((course)=>(
+          <div className="col-sm-6">
+            <div className="card">
+              <div className="card-header bg-info"> <b>{course.Course_Name}</b> </div>
+              <div className="card-body"></div>
+              <div className="row">
+                <p>Skills here</p>
+              </div>
+              <div className="row">
+                <div className="col-8"> <b>Course ID: {course.Course_ID}</b></div> 
+                <span className="col-4 badge bg-light text-black "> {course.Course_Category} </span>
+                {/* <h6> <span className=" col-sm-2 badge badge-secondary">{course.Course_Category}</span></h6> */}
+              </div>
+              <div className="row">
+                <div className="col-10"> <p>{course.Course_Desc}</p> </div>
+                <div className="col-2"> 
+                <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        ))}
 
         </div>
 
       </div>
 
- 
 
 
 
 
-
-                
 
     </div>
-    
-
-
-
+  
   );
 }
