@@ -7,12 +7,15 @@ CREATE TABLE `role` (
     CONSTRAINT `role_pk` PRIMARY KEY (`Role_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `user` (
-	`User_ID` int AUTO_INCREMENT,
-    `Username` varchar(25) NOT NULL,
+CREATE TABLE `staff` (
+	`Staff_ID` int,
+    `Staff_FName` varchar(50),
+    `Staff_LName` varchar(50),
+    `Dept` varchar(50),
+    `Email` varchar (50),
     `Role_ID` int,
-    CONSTRAINT `user_pk` PRIMARY KEY (`User_ID`),
-    CONSTRAINT `user_fk1` FOREIGN KEY (`Role_ID`) REFERENCES role(`Role_ID`)
+    CONSTRAINT `staff_pk` PRIMARY KEY (`Staff_ID`),
+    CONSTRAINT `staff_fk1` FOREIGN KEY (`Role_ID`) REFERENCES role(`Role_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `job_role` (
@@ -46,10 +49,10 @@ CREATE TABLE `learning_journey` (
 	`Learning_Journey_ID` int AUTO_INCREMENT,
 	`Learning_Journey_Name` varchar(25) NOT NULL,
 	`Learning_Journey_Description` varchar(300),
-	`User_ID` int,
+	`Staff_ID` int,
 	`Job_Role_ID` int,
     CONSTRAINT `learning_journey_pk` PRIMARY KEY (`Learning_Journey_ID`),
-    CONSTRAINT `learning_journey_fk1` FOREIGN KEY (`User_ID`) REFERENCES user(`User_ID`),
+    CONSTRAINT `learning_journey_fk1` FOREIGN KEY (`Staff_ID`) REFERENCES staff(`Staff_ID`),
     CONSTRAINT `learning_journey_fk2` FOREIGN KEY (`Job_Role_ID`) REFERENCES job_role(`Job_Role_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -77,4 +80,27 @@ CREATE TABLE `course_skill` (
     CONSTRAINT `course_skill_fk2` FOREIGN KEY (`Course_ID`) REFERENCES course(`Course_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-LOAD DATA INFILE 'C:/wamp64/tmp/LMSRawData/courses.csv' INTO TABLE course FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+CREATE TABLE `learning_journey_skill` (
+	`Learning_Journey_ID` int,
+    `Skill_ID` int,
+	CONSTRAINT `learning_journey_skill_pk` PRIMARY KEY (`Learning_Journey_ID`, `Skill_ID`),
+    CONSTRAINT `learning_journey_skill_fk1` FOREIGN KEY (`Learning_Journey_ID`) REFERENCES learning_journey(`Learning_Journey_ID`),
+    CONSTRAINT `learning_journey_skill_fk2` FOREIGN KEY (`Skill_ID`) REFERENCES skill(`Skill_ID`) 
+);
+
+CREATE TABLE `registration` (
+	`Reg_ID` int,
+    `Course_ID` varchar(20),
+    `Staff_ID` int,
+    `Reg_Status` varchar(20),
+    `Completion_Status` varchar(20),
+    CONSTRAINT `registration_pk` PRIMARY KEY (`Reg_ID`),
+    CONSTRAINT `registration_fk1` FOREIGN KEY (`Course_ID`) REFERENCES course(`Course_ID`),
+    CONSTRAINT `registration_fk2` FOREIGN KEY (`Staff_ID`) REFERENCES staff(`Staff_ID`)
+);
+
+
+LOAD DATA INFILE 'E:/wamp64/tmp/LMSRawData/courses.csv' INTO TABLE course FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE 'E:/wamp64/tmp/LMSRawData/role.csv' INTO TABLE role FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE 'E:/wamp64/tmp/LMSRawData/staff.csv' INTO TABLE staff FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
+LOAD DATA INFILE 'E:/wamp64/tmp/LMSRawData/registration.csv' INTO TABLE registration FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' IGNORE 1 ROWS;
