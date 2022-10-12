@@ -176,24 +176,30 @@ export default function ViewCourses() {
       )) }
       </div> */}
 
-      <div className="container mx-4">
+      <div className="container mx-4 px-1">
         <div className="row"> {courses.length > 0 && courses.map((course)=>(
           <div className="col-sm-6">
             <div className="card">
               <div className="card-header bg-info"> <b>{course.Course_Name}</b> </div>
               <div className="card-body"></div>
               <div className="row">
-                <p>Skills here</p>
+                <div className="col-4">
+                  <p>Skills here</p>
+                </div>
+                <div className="col-8">
+                  <div className="col-3 badge bg-light text-black" style={{"marginLeft":300}}> {course.Course_Category} </div>
+                </div>
+                
               </div>
               <div className="row">
-                <div className="col-8"> <b>Course ID: {course.Course_ID}</b></div> 
-                <span className="col-4 badge bg-light text-black "> {course.Course_Category} </span>
+                <div className="col-9"> <b>Course ID: {course.Course_ID}</b></div> 
+                
                 {/* <h6> <span className=" col-sm-2 badge badge-secondary">{course.Course_Category}</span></h6> */}
               </div>
               <div className="row">
                 <div className="col-10"> <p>{course.Course_Desc}</p> </div>
                 <div className="col-2"> 
-                <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input>
+                <div><input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input> </div>
                 </div>
               </div>
 
