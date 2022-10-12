@@ -2,13 +2,36 @@ const express = require("express");
 const router = express.Router();
 
 
-var connection = require('../../../database/database')
+var connection = require('../../../database')
 
 
 router.get('/', (req, res) => {
   connection.connect(err => {
     const getSkills = `SELECT * FROM skill WHERE Is_Active=TRUE`
     connection.query(getSkills, (err, result) => {
+      console.log(err)
+      console.log(result)
+      if (err) {
+        res.send({
+          success: false,
+          message: "An error occured, please try again ",
+        });
+      } else {
+        res.send({
+          success: true,
+          message: "",
+          data: result
+        });
+      }
+    })
+  })
+})
+
+router.get('/:skillID', (req, res) => {
+  var skillID = req.params.skillID
+  connection.connect(err => {
+    const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
+    connection.query(getSkill, (err, result) => {
       console.log(err)
       console.log(result)
       if (err) {

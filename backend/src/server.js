@@ -10,6 +10,7 @@ const RolesRouter = require('./routes/roles/RolesRouter');
 const SkillsRouter = require('./routes/skills/SkillsRouter')
 const LearningJourneysRouter = require('./routes/learning-journey/LearningJourneysRouter')
 
+const CourseRouter = require('./routes/courses/CoursesRouter')
 
 
 app.use(cors())
@@ -23,6 +24,8 @@ app.use((req, res, next)=>{
 app.use('/api/roles', RolesRouter);
 app.use('/api/skills', SkillsRouter);
 app.use('/api/learning-journey', LearningJourneysRouter);
+app.use('/api/courses', CourseRouter);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -45,7 +48,7 @@ const server = http.createServer(app);
 
 server.listen(port, () => console.log(`One step closer to graduating ! localhost:${port}`));
 
-exports.server = server;
+module.exports = server;
 
 
 

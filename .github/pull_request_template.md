@@ -26,11 +26,7 @@ JIRA ticket: https://g4t7.atlassian.net/jira/software/c/projects/LJPS/issues/LJP
 
 - [ ] My branch is up-to-date with the `main` branch
 - [ ] Unit test written
-<!-- For Database Migration changes:
-- [ ] Migration follows [Database Schema Guidelines](https://docs.google.com/document/d/1zsBWJaQ4Ll_ow00Dvv0E_YIODAQSZwPbVV582ph3nH4/edit)
-- [ ] Migration should contain incremental changes and achieve backward compatibility between the database and all versions of the production code
-- [ ] Undo Migration is added to `db/backup_undo_migrations`
-- [ ] Migration and Undo Migration have been tested in Staging -->
+- [ ] Acceptance Criteria considered and implemented
 
 ## Test Instruction
 

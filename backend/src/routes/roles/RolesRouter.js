@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-var connection = require('../../../database/database')
+var connection = require('../../../database')
 
 router.post("/", function (req, res) {
   let roleName = req.body.roleName;
@@ -65,6 +65,7 @@ router.get('/', (req, res) => {
           message: "An error occured, please try again ",
         });
       } else {
+        console.log(result)
         res.send({
           success: true,
           message: "",
