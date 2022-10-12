@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
       if (err) {
         res.send({
           success: false,
-          message: "An error occured, please try again ",
+          message: "An error occurred, please try again ",
         });
       } else {
         res.send({
