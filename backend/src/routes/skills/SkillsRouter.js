@@ -32,8 +32,6 @@ router.get('/:skillID', (req, res) => {
   connection.connect(err => {
     const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
     connection.query(getSkill, (err, result) => {
-      console.log(err)
-      console.log(result)
       if (err) {
         res.send({
           success: false,
