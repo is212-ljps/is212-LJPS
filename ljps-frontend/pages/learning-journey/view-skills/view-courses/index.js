@@ -92,35 +92,6 @@ export default function ViewCourses() {
         </div>
       </div>
 
-      <div className="row m-5">
-          <div className="accordion" id="accordion1">
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingOne">
-                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="collapseOne" aria-expanded="true" aria-controls="collapseOne">Course Name #1</button>
-              </h2>
-              <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion1">
-                <div className="accordion-body"> 
-                  <strong> Course Description </strong>
-                </div>
-              </div>
-            </div>
-
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingTwo">
-                <button className="accordion-button collapsed" type="button" data-bs-toggleButton="collpased" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Course Name #2 </button>
-              </h2>
-              <div id="collapseTwo" className="accordion-colllapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion1">
-                <div className="accordion-body">
-                  <strong>Course Description: </strong>
-                </div>
-              </div>
-            </div>
-
-          </div>
-      </div> 
-
-      
-
       <div className="row mx-4">
         {courses.length > 0 &&
           courses.map((course) => (
@@ -139,11 +110,66 @@ export default function ViewCourses() {
                 }
                 onClick={toggleButton}
               >
-                {course.Course_Name}
+                {course.Course_Name} 
               </button>
             </div>
           ))}
       </div>
+
+      <table className="table">
+        <thead className="thead-dark">
+          <tr>
+            <th scope="col">Course ID</th>
+            <th scope="col">Course Name</th>
+            <th scope="col">Course Description</th>
+            <th scope="col">Course Category</th>
+            <th scope="col"> Select </th>
+          </tr>
+        </thead>
+
+        <tbody> {courses.length > 0 && courses.map((course)=>(
+          <tr>
+            <th>{course.Course_ID}</th>
+            <th> {course.Course_Name}</th>
+            <th> {course.Course_Desc}</th>
+            <th> {course.Course_Category}</th>
+            <th> <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input> </th>
+
+          </tr>
+
+        ))}
+
+        </tbody>
+      </table>
+
+      
+
+      <h4 className="mx-4">Card here</h4>
+      //Need to use rows and columns here
+
+      <div className="card">
+        <div className="card-header">Course ID #1</div>
+        <div className="card-body">
+          <h5 className="card-title">Course Name </h5>
+          <p className="card-text">Course Description</p>
+          <input type={"checkbox"}></input>
+
+        </div>
+
+      </div>
+
+ 
+
+
+
+
+
+                
+
     </div>
+    
+
+
+
   );
 }
