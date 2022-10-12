@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import CourseModal from "../../../../components/CourseComponent/CourseModal"
 
 export default function ViewCourses() {
   var router = useRouter();
@@ -16,6 +17,7 @@ export default function ViewCourses() {
 
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
 
   useEffect(() => {
     if (skillID) {
@@ -61,20 +63,21 @@ export default function ViewCourses() {
     }
   };
 
-  // const checkSubmit = () => {
-  //   if (selectedSkill == "") {
-  //     var myToast = new bootstrap.Toast(toast.current);
-  //     myToast.show();
-  //   } else {
-  //     router.push({
-  //       pathname: "/learning-journey/view-skills",
-  //       query: {selectedSkill},
-  //     });
-  //   }
-  // };
+  const checkSubmit = () => {
+    if (selectedCourses.length == 0) {
+      setConfirmSubmit(false);
+    } else {
+      setConfirmSubmit(true);
+    }
+  };
+
+  const handleSubmit = () => {
+    
+  }
 
   return (
-    <div>
+    <>
+      <CourseModal handleSubmit={handleSubmit} checkSubmit={confirmSubmit} />
       <div className="row m-4">
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
@@ -92,7 +95,7 @@ export default function ViewCourses() {
         </div>
       </div>
 
-      <div className="row mx-4">
+      <div className="container row mx-auto">
         {courses.length > 0 &&
           courses.map((course) => (
             <div
@@ -115,6 +118,21 @@ export default function ViewCourses() {
             </div>
           ))}
       </div>
-    </div>
+      <div className="container d-flex justify-content-end">
+        <button type="button" value="Create Learning Journey" onClick={checkSubmit} data-bs-toggle="modal" data-bs-target="#role-modal" className="float-right btn btn-outline-primary my-3 active">Create Learning Journey</button>
+      </div>
+      <div
+        className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
+        ref={toast}
+        role="alert"
+        aria-live="assertive"
+        data-bs-autohide="true"
+        aria-atomic="true"
+      >
+        <div className="d-flex ">
+          <div className="toast-body">Please select at least one course!</div>
+        </div>
+      </div>
+    </>
   );
 }
