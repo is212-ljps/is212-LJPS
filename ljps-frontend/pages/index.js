@@ -7,7 +7,6 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
-        {console.log('test')}
 
         <link rel="icon" href="/favicon.ico" />
       </Head>
