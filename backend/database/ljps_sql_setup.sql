@@ -48,7 +48,6 @@ CREATE TABLE `course` (
 CREATE TABLE `learning_journey` (
 	`Learning_Journey_ID` int AUTO_INCREMENT,
 	`Learning_Journey_Name` varchar(25) NOT NULL,
-	`Learning_Journey_Description` varchar(300),
 	`Staff_ID` int,
 	`Job_Role_ID` int,
     CONSTRAINT `learning_journey_pk` PRIMARY KEY (`Learning_Journey_ID`),
