@@ -176,18 +176,18 @@ export default function ViewCourses() {
       )) }
       </div> */}
 
-      <div className="container mx-4 px-1">
+      <div className="container mx-6 px-1">
         <div className="row"> {courses.length > 0 && courses.map((course)=>(
-          <div className="col-sm-6">
-            <div className="card">
+          <div className="col-sm-4">
+            <div className="card mt-2">
               <div className="card-header" style={{"backgroundColor":"lightblue"}}> <b>{course.Course_Name}</b> </div>
               <div className="card-body"></div>
               <div className="row">
                 <div className="col-4">
-                  <p className="mx-3">Skill: {skillDetails.skillName}</p>
+                  <p className="mx-3">{skillDetails.skillName}</p>
                 </div>
                 <div className="col-8">
-                  <div className="col-3 badge bg-light text-black" style={{"marginLeft":300}}> {course.Course_Category} </div>
+                  <div className="col-3 badge bg-light text-black" style={{"marginLeft":190}}> {course.Course_Category} </div>
                 </div>
                 
               </div>
