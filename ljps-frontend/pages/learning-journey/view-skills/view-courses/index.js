@@ -197,7 +197,7 @@ export default function ViewCourses() {
                 </div>
 
                 <div className="col-3">
-                  <span style={{"marginLeft":25}}>+</span>
+                  <span style={{"marginLeft":26}}>+</span>
                 </div> 
                 
               
