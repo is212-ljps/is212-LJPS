@@ -9,8 +9,7 @@ router.post('/', (req, res) => {
   let jobRoleId = req.body.jobRoleId;
   let skillId = req.body.skillId
   connection.connect(err => {
-    const insertLearningJourney = `INSERT INTO learning_journey (Learning_Journey_Name,
-      Staff_ID, Job_Role_ID) VALUES (${learningJourneyName}, ${staffId}, ${jobRoleId})`
+    const insertLearningJourney = `INSERT INTO learning_journey (Learning_Journey_Name, Staff_ID, Job_Role_ID) VALUES ("${learningJourneyName}", ${staffId}, ${jobRoleId})`
     
     connection.query(insertLearningJourney, (err, result) =>{
       if (err) throw err;

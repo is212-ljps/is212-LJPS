@@ -9,6 +9,7 @@ const app = express();
 const RolesRouter = require('./routes/roles/RolesRouter');
 const SkillsRouter = require('./routes/skills/SkillsRouter')
 const CourseRouter = require('./routes/courses/CoursesRouter')
+const LearningJourneyRouter = require('./routes/learning-journey/LearningJourneyRouter');
 
 
 app.use(cors())
@@ -22,6 +23,7 @@ app.use((req, res, next)=>{
 app.use('/api/roles', RolesRouter);
 app.use('/api/skills', SkillsRouter)
 app.use('/api/courses', CourseRouter);
+app.use('/api/learning-journey', LearningJourneyRouter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
