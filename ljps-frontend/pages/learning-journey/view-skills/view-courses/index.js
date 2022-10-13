@@ -192,14 +192,20 @@ export default function ViewCourses() {
                 
               </div>
               <div className="row">
-                <div className="col-9 mx-3"> <b>Course ID: {course.Course_ID}</b></div> 
+                <div className="col-9">
+                  <div className="col-9 mx-3"> <b>Course ID: {course.Course_ID}</b></div> 
+                </div>
+
+                <div className="col-3">
+                  <span style={{"marginLeft":25}}>+</span>
+                </div> 
                 
-                {/* <h6> <span className=" col-sm-2 badge badge-secondary">{course.Course_Category}</span></h6> */}
+              
               </div>
               <div className="row mx-1">
                 <div className="col-10"> <p>{course.Course_Desc}</p> </div>
                 <div className="col-2"> 
-                <div><input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input> </div>
+                <div> <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input></div>
                 </div>
               </div>
 
