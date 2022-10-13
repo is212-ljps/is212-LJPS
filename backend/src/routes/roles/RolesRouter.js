@@ -42,6 +42,7 @@ router.post("/", function (req, res) {
           res.send({
             success: true,
             message: "A new role has been successfully created!",
+            id: result.insertId
           });
         })
 
