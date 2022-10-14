@@ -5,7 +5,7 @@ var connection = require('../../../database/database')
 
 router.get('/', (req, res) => {
   connection.connect(err => {
-    const getCourses = `SELECT * FROM course`
+    const getCourses = `SELECT * FROM course WHERE Course_Status="Active"`
     connection.query(getCourses, (err, result) =>{
       if (err) {
         res.send({
