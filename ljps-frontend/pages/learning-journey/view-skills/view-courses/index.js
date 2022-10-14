@@ -180,7 +180,7 @@ export default function ViewCourses() {
         <div className="row"> {courses.length > 0 && courses.map((course)=>(
           <div className="col-sm-4">
             <div className="card mt-2">
-              <div className="card-header" style={{"backgroundColor":"lightblue"}}> <b>{course.Course_Name}</b> </div>
+              <div className="card-header" style={{"backgroundColor":"black", color:"white"}}> <b>{course.Course_Name}</b> </div>
               <div className="card-body"></div>
               <div className="row">
                 <div className="col-4">
@@ -197,7 +197,7 @@ export default function ViewCourses() {
                 </div>
 
                 <div className="col-3">
-                  <span style={{"marginLeft":26}}>+</span>
+                  <span style={{"marginLeft":25, "size":1}}>Add</span>
                 </div> 
                 
               
@@ -205,7 +205,7 @@ export default function ViewCourses() {
               <div className="row mx-1">
                 <div className="col-10"> <p>{course.Course_Desc}</p> </div>
                 <div className="col-2"> 
-                <div> <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input></div>
+                <div style={{"marginLeft":8}}> <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input></div>
                 </div>
               </div>
 
