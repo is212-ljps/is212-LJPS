@@ -7,6 +7,7 @@ import CourseModal from "../../../../components/CourseComponent/CourseModal"
 export default function ViewCourses() {
   var router = useRouter();
   var skillID = router.query["selectedSkill"];
+  var roleID = router.query["selectedRole"];
   const toast = useRef();
 
 
@@ -71,13 +72,9 @@ export default function ViewCourses() {
     }
   };
 
-  const handleSubmit = () => {
-    
-  }
-
   return (
     <>
-      <CourseModal handleSubmit={handleSubmit} checkSubmit={confirmSubmit} />
+      <CourseModal checkSubmit={confirmSubmit} roleId={roleID} skillId={skillID} courses={selectedCourses} />
       <div className="row m-4">
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
