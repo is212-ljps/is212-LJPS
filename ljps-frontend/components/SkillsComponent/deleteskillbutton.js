@@ -39,7 +39,7 @@ export default function DeleteSkillButton({ skillName, skillId, onSkillsUpdate }
   }, [modal]);
 
   return (
-    <div>
+    <div style={{display:"inline"}}>
 
       <button
         type="button"
