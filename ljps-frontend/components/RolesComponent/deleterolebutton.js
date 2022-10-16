@@ -42,7 +42,7 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
   }, [modal]);
 
   return (
-    <div>
+    <div style={{display:"inline"}}>
 
       <button
         type="button"

@@ -7,9 +7,10 @@ router.post("/", function (req, res) {
   let roleName = req.body.roleName;
   let roleDescription = req.body.roleDescription;
   let department = req.body.jobDepartment;
+  const assignedSkills = req.body.skills
 
   connection.connect((err) => {
-    var insert_sql = `INSERT into job_role (Job_Role_Name, Job_Role_Description, Job_Department, Is_Active) VALUES ('${roleName}', '${roleDescription}', '${department}' , TRUE );`;
+    var insert_sql = `INSERT into job_role (Job_Role_Name, Job_Role_Description, Job_Department, Is_Active) VALUES ('${roleName}', '${roleDescription}', '${department}' , TRUE );`
     connection.query(insert_sql, function (err, result) {
       if (err) {
         if (err.code == "ER_DUP_ENTRY") {
@@ -25,18 +26,35 @@ router.post("/", function (req, res) {
           });
         }
       } else {
-        res.send({
-          success: true,
-          message: "A new role has been successfully created!",
-        });
+        var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
+        assignedSkills.forEach((item) => {
+          assignSkillsSql += `(${result.insertId}, ${item}), `
+        })
+        assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
+        connection.query(assignSkillsSql, (err, result) => {
+          if (err) {
+            res.send({
+              success: false,
+              message: "An error occured, please try again.",
+            });
+            return
+          }
+          res.send({
+            success: true,
+            message: "A new role has been successfully created!",
+            id: result.insertId
+          });
+        })
+
       }
     });
+
   });
 });
 
 router.delete("/:roleID", function (req, res) {
   let roleID = req.params.roleID;
-  
+
   connection.connect((err) => {
     var update_sql = `UPDATE job_role SET Is_Active=${false} WHERE Job_Role_ID=${roleID}`;
     connection.query(update_sql, function (err, result) {
@@ -58,7 +76,7 @@ router.delete("/:roleID", function (req, res) {
 router.get('/', (req, res) => {
   connection.connect(err => {
     const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
-    connection.query(getRoles, (err, result) =>{
+    connection.query(getRoles, (err, result) => {
       if (err) {
         res.send({
           success: false,
@@ -71,7 +89,7 @@ router.get('/', (req, res) => {
           message: "",
           data: result
         });
-      } 
+      }
     })
   })
 })
@@ -80,7 +98,7 @@ router.get('/:roleID', (req, res) => {
   let role_id = req.params.roleID
   connection.connect(err => {
     const getRoles = `SELECT * FROM job_role WHERE Job_Role_ID=${role_id} AND Is_Active= TRUE`
-    connection.query(getRoles, (err, result) =>{
+    connection.query(getRoles, (err, result) => {
       if (err) {
         res.send({
           success: false,
@@ -92,7 +110,7 @@ router.get('/:roleID', (req, res) => {
           message: "",
           data: result
         });
-      } 
+      }
     })
   })
 })
@@ -104,8 +122,8 @@ router.get('/:roleID/skills', (req, res) => {
     FROM job_role_skill
     INNER JOIN skill ON skill.Skill_ID=job_role_skill.Skill_ID
     WHERE skill.Is_Active= TRUE AND Job_Role_ID=${roleID};`
-    
-    connection.query(getSkills, (err, result) =>{
+
+    connection.query(getSkills, (err, result) => {
       if (err) {
         res.send({
           success: false,
@@ -117,17 +135,18 @@ router.get('/:roleID/skills', (req, res) => {
           message: "",
           data: result
         });
-      } 
+      }
     })
   })
 })
 
 
-router.put('/roles/:roleID', (req, res) => {
+router.put('/:roleID', (req, res) => {
   const roleID = req.params.roleID
   const roleName = req.body.roleName
   const roleDescription = req.body.roleDescription
   const jobDepartment = req.body.jobDepartment
+  const assignedSkills = req.body.skills
   connection.connect(err => {
     const updateRole =
       `UPDATE job_role SET Job_Role_Name='${roleName}', 
@@ -136,18 +155,42 @@ router.put('/roles/:roleID', (req, res) => {
       WHERE Job_Role_ID=${roleID}`
 
     connection.query(updateRole, (err, result) => {
-      console.log(err)
-      console.log(result)
       if (err) {
+        const errMsg = err.code === "ER_DUP_ENTRY" ? "Role Name currently exist, please use a different Skill Name. " :"An error occured, please try again "
         res.send({
           success: false,
-          message: "An error occured, please try again ",
+          message: errMsg,
         });
       } else {
-        res.send({
-          success: true,
-          message: "Role updated"
-        });
+        var deleteSkillsSql = `DELETE FROM job_role_skill WHERE Job_Role_ID=${roleID}`
+        connection.query(deleteSkillsSql, (err, result) => {
+          if (err) {
+            res.send({
+              success: false,
+              message: "An error occured, please try again.",
+            });
+            return
+          } else {
+            var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
+            assignedSkills.forEach((item) => {
+              assignSkillsSql += `(${roleID}, ${item}), `
+            })
+            assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
+            connection.query(assignSkillsSql, (err, result) => {
+              if (err) {
+                res.send({
+                  success: false,
+                  message: "An error occured, please try again.",
+                });
+                return
+              }
+              res.send({
+                success: true,
+                message: "Role updated",
+              });
+            })
+          }
+        })
       }
     })
   })
