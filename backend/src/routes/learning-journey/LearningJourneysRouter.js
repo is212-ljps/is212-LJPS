@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-var connection = require('../../../database')
+var connection = require("../../../database");
 
+router.get("/:Staff_ID", (req, res) => {
 
-router.get('/', (req, res) => {
-  connection.connect(err => {
-    const getLearningJourneys = `SELECT * FROM learning_journey`
-    connection.query(getLearningJourneys, (err, result) =>{
+  let staffID = req.params.Staff_ID
+  connection.connect((err) => {
+    const getLearningJourneys = `SELECT * from learning_journey INNER join learning_journey_skill on learning_journey.Learning_Journey_ID=learning_journey_skill.Learning_Journey_ID INNER JOIN skill on learning_journey_skill.Skill_ID= skill.Skill_ID WHERE Staff_ID = ${staffID}; `;
+    connection.query(getLearningJourneys, (err, result) => {
       if (err) {
         res.send({
           success: false,
@@ -17,14 +18,11 @@ router.get('/', (req, res) => {
         res.send({
           success: true,
           message: "",
-          data: result
+          data: result,
         });
-      } 
-    })
-  })
-})
-
-
-
+      }
+    });
+  });
+});
 
 module.exports = router;
