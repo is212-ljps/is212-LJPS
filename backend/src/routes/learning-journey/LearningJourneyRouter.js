@@ -50,20 +50,15 @@ function learningJourneyRoutes(database){
     
     let staffID = req.params.staffID
 
-    console.log('-------')
-    console.log(staffID)
-
     try {
       
       const result = await database.getLearningJourneyByStaffID(staffID);
 
-      console.log(result)
       res.status(200).send({
         success: true,
         data: result
       });
     } catch (err) {
-      console.log(err)
       res.status(500).send({
         success: false,
         message: "An error occured, please try again ",
