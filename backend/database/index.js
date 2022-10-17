@@ -147,6 +147,16 @@ exports.assignSkillsToRoles = async (assignedSkills, result) => {
   }
 }
 
+exports.removeSkillsFromRole = async (roleID) => {
+  const removeSkillsFromRole = `DELETE FROM job_role_skill WHERE Job_Role_ID=${roleID}`
+  try {
+    const result = await promiseQuery(removeSkillsFromRole)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
 exports.deleteRoleById = async (roleID) => {
   var update_sql = `UPDATE job_role SET Is_Active=${false} WHERE Job_Role_ID=${roleID}`;
   try {
@@ -198,7 +208,7 @@ exports.updateRoleDetails = async (roleID, roleName, roleDescription, jobDepartm
         WHERE Job_Role_ID=${roleID}`
   try {
     const result = await promiseQuery(updateRole)
-    return result
+    return result.insertId
   } catch (err){
     throw err
   }
