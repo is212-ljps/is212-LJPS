@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
 
 
 export default function ViewLearningJourneys() {
+
+  const [learningJourney, setLearningJourney] = useState([]);
+  
+  useEffect(() => {
+    onLearningJourneyUpdate();
+  }, []);
+
+
+  const onLearningJourneyUpdate = useCallback(() => {
+    // currently staffID is hardcoded
+    axios.get("http://localhost:8080/api/learning-journey/130001").then((res) => {
+      setLearningJourney(res.data.data);
+    });
+  }, []);
+
+
+  console.log(learningJourney)
+
+
+
   return (
     <div>
       <div className="row">
