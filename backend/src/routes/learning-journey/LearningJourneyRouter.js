@@ -44,6 +44,36 @@ function learningJourneyRoutes(database){
     }  
   })
 
+
+  router.get("/:Staff_ID", async (req, res) => {
+
+    
+    let staffID = req.params.Staff_ID
+
+    console.log('-------')
+    console.log(staffID)
+
+    try {
+      
+      const result = await database.getLearningJourneyByStaffID(staffID);
+
+      console.log(result)
+      res.status(200).send({
+        success: true,
+        data: result
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+
+
+
+  });
+
   return router;
 }
 
