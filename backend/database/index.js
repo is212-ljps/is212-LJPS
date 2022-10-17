@@ -136,7 +136,7 @@ exports.createRole = async (roleName, roleDescription, department) => {
 exports.assignSkillsToRoles = async (assignedSkills, result) => {
   var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
   assignedSkills.forEach((item) => {
-    assignSkillsSql += `(${result}, ${item}), `
+    assignSkillsSql += `(${result.insertId}, ${item}), `
   })
   assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
   try {
