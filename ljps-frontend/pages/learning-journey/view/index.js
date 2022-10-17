@@ -12,7 +12,7 @@ export default function ViewLearningJourneys() {
   const onLearningJourneyUpdate = useCallback(() => {
     // currently staffID is hardcoded
     axios
-      .get("http://localhost:8080/api/learning-journey/130002")
+      .get("http://localhost:8080/api/learning-journey/staff/130002")
       .then((res) => {
         parseLearningJourneyObj(res.data.data);
       });
@@ -53,26 +53,29 @@ export default function ViewLearningJourneys() {
       </div>
       {Object.keys(learningJourney).map(( learningJourneyID, i) => ( 
 
-<div className = "row">
-<div className="card mx-auto" style={{width:"90%", border:"1px solid black"}}>
-        <div className ="card-body">
-            <div className = 'row'>
-            <h5 className="card-title">{learningJourney[learningJourneyID].Learning_Journey_Name}</h5>
-            </div>
-            <div className = 'row'>
-                <div className = 'col-md-8'>
-                {learningJourney[learningJourneyID].Skills.map(( skill ) => (
-                    <span className ="badge bg-primary mx-1">{skill}</span> 
-                    ))}
+      <div className = "row">
+        <div className="card mx-auto" style={{width:"90%", border:"1px solid black"}}>
+          <div className ="card-body">
+              <div className = 'row'>
+              <h5 className="card-title">{learningJourney[learningJourneyID].Learning_Journey_Name}</h5>
+              </div>
+              <div className = 'row'>
+                  <div className = 'col-md-8'>
+                  {learningJourney[learningJourneyID].Skills.map(( skill ) => (
+                      <span className ="badge bg-primary mx-1">{skill}</span> 
+                      ))}
 
-                </div>
-                <div className = 'col-md-4 d-flex justify-content-end mt-4'>
-                    <button type="button" class="btn btn-light mx-1">View <i class="bi bi-eye-fill mx-1"></i></button>
-                    <button type="button" class="btn btn-secondary">Delete <i class="bi bi-trash3 mx-1"></i></button>
-                </div>
+                  </div>
+                  <div className = 'col-md-4 d-flex justify-content-end mt-4'>
+                      <button type="button" class="btn btn-light mx-1">View <i class="bi bi-eye-fill mx-1"></i></button>
+                      <button type="button" class="btn btn-secondary">Delete <i class="bi bi-trash3 mx-1"></i></button>
+                  </div>
 
-            </div>
+              </div>
+          </div>
         </div>
-      </div>
-    </div>    
-  )}
+      </div>    
+  ))}
+  </div>
+  )
+}

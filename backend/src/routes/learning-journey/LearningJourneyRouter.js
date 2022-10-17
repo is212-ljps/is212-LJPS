@@ -45,10 +45,10 @@ function learningJourneyRoutes(database){
   })
 
 
-  router.get("/:Staff_ID", async (req, res) => {
+  router.get("/staff/:staffID", async (req, res) => {
 
     
-    let staffID = req.params.Staff_ID
+    let staffID = req.params.staffID
 
     console.log('-------')
     console.log(staffID)

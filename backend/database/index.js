@@ -4,7 +4,7 @@ const { promisify } = require('util')
 const connection = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "",
+  password: "yeotwig1999",
   database: "ljps_db",
 })
 
