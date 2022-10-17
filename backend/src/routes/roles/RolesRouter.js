@@ -1,156 +1,141 @@
 const express = require("express");
-const router = express.Router();
 
-var connection = require('../../../database')
+function rolesRoutes(database) {
+  const router = express.Router();
 
-router.post("/", function (req, res) {
-  let roleName = req.body.roleName;
-  let roleDescription = req.body.roleDescription;
-  let department = req.body.jobDepartment;
+  router.post("/", async (req, res) => {
+    let roleName = req.body.roleName;
+    let roleDescription = req.body.roleDescription;
+    let department = req.body.jobDepartment;
+    const assignedSkills = req.body.skills
 
-  connection.connect((err) => {
-    var insert_sql = `INSERT into job_role (Job_Role_Name, Job_Role_Description, Job_Department, Is_Active) VALUES ('${roleName}', '${roleDescription}', '${department}' , TRUE );`;
-    connection.query(insert_sql, function (err, result) {
-      if (err) {
-        if (err.code == "ER_DUP_ENTRY") {
-          res.send({
-            success: false,
-            message:
-              "Role Name currently exist, please use a different Skill Name. ",
-          });
-        } else {
-          res.send({
-            success: false,
-            message: "An error occured, please try again.",
-          });
-        }
-      } else {
-        res.send({
-          success: true,
-          message: "A new role has been successfully created!",
-        });
-      }
-    });
-  });
-});
-
-router.delete("/:roleID", function (req, res) {
-  let roleID = req.params.roleID;
-  
-  connection.connect((err) => {
-    var update_sql = `UPDATE job_role SET Is_Active=${false} WHERE Job_Role_ID=${roleID}`;
-    connection.query(update_sql, function (err, result) {
-      if (err) {
-        res.send({
-          success: false,
-          message: "An error occured, please try again ",
-        });
-      } else {
-        res.send({
-          success: true,
-          message: "",
-        });
-      }
-    });
-  });
-});
-
-router.get('/', (req, res) => {
-  connection.connect(err => {
-    const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
-    connection.query(getRoles, (err, result) =>{
-      if (err) {
-        res.send({
-          success: false,
-          message: "An error occured, please try again ",
-        });
-      } else {
-        console.log(result)
-        res.send({
-          success: true,
-          message: "",
-          data: result
-        });
-      } 
-    })
-  })
-})
-
-router.get('/:roleID', (req, res) => {
-  let role_id = req.params.roleID
-  connection.connect(err => {
-    const getRoles = `SELECT * FROM job_role WHERE Job_Role_ID=${role_id} AND Is_Active= TRUE`
-    connection.query(getRoles, (err, result) =>{
-      if (err) {
-        res.send({
-          success: false,
-          message: "An error occured, please try again ",
-        });
-      } else {
-        res.send({
-          success: true,
-          message: "",
-          data: result
-        });
-      } 
-    })
-  })
-})
-
-router.get('/:roleID/skills', (req, res) => {
-  let roleID = req.params.roleID
-  connection.connect(err => {
-    const getSkills = `SELECT  job_role_skill.Job_Role_ID ,skill.Skill_ID , skill.Skill_Name, skill.Skill_Description
-    FROM job_role_skill
-    INNER JOIN skill ON skill.Skill_ID=job_role_skill.Skill_ID
-    WHERE skill.Is_Active= TRUE AND Job_Role_ID=${roleID};`
-    
-    connection.query(getSkills, (err, result) =>{
-      if (err) {
-        res.send({
-          success: false,
-          message: "An error occured, please try again ",
-        });
-      } else {
-        res.send({
-          success: true,
-          message: "",
-          data: result
-        });
-      } 
-    })
-  })
-})
-
-
-router.put('/roles/:roleID', (req, res) => {
-  const roleID = req.params.roleID
-  const roleName = req.body.roleName
-  const roleDescription = req.body.roleDescription
-  const jobDepartment = req.body.jobDepartment
-  connection.connect(err => {
-    const updateRole =
-      `UPDATE job_role SET Job_Role_Name='${roleName}', 
-      Job_Role_Description='${roleDescription}',
-      Job_Department='${jobDepartment}'
-      WHERE Job_Role_ID=${roleID}`
-
-    connection.query(updateRole, (err, result) => {
+    try {
+      const data = await database.createRole(roleName, roleDescription, department);
+      const result = await database.assignSkillsToRoles(assignedSkills, data);
+      
+      res.status(201).send({
+        success: true,
+        message: "A new role has been successfully created!"
+      });
+    } catch (err) {
       console.log(err)
-      console.log(result)
-      if (err) {
-        res.send({
+      if (err.code == "ER_DUP_ENTRY") {
+        res.status(409).send({
           success: false,
-          message: "An error occured, please try again ",
+          message: "Role Name currently exist, please use a different Skill Name. "
         });
       } else {
-        res.send({
-          success: true,
-          message: "Role updated"
+        res.status(500).send({
+          success: false,
+          message: "An error occured, please try again.",
         });
       }
-    })
+    }  
+  });
+  
+  router.delete("/:roleID", async (req, res) => {
+    let roleID = req.params.roleID;
+  
+    try {
+      const data = await database.deleteRoleById(roleID);
+      res.status(200).send({
+        success: true,
+        message: "The skill has been successfully deleted!",
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+  });
+  
+  router.get('/', async (req, res) => {
+    try {
+      const data = await database.getAllRoles();
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
   })
-})
+  
+  router.get('/:roleID', async (req, res) => {
+    let roleID = req.params.roleID
+    try {
+      const data = await database.getRoleById(roleID);
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+  })
+  
+  router.get('/:roleID/skills', async (req, res) => {
+    let roleID = req.params.roleID
+    try {
+      const data = await database.getSkillsAssignedToRole(roleID);
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+  })
+  
+  
+  router.put('/:roleID', async (req, res) => {
+    const roleID = req.params.roleID
+    const roleName = req.body.roleName
+    const roleDescription = req.body.roleDescription
+    const jobDepartment = req.body.jobDepartment
+    const assignedSkills = req.body.skills
 
-module.exports = router;
+    console.log(jobDepartment)
+    try {
+      const data = await database.updateRoleDetails(roleID, roleName, roleDescription, jobDepartment);
+      await database.removeSkillsFromRole(roleID)
+      await database.assignSkillsToRoles(assignedSkills, roleID);
+      res.status(200).send({
+        success: true,
+        message: "Role updated."
+      });
+    } catch (err) {
+      console.log(err)
+      if (err.code == "ER_DUP_ENTRY") {
+        res.status(409).send({
+          success: false,
+          message: "Role Name currently exist, please use a different Skill Name. "
+        });
+      } else {
+        res.status(500).send({
+          success: false,
+          message: "An error occured, please try again.",
+        });
+      }
+    }  
+  })
+
+  return router;
+}
+
+
+module.exports.rolesRoutes = rolesRoutes;
