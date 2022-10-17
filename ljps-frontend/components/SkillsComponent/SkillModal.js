@@ -57,11 +57,12 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
             myToast.show();
             onSkillsUpdate()
           } else {
-            setErrorMsg(response.data.message)
+            setNameErrorMsg(response.data.message)
           }
         })
         .catch(function (error) {
           console.log(error);
+          setNameErrorMsg(error.response.data.message)
         });
     } else {
       // fail validation
