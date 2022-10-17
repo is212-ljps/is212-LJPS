@@ -62,6 +62,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
         })
         .catch(function (error) {
           console.log(error);
+          setNameErrorMsg(error.response.data.message)
         });
     } else {
       // fail validation

@@ -107,19 +107,30 @@ function rolesRoutes(database) {
     const roleName = req.body.roleName
     const roleDescription = req.body.roleDescription
     const jobDepartment = req.body.jobDepartment
+    const assignedSkills = req.body.skills
+
     console.log(jobDepartment)
     try {
       const data = await database.updateRoleDetails(roleID, roleName, roleDescription, jobDepartment);
+      await database.removeSkillsFromRole(roleID)
+      await database.assignSkillsToRoles(assignedSkills, roleID);
       res.status(200).send({
         success: true,
         message: "Role updated."
       });
     } catch (err) {
       console.log(err)
-      res.status(500).send({
-        success: false,
-        message: "An error occured, please try again ",
-      })
+      if (err.code == "ER_DUP_ENTRY") {
+        res.status(409).send({
+          success: false,
+          message: "Role Name currently exist, please use a different Skill Name. "
+        });
+      } else {
+        res.status(500).send({
+          success: false,
+          message: "An error occured, please try again.",
+        });
+      }
     }  
   })
 

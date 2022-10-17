@@ -136,11 +136,21 @@ exports.createRole = async (roleName, roleDescription, department) => {
 exports.assignSkillsToRoles = async (assignedSkills, result) => {
   var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
   assignedSkills.forEach((item) => {
-    assignSkillsSql += `(${result.insertId}, ${item}), `
+    assignSkillsSql += `(${result}, ${item}), `
   })
   assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
   try {
     const result = await promiseQuery(assignSkillsSql)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
+exports.removeSkillsFromRole = async (roleID) => {
+  const removeSkillsFromRole = `DELETE FROM job_role_skill WHERE Job_Role_ID=${roleID}`
+  try {
+    const result = await promiseQuery(removeSkillsFromRole)
     return result
   } catch (err){
     throw err
@@ -198,7 +208,7 @@ exports.updateRoleDetails = async (roleID, roleName, roleDescription, jobDepartm
         WHERE Job_Role_ID=${roleID}`
   try {
     const result = await promiseQuery(updateRole)
-    return result
+    return result.insertId
   } catch (err){
     throw err
   }

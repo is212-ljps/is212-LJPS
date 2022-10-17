@@ -90,6 +90,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
         setErrors({ ...errorDefaultVal, name: response.data.message });
       }).catch(function (error) {
         console.log(error);
+        setErrors({ ...errorDefaultVal, name: error.response.data.message });
       });
     } else {
       // fail validation
