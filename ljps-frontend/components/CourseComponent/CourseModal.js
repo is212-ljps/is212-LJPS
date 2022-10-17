@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
 
-export default function CourseModal({ checkSubmit, skillId, roleId, courses }) {
+export default function CourseModal({ checkSubmit, skillId, roleId, skillName, roleName, courses }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [name, setName] = useState('');
   const modal = useRef();
@@ -55,12 +55,20 @@ export default function CourseModal({ checkSubmit, skillId, roleId, courses }) {
               <div className="row mb-3">
                 <div className="col-12">
                   <label htmlFor="roleName" className="col-form-label">
+                    Role Name : {roleName}
+                  </label>
+                  <br />
+                  <label htmlFor="skillName" className="col-form-label">
+                    Skill Name : {skillName}
+                  </label>
+                  <br />
+                  <label htmlFor="learningJourneyName" className="col-form-label">
                     Learning Journey Name
                   </label>
 
                   <input
                     type="text"
-                    id="roleName"
+                    id="learningJourneyName"
                     className="form-control"
                     onChange={({ target }) => setName(target?.value)}
                   />

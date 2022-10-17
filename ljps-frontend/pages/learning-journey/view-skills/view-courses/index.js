@@ -19,9 +19,10 @@ export default function ViewCourses() {
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
+  const [roleName, setRoleName] = useState("");
 
   useEffect(() => {
-    if (skillID) {
+    if (skillID && roleID) {
       const url = `http://localhost:8080/api/skills/${skillID}`
       const axiosFn = axios.get;
       axiosFn(url)
@@ -32,6 +33,17 @@ export default function ViewCourses() {
               skillDescription: response.data.data[0].Skill_Description,
             };
             setSkillDetails(newSkillDetails)
+          } else {
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      const roleUrl = `http://localhost:8080/api/roles/${roleID}`
+      axiosFn(roleUrl)
+        .then(function (response) {
+          if (response.data.success) {
+            setRoleName(response.data.data[0].Job_Role_Name);
           } else {
           }
         })
@@ -73,7 +85,7 @@ export default function ViewCourses() {
 
   return (
     <>
-      <CourseModal checkSubmit={confirmSubmit} roleId={roleID} skillId={skillID} courses={selectedCourses} />
+      <CourseModal checkSubmit={confirmSubmit} roleId={roleID} skillName={skillDetails.skillName} skillId={skillID} roleName={roleName} courses={selectedCourses} />
       <div className="row m-4">
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
