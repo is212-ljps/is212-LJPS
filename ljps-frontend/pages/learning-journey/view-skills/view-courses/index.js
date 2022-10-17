@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
+import CourseModal from "../../../../components/CourseComponent/CourseModal"
 
 export default function ViewCourses() {
   var router = useRouter();
   var skillID = router.query["selectedSkill"];
+  var roleID = router.query["selectedRole"];
   const toast = useRef();
 
 
@@ -16,9 +18,11 @@ export default function ViewCourses() {
 
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
+  const [confirmSubmit, setConfirmSubmit] = useState(false);
+  const [roleName, setRoleName] = useState("");
 
   useEffect(() => {
-    if (skillID) {
+    if (skillID && roleID) {
       const url = `http://localhost:8080/api/skills/${skillID}`
       const axiosFn = axios.get;
       axiosFn(url)
@@ -29,6 +33,17 @@ export default function ViewCourses() {
               skillDescription: response.data.data[0].Skill_Description,
             };
             setSkillDetails(newSkillDetails)
+          } else {
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      const roleUrl = `http://localhost:8080/api/roles/${roleID}`
+      axiosFn(roleUrl)
+        .then(function (response) {
+          if (response.data.success) {
+            setRoleName(response.data.data[0].Job_Role_Name);
           } else {
           }
         })
@@ -60,20 +75,17 @@ export default function ViewCourses() {
     }
   };
 
-  // const checkSubmit = () => {
-  //   if (selectedSkill == "") {
-  //     var myToast = new bootstrap.Toast(toast.current);
-  //     myToast.show();
-  //   } else {
-  //     router.push({
-  //       pathname: "/learning-journey/view-skills",
-  //       query: {selectedSkill},
-  //     });
-  //   }
-  // };
+  const checkSubmit = () => {
+    if (selectedCourses.length == 0) {
+      setConfirmSubmit(false);
+    } else {
+      setConfirmSubmit(true);
+    }
+  };
 
   return (
-    <div>
+    <>
+      <CourseModal checkSubmit={confirmSubmit} roleId={roleID} skillName={skillDetails.skillName} skillId={skillID} roleName={roleName} courses={selectedCourses} />
       <div className="row m-4">
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
@@ -90,7 +102,6 @@ export default function ViewCourses() {
           <Image src="/view-skill-learner.svg" height={350} width={350} />
         </div>
       </div>
-
       <div className="container mx-6 px-3">
         <div className="row"> {courses.length > 0 && courses.map((course) => (
           <div className="col-12 col-md-6 col-xl-4">
@@ -123,7 +134,6 @@ export default function ViewCourses() {
                   <div > <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input></div>
                 </div>
               </div>
-
             </div>
 
           </div>
@@ -132,6 +142,21 @@ export default function ViewCourses() {
         </div>
         {/* [LJPS-35] Add button here */}
       </div>
-    </div>
+      <div className="container d-flex justify-content-end">
+        <button type="button" value="Create Learning Journey" onClick={checkSubmit} data-bs-toggle="modal" data-bs-target="#role-modal" className="float-right btn btn-outline-primary my-3 active">Create Learning Journey</button>
+      </div>
+      <div
+        className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
+        ref={toast}
+        role="alert"
+        aria-live="assertive"
+        data-bs-autohide="true"
+        aria-atomic="true"
+      >
+        <div className="d-flex ">
+          <div className="toast-body">Please select at least one course!</div>
+        </div>
+      </div>
+    </>
   );
 }

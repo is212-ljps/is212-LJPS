@@ -1,47 +1,41 @@
 const express = require("express");
-const router = express.Router();
 
-var connection = require('../../../database')
-
-router.get('/', (req, res) => {
-  connection.connect(err => {
-    const getCourses = `SELECT * FROM course WHERE Course_Status="Active"`
-    connection.query(getCourses, (err, result) =>{
-      if (err) {
-        res.send({
-          success: false,
-          message: "An error occured, please try again ",
-        });
-      } else {
-        res.send({
-          success: true,
-          message: "",
-          data: result
-        });
-      } 
-    })
+function courseRoutes(database) {
+  const router = express.Router();
+  router.get('/', async (req, res) => {
+    try {
+      const data = await database.getCourses();
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
   })
-})
+  
+  router.get('/skill/:skillID', async (req, res) => {
+    let skillId = req.params.skillID
+    try {
+      const data = await database.getCoursesBySkill(skillId);
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+  }) 
+  
+  return router;
+}
 
-router.get('/skill/:skillID', (req, res) => {
-  let skillId = req.params.skillID
-  connection.connect(err => {
-    const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_Status="Active" AND Course_ID in (SELECT Course_ID FROM course_skill WHERE Skill_ID=${skillId});`
-    connection.query(getCoursesBasedOnSkill, (err, result) =>{
-      if (err) {
-        res.send({
-          success: false,
-          message: "An error occured, please try again ",
-        });
-      } else {
-        res.send({
-          success: true,
-          message: "",
-          data: result
-        });
-      } 
-    })
-  })
-})
-
-module.exports = router;
+module.exports.courseRoutes = courseRoutes;
