@@ -15,6 +15,7 @@ router.get("/:Staff_ID", (req, res) => {
           message: "An error occured, please try again ",
         });
       } else {
+        console.log(result)
         res.send({
           success: true,
           message: "",
@@ -24,5 +25,8 @@ router.get("/:Staff_ID", (req, res) => {
     });
   });
 });
+
+
+
 
 module.exports = router;
