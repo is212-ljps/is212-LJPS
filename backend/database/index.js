@@ -54,7 +54,7 @@ exports.getLearningJourney = async (learningJourneyId) => {
 }
 
 exports.getCourses = async () => {
-  const getCourses = `SELECT * FROM course WHERE Is_Active=TRUE`
+  const getCourses = `SELECT * FROM course WHERE Course_Status="Active"`
   try {
     const result = await promiseQuery(getCourses)
     return result
@@ -133,10 +133,10 @@ exports.createRole = async (roleName, roleDescription, department) => {
   }
 }
 
-exports.assignSkillsToRoles = async (assignedSkills, result) => {
+exports.assignSkillsToRoles = async (assignedSkills, roleId) => {
   var assignSkillsSql = `INSERT into job_role_skill (Job_Role_ID, Skill_ID) VALUES `
   assignedSkills.forEach((item) => {
-    assignSkillsSql += `(${result.insertId}, ${item}), `
+    assignSkillsSql += `(${roleId}, ${item}), ` 
   })
   assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
   try {
@@ -147,8 +147,32 @@ exports.assignSkillsToRoles = async (assignedSkills, result) => {
   }
 }
 
+exports.assignCoursesToSkills = async (assignedCourses, skillID) => {
+  var assignCoursesSql = `INSERT into course_skill (Skill_ID, Course_ID) VALUES `
+  assignedCourses.forEach((item) => {
+    assignCoursesSql += `(${skillID}, "${item}"), `
+  })
+  assignCoursesSql = assignCoursesSql.slice(0, -2) + `;`
+  try {
+    const result = await promiseQuery(assignCoursesSql)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
+exports.removeCoursesFromSkill = async (skillID) => {
+  const removeCoursesFromSkill = `DELETE FROM course_skill WHERE Skill_ID=${skillID}`;
+  try {
+    const result = await promiseQuery(removeCoursesFromSkill)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
 exports.removeSkillsFromRole = async (roleID) => {
-  const removeSkillsFromRole = `DELETE FROM job_role_skill WHERE Job_Role_ID=${roleID}`
+  const removeSkillsFromRole = `DELETE FROM job_role_skill WHERE Job_Role_ID=${roleID}`;
   try {
     const result = await promiseQuery(removeSkillsFromRole)
     return result
@@ -200,6 +224,19 @@ exports.getSkillsAssignedToRole = async (roleID) => {
   }
 }
 
+exports.getCoursesAssignedToSkill = async (skillID) => {
+  const getCourses = `SELECT  course_skill.Skill_ID ,course.Course_ID , course.Course_Name, course.Course_Desc
+      FROM course_skill
+      INNER JOIN course ON course.Course_ID=course_skill.Course_ID
+      WHERE course.Course_Status="Active" AND Skill_ID=${skillID};`
+  try {
+    const result = await promiseQuery(getCourses)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
 exports.updateRoleDetails = async (roleID, roleName, roleDescription, jobDepartment) => {
   const updateRole =
         `UPDATE job_role SET Job_Role_Name='${roleName}', 
@@ -213,3 +250,4 @@ exports.updateRoleDetails = async (roleID, roleName, roleDescription, jobDepartm
     throw err
   }
 }
+

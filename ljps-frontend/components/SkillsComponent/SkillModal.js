@@ -8,10 +8,25 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
   const [descErrorMsg, setDescErrorMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
   const { skillName, skillDescription, skillID } = selectedSkill
+  const [courses, setCourses] = useState([])
+  const [assignedCourses, setAssignedCourses] = useState([])
   const modal = useRef()
   const toast = useRef()
   const nameInput = useRef()
   const descriptionInput = useRef()
+
+
+  function handleChangeItem(e) {
+    const temp = [...assignedCourses]
+    const index = assignedCourses.indexOf(e.target.value)
+    if (index >= 0) {
+      temp.splice(index, 1)
+    }
+    else {
+      temp.push(e.target.value)
+    }
+    setAssignedCourses(temp)
+  }
 
   useEffect(() => {
     if (!nameInput.current || !descriptionInput.current)
@@ -21,16 +36,32 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
     descriptionInput.current.value = skillDescription
   }, [skillName, skillDescription, skillID, nameInput, descriptionInput])
 
-  useEffect(() => { 
-    if(modal.current){
-      modal.current.addEventListener("hidden.bs.modal", function(event){
-        nameInput.current.value=""
-        descriptionInput.current.value =""
+  useEffect(() => {
+    if (modal.current) {
+      modal.current.addEventListener("hidden.bs.modal", function (event) {
+        nameInput.current.value = ""
+        descriptionInput.current.value = ""
+        setAssignedCourses([])
         setNameErrorMsg("")
         setDescErrorMsg("")
       })
     }
-  },[modal.current])
+  }, [modal.current])
+
+  useEffect(() => {
+    axios.get('http://localhost:8080/api/courses').then((res) => {
+      setCourses(res.data.data)
+      console.log(courses)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!skillID) return
+    axios.get(`http://localhost:8080/api/skills/${skillID}/courses`).then((res) => {
+      console.log(res.data.data.map(item => item.Course_ID))
+      setAssignedCourses(res.data.data.map(item => item.Course_ID))
+    })
+  }, [skillID])
 
 
   const handleSubmit = useCallback((e) => {
@@ -44,9 +75,11 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
       var myToast = new bootstrap.Toast(toast.current);
       const url = skillID ? 'http://localhost:8080/api/skills/' + skillID : 'http://localhost:8080/api/skills'
       const axiosFn = skillID ? axios.put : axios.post
+    
       axiosFn(url, {
         skillName: nameInput.current.value,
         skillDescription: descriptionInput.current.value,
+        assignedCourses: Array.from(document.getElementsByName("course-checkbox")).filter((item) => item.checked).map(item => item.value)
       })
         .then(function (response) {
           if (response.data.success) {
@@ -108,6 +141,29 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
 
             <div className="row mb-3">
               <div className="col-12">
+                <label htmlFor="Assign Skills" className="col-form-label">
+                  Assign Courses
+                </label>
+              </div>
+              <div className="col-12">
+                <div className="bg-light p-2 rounded-2" style={{ height: "100px", overflowY: "auto", overflowX: "hidden" }}>
+                <div className="row">
+                  {courses.map((item, index) => {
+                    const {Course_Name, Course_ID} = item
+                    return <div className="col-6" key={Course_ID}>
+                    <div className="form-check">
+                      <input onChange={(e)=>handleChangeItem(e)} checked={assignedCourses.includes(Course_ID)}className="form-check-input" name="course-checkbox" type="checkbox" id={"course-checkbox-" + Course_ID} value={Course_ID} />
+                      <label className="form-check-label" htmlFor={"course-checkbox-" + Course_ID}>{Course_Name}</label>
+                    </div>
+                  </div>
+                  })}
+                </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row mb-3">
+              <div className="col-12">
                 <label
                   htmlFor="skillDescription"
                   className="col-form-label"
@@ -123,6 +179,12 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
                 {!!descErrorMsg.length && <p className="text-danger">{descErrorMsg}</p>}
               </div>
             </div>
+
+            
+
+
+
+
           </div>
           <div className="modal-footer">
             <button type="submit" className="btn btn-primary">
@@ -149,3 +211,5 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
     </div>
   </div>
 }
+
+
