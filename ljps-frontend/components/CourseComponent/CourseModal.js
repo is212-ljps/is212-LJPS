@@ -12,13 +12,14 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
       const learningJourneyUrl = `http://localhost:8080/api/learning-journey`;
       axios.post(learningJourneyUrl, {
         learningJourneyName: name,
-        staffId: 1,
+        staffId: 130001,
         jobRoleId: roleId,
         skillId: skillId,
         courses: courses
       }).then(res => {
         if (res.data.success) {
           console.log("SUCCESS")
+          // Add router.push here
         } else {
           console.log("FAIL")
         }

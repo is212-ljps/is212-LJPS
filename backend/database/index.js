@@ -32,8 +32,8 @@ exports.createLearningJourneySkill = async (learningJourneyId, skillId) => {
   }
 }
 
-exports.createLearningJourneyCourse = async (courses, learningJourneyId) => {
-  for (course of courses) {
+exports.createLearningJourneyCourse = async (learningJourneyId, courses) => {
+  for (var course of courses) {
     const insertLearningJourneyCourse = `INSERT INTO learning_journey_course (Learning_Journey_ID, Course_ID) VALUES (${learningJourneyId}, "${course}")`;
     try {
       const result = await promiseQuery(insertLearningJourneyCourse)
