@@ -53,6 +53,17 @@ exports.getLearningJourney = async (learningJourneyId) => {
   }
 }
 
+exports.getLearningJourneyByStaffID= async(staffID) => { 
+  console.log(staffID)
+  const getLearningJourneys = `SELECT * from learning_journey INNER join learning_journey_skill on learning_journey.Learning_Journey_ID=learning_journey_skill.Learning_Journey_ID INNER JOIN skill on learning_journey_skill.Skill_ID= skill.Skill_ID WHERE Staff_ID = ${staffID}; `;
+  try{
+    const result = await promiseQuery(getLearningJourneys)
+    return result
+  }catch(err){
+    throw err 
+  }
+}
+
 exports.getCourses = async () => {
   const getCourses = `SELECT * FROM course WHERE Course_Status="Active"`
   try {
@@ -62,6 +73,8 @@ exports.getCourses = async () => {
     throw err
   }
 }
+
+
 
 exports.getCoursesBySkill = async (skillId) => {
   const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE Skill_ID=${skillId});`

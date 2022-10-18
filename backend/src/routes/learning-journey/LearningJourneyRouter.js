@@ -44,6 +44,31 @@ function learningJourneyRoutes(database){
     }  
   })
 
+
+  router.get("/staff/:staffID", async (req, res) => {
+
+    
+    let staffID = req.params.staffID
+
+    try {
+      
+      const result = await database.getLearningJourneyByStaffID(staffID);
+
+      res.status(200).send({
+        success: true,
+        data: result
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+
+
+
+  });
+
   return router;
 }
 
