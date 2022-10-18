@@ -11,7 +11,7 @@ function rolesRoutes(database) {
 
     try {
       const data = await database.createRole(roleName, roleDescription, department);
-      const result = await database.assignSkillsToRoles(assignedSkills, data);
+      const result = await database.assignSkillsToRoles(assignedSkills, data.insertId);
       
       res.status(201).send({
         success: true,
