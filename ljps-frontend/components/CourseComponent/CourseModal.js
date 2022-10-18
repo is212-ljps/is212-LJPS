@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
+import Router, { useRouter } from "next/router";
 
 export default function CourseModal({ checkSubmit, skillId, roleId, skillName, roleName, courses }) {
   const [errorMsg, setErrorMsg] = useState("");
@@ -20,6 +21,10 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
         if (res.data.success) {
           console.log("SUCCESS")
           // Add router.push here
+          Router.push({
+            pathname: "/learning-journey/confirmation"
+          })
+          
         } else {
           console.log("FAIL")
         }
