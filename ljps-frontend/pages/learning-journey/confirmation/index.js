@@ -1,79 +1,103 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
+import Router, { useRouter } from "next/router";
 
-export default function ViewLearningJourneys() {
-  const [learningJourney, setLearningJourney] = useState([]);
+export default function ViewConfirmation() {
+//   const [learningJourney, setLearningJourney] = useState([]);
 
-  useEffect(() => {
-    onLearningJourneyUpdate();
-  }, []);
+//   useEffect(() => {
+//     onLearningJourneyUpdate();
+//   }, []);
 
-  const onLearningJourneyUpdate = useCallback(() => {
-    // currently staffID is hardcoded
-    axios
-      .get("http://localhost:8080/api/learning-journey/staff/130002")
-      .then((res) => {
-        parseLearningJourneyObj(res.data.data);
-      });
-  }, []);
+//   const onLearningJourneyUpdate = useCallback(() => {
+//     // currently staffID is hardcoded
+//     axios
+//       .get("http://localhost:8080/api/learning-journey/staff/130002")
+//       .then((res) => {
+//         parseLearningJourneyObj(res.data.data);
+//       });
+//   }, []);
 
-  const parseLearningJourneyObj = (data) => {
-    const learningJourney = {};
-    data.forEach(
-      ({ Learning_Journey_ID, Learning_Journey_Name, Skill_Name }) => {
-        if (learningJourney[Learning_Journey_ID]) {
-          learningJourney[Learning_Journey_ID].Skills.push(Skill_Name);
-        } else {
-          learningJourney[Learning_Journey_ID] = {
-            Learning_Journey_ID,
-            Learning_Journey_Name,
-            Skills: [Skill_Name],
-          };
-        }
-      }
-    );
+//   const parseLearningJourneyObj = (data) => {
+//     const learningJourney = {};
+//     data.forEach(
+//       ({ Learning_Journey_ID, Learning_Journey_Name, Skill_Name }) => {
+//         if (learningJourney[Learning_Journey_ID]) {
+//           learningJourney[Learning_Journey_ID].Skills.push(Skill_Name);
+//         } else {
+//           learningJourney[Learning_Journey_ID] = {
+//             Learning_Journey_ID,
+//             Learning_Journey_Name,
+//             Skills: [Skill_Name],
+//           };
+//         }
+//       }
+//     );
 
-    setLearningJourney(learningJourney);
-  };
+//     setLearningJourney(learningJourney);
+//   };
+
+  const checkCreateLearningJourney = () => {
+    Router.push({
+        pathname: "/learning-journey"
+    })
+  }
+
+  const checkViewLearningJourney = () => {
+    Router.push({
+        pathname: "/learning-journey/view"
+    })
+  }
+
 
   return (
     <div>
-      <div className="row p-3">
-        <div className="col-md-6 d-flex justify-content-center align-items-center flex-column">
-          <h3 className="fw-bold"> My Learning Journeys</h3> 
-          <h4 className="text-primary"> {Object.keys(learningJourney).length} Learning Journey(s) </h4>
+
+    <div>
+        <nav className="navbar navbar-light bg-light p-3">
+            <span className="navbar-brand mb-0 h1"> All-in-one LJPS </span>
+        </nav>
+
+        <div className="container">
+            <div className="row p-3" style={{"marginTop":100}}>
+                <div className="col-md d-flex justify-content-center align-items-center ">
+                    <Image src="/ConfirmationLogo.jpg" height={350} width={350} />
+                </div>
+            </div>
         </div>
 
-        <div className="col-md-6 d-flex justify-content-center align-items-center">
-          <Image src="/view-learning-journey.svg" height={350} width={350} />
+        <br></br>
+
+        <div className="container">
+            <div className="row p-3 d-flex justify-content-center align-items-center text-center">
+                <h2>Your learning Journey Has been Successfully Created!</h2>
+            </div>
+
         </div>
-      </div>
-      {Object.keys(learningJourney).map(( learningJourneyID, i) => ( 
 
-      <div className = "row" key={i}>
-        <div className="card mx-auto" style={{width:"90%", border:"1px solid black"}}>
-          <div className ="card-body">
-              <div className = 'row'>
-              <h5 className="card-title">{learningJourney[learningJourneyID].Learning_Journey_Name}</h5>
-              </div>
-              <div className = 'row'>
-                  <div className = 'col-md-8'>
-                  {learningJourney[learningJourneyID].Skills.map(( skill ) => (
-                      <span className ="badge bg-primary mx-1" key={skill}>{skill}</span> 
-                      ))}
+        <div className="container">
+            <div className="row p-3 ">
+                {/* Create Learning Journey Button */}
+                <div className="col-sm-6 d-flex justify-content-end align-items-center">
+                    <button type="button" className="btn btn-primary btn-lg" onClick={checkCreateLearningJourney}>
+                        {" "} Create Learning Journey {" "}
+                    </button>
+                </div>
 
-                  </div>
-                  <div className = 'col-md-4 d-flex justify-content-end mt-4'>
-                      <button type="button" className="btn btn-light mx-1">View <i className="bi bi-eye-fill mx-1"></i></button>
-                      <button type="button" className="btn btn-secondary">Delete <i className="bi bi-trash3 mx-1"></i></button>
-                  </div>
+                {/* View Learning Journey Button */}
+                <div className="col-sm-6 d-flex justify-content-start align-items-center">
+                    <button type="button" className="btn btn-primary btn-lg" onClick={checkViewLearningJourney}>
+                        {" "} View Learning Journey {" "}
+                    </button>
+                </div>
 
-              </div>
-          </div>
+
+            </div>
         </div>
-      </div>    
-  ))}
+
+
+    </div>
   </div>
   )
 }
