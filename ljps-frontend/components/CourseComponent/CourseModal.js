@@ -22,7 +22,7 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
           console.log("SUCCESS")
           // Add router.push here
           Router.push({
-            pathname: "/learning-journey/confirmation"
+            pathname: "/learning-journey/view-skills/view-courses/confirmation"
           })
           
         } else {
