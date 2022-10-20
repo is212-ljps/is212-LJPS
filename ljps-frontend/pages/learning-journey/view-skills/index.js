@@ -29,7 +29,7 @@ export default function ViewSkills() {
               roleDepartment: response.data.data[0].Job_Department,
               roleDescription: response.data.data[0].Job_Role_Description,
             };
-            setRoleDetails(newRoleDetails)
+            setRoleDetails(newRoleDetails);
           } else {
           }
         })
@@ -64,7 +64,7 @@ export default function ViewSkills() {
     } else {
       router.push({
         pathname: "/learning-journey/view-skills/view-courses",
-        query: {selectedSkill, selectedRole: roleID},
+        query: { selectedSkill, selectedRole: roleID },
       });
     }
   };
@@ -92,22 +92,18 @@ export default function ViewSkills() {
         {skills.length > 0 &&
           skills.map((skill) => (
             <div
-              className="col-6 col-md-3"
+              className="col-12 col-md-4 mb-3"
               style={{ overflowWrap: "break-word" }}
             >
-              <button
-                type="button"
-                id={skill.Skill_ID}
-                key={skill.Skill_ID}
-                className={
-                  skill.Skill_ID === Number(selectedSkill)
-                    ? "btn btn-outline-primary my-3 w-100 active"
-                    : "btn btn-outline-primary my-3 w-100"
-                }
-                onClick={toggleButton}
-              >
+              <div className="rounded border border-primary p-3 d-flex">
+                <input type="checkbox" className="mx-1"/>
                 {skill.Skill_Name}
-              </button>
+
+                <i className="bi bi-info-circle-fill" style={{ marginLeft:'auto' , marginRight:'0px' }}></i>
+
+                </div>
+
+                
             </div>
           ))}
       </div>
