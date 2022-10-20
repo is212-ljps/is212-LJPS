@@ -4,39 +4,6 @@ import axios from "axios";
 import Router, { useRouter } from "next/router";
 
 export default function ViewConfirmation() {
-//   const [learningJourney, setLearningJourney] = useState([]);
-
-//   useEffect(() => {
-//     onLearningJourneyUpdate();
-//   }, []);
-
-//   const onLearningJourneyUpdate = useCallback(() => {
-//     // currently staffID is hardcoded
-//     axios
-//       .get("http://localhost:8080/api/learning-journey/staff/130002")
-//       .then((res) => {
-//         parseLearningJourneyObj(res.data.data);
-//       });
-//   }, []);
-
-//   const parseLearningJourneyObj = (data) => {
-//     const learningJourney = {};
-//     data.forEach(
-//       ({ Learning_Journey_ID, Learning_Journey_Name, Skill_Name }) => {
-//         if (learningJourney[Learning_Journey_ID]) {
-//           learningJourney[Learning_Journey_ID].Skills.push(Skill_Name);
-//         } else {
-//           learningJourney[Learning_Journey_ID] = {
-//             Learning_Journey_ID,
-//             Learning_Journey_Name,
-//             Skills: [Skill_Name],
-//           };
-//         }
-//       }
-//     );
-
-//     setLearningJourney(learningJourney);
-//   };
 
   const checkCreateLearningJourney = () => {
     Router.push({
@@ -71,7 +38,7 @@ export default function ViewConfirmation() {
 
         <div className="container">
             <div className="row p-3 d-flex justify-content-center align-items-center text-center">
-                <h2>Your learning Journey Has been Successfully Created!</h2>
+                <h2>Your Learning Journey has been successfully created!</h2>
             </div>
 
         </div>
