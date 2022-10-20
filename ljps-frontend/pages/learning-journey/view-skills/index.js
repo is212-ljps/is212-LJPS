@@ -85,12 +85,17 @@ export default function ViewSkills() {
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
             {" "}
-            Select a skill to kickstart your Learning Journey as a{" "}
+            Select your skill(s) to kickstart your Learning Journey as a{" "}
             <span className="text-primary fw-bold">{roleDetails.roleName}</span>
           </h3>
           <span className="badge text-white bg-dark w-50 mt-3">
             {roleDetails.roleDepartment}
           </span>
+
+          <p className="mt-4">
+            {" "}
+            Click on <i className="bi bi-info-circle-fill text-primary  "/> to view the skill description
+          </p>
         </div>
 
         <div className="col-md-7 col-sm-12 d-flex justify-content-center">
