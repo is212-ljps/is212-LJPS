@@ -13,9 +13,10 @@ export default function ViewSkills() {
     roleDepartment: "",
     roleDescription: "",
   });
+  const [checked, setChecked] = useState(false);
 
   const [skills, setSkills] = useState([]);
-  const [selectedSkill, setSelectedSkill] = useState("");
+  const [selectedSkill, setSelectedSkill] = useState([]);
 
   useEffect(() => {
     if (roleID) {
@@ -53,12 +54,21 @@ export default function ViewSkills() {
     }
   }, []);
 
-  const toggleButton = (e) => {
-    setSelectedSkill(e.target.id);
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      setSelectedSkill((selectedSkill) => [
+        ...selectedSkill,
+        Number(e.target.value),
+      ]);
+    } else {
+      setSelectedSkill(
+        selectedSkill.filter((skill) => skill !== Number(e.target.value))
+      );
+    }
   };
 
   const checkSubmit = () => {
-    if (selectedSkill == "") {
+    if (selectedSkill.length == 0) {
       var myToast = new bootstrap.Toast(toast.current);
       myToast.show();
     } else {
@@ -78,7 +88,7 @@ export default function ViewSkills() {
             Select a skill to kickstart your Learning Journey as a{" "}
             <span className="text-primary fw-bold">{roleDetails.roleName}</span>
           </h3>
-          <span className="badge text-white bg-dark w-25 mt-3">
+          <span className="badge text-white bg-dark w-50 mt-3">
             {roleDetails.roleDepartment}
           </span>
         </div>
@@ -92,18 +102,29 @@ export default function ViewSkills() {
         {skills.length > 0 &&
           skills.map((skill) => (
             <div
-              className="col-12 col-md-4 mb-3"
+              className="col-12 col-md-4 mb-5"
               style={{ overflowWrap: "break-word" }}
             >
-              <div className="rounded border border-primary p-3 d-flex">
-                <input type="checkbox" className="mx-1"/>
+              <div
+                className={
+                  selectedSkill.includes(skill.Skill_ID)
+                    ? "rounded border border-white bg-primary text-white p-3 d-flex"
+                    : "rounded border border-primary p-3 d-flex"
+                }
+              >
+                <input
+                  type="checkbox"
+                  className="mx-1"
+                  id={skill.Skill_ID}
+                  value={skill.Skill_ID}
+                  onChange={handleChange}
+                />
                 {skill.Skill_Name}
-
-                <i className="bi bi-info-circle-fill" style={{ marginLeft:'auto' , marginRight:'0px' }}></i>
-
-                </div>
-
-                
+                <i
+                  className="bi bi-info-circle-fill"
+                  style={{ marginLeft: "auto", marginRight: "0px" }}
+                ></i>
+              </div>
             </div>
           ))}
       </div>

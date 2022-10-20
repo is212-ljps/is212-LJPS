@@ -21,7 +21,6 @@ export default function SelectRole() {
 
   const onRolesUpdate = useCallback(() => {
     axios.get("http://localhost:8080/api/roles").then((res) => {
-      console.log(res.data.data)
       setRoles(res.data.data);
     });
   }, []);
@@ -54,7 +53,6 @@ export default function SelectRole() {
       </div>
 
       <div
-        className="container"
         style={{ maxHeight: "400px", overflowY: "auto" }}
       >
         <div className="row mx-4">
