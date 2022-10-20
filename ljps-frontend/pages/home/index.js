@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
+import { useRouter } from "next/router";
+
 
 export default function Home() {
   const [role, setRole ] = useState("User");
+  var router = useRouter();
+
 
   const handleSubmit =(e)=>{
     e.preventDefault()
-    // if(role=='User'){
+    if(role=='User'){
+        router.push("/learning-journey");
+    }
+    else{
+        router.push("/roles")
 
-    // }
-    // else{
-
-    // }
+    }
 
   }
 
