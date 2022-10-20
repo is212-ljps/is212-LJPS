@@ -2,9 +2,19 @@ import React, { useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 
 export default function Home() {
-  const { role, setRole } = useState("User");
+  const [role, setRole ] = useState("User");
 
-  console.log(role);
+  const handleSubmit =(e)=>{
+    e.preventDefault()
+    // if(role=='User'){
+
+    // }
+    // else{
+
+    // }
+
+  }
+
 
   return (
     <div className="row">
@@ -36,11 +46,10 @@ export default function Home() {
 
         <p className="mb-3"> Select your Role to proceed</p>
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <select
             className="form-select mb-4"
             onChange={(e) => setRole(e.target.value)}
-            value={role}
           >
             <option value="User">User</option>
             <option value="Manager">Manager</option>
@@ -48,7 +57,7 @@ export default function Home() {
           </select>
 
           <div className="mt-5 d-flex justify-content-end">
-            <button type="submit" className="btn btn-outline-primary">
+            <button type="submit" className="btn btn-outline-primary" >
               Submit
             </button>
           </div>
