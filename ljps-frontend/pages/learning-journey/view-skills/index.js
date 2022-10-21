@@ -13,7 +13,6 @@ export default function ViewSkills() {
     roleDepartment: "",
     roleDescription: "",
   });
-  const [checked, setChecked] = useState(false);
 
   const [skills, setSkills] = useState([]);
   const [selectedSkill, setSelectedSkill] = useState([]);
@@ -93,7 +92,6 @@ export default function ViewSkills() {
           </span>
 
           <p className="mt-4">
-            {" "}
             Click on <i className="bi bi-info-circle-fill text-primary  "/> to view the skill description
           </p>
         </div>
@@ -104,7 +102,7 @@ export default function ViewSkills() {
       </div>
 
       <div className="row mx-4">
-        {skills.length > 0 &&
+        {skills?.length > 0 &&
           skills.map((skill) => (
             <div
               className="col-12 col-md-4 mb-5"
