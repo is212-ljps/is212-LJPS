@@ -52,7 +52,6 @@ export default function LearningJourneyDetails() {
           </div>
         </div>
 
-        {console.log(skills)}
 
         <div className="col-md-7 d-flex justify-content-center">
           <Player
