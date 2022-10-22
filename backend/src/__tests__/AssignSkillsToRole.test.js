@@ -14,6 +14,9 @@ describe("GET /api/courses", () => {
   beforeEach(() => {
     app = require('../server');
   })
+  afterEach(() => {
+    app.close();
+  })
 
   it('Create 2 skills -> Create a role -> Assign both skills to role', async () => {
     try {
