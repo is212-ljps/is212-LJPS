@@ -9,6 +9,7 @@ export default function LearningJourneyDetails() {
 
   const [learningJourney, setLearningJourney] = useState({});
   const [courses, setCourses] = useState([]);
+  const [skills, setSkills] = useState([]);
 
   useEffect(() => {
     if (learningJourneyId) {
@@ -18,6 +19,14 @@ export default function LearningJourneyDetails() {
         if (response.data.success) {
           setLearningJourney(response.data.data);
           setCourses(response.data.data.courses);
+
+          for (let course of response.data.data.courses) {
+            for (let skill of course.skills) {
+              if (!skills.includes(skill.trim())) {
+                setSkills(skills => [...skills, skill.trim()]);
+              }
+            }
+          }
         } else {
         }
       });
@@ -32,7 +41,23 @@ export default function LearningJourneyDetails() {
             {learningJourney.Learning_Journey_Name}
           </h3>
           <h4 className="fw-bold">{learningJourney.courses?.length} courses</h4>
+
+          <div className="row">
+            {skills.map((skill) => (
+              <div className="col-4">
+                <span
+                  className="badge rounded-pill bg-dark p-2"
+                
+                >
+                  {" "}
+                  {skill}{" "}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {console.log(skills)}
 
         <div className="col-md-7 d-flex justify-content-center">
           <Player
@@ -44,7 +69,6 @@ export default function LearningJourneyDetails() {
           ></Player>
         </div>
       </div>
-      {console.log(courses)}
 
       <div className="container">
         <h4 className="fw-bold"> Courses </h4>
@@ -71,7 +95,13 @@ export default function LearningJourneyDetails() {
                 <div className="row mb-2 mx-2">
                   {course.skills.map((skill) => (
                     <div className="col-sm-12 col-md-6 col-lg-6">
-                      <span className="badge rounded-pill bg-dark" style={{ fontSize: '10px' }}> {skill} </span>
+                      <span
+                        className="badge rounded-pill bg-dark py-1"
+                        style={{ fontSize: "10px" }}
+                      >
+                        {" "}
+                        {skill}{" "}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -81,6 +111,12 @@ export default function LearningJourneyDetails() {
                     {" "}
                     <p>{course.Course_Desc}</p>{" "}
                   </div>
+                </div>
+
+                <div className="d-flex justify-content-end m-2">
+                  <button type="button" className="btn btn-outline-primary">
+                    Delete <i className="bi bi-trash3-fill"></i>
+                  </button>
                 </div>
               </div>
             </div>
