@@ -18,7 +18,7 @@ on:
 jobs:
   my_ci_pipeline:
     runs-on: [ubuntu-latest]
-    
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Git clone our repos
         uses: actions/checkout@v1
