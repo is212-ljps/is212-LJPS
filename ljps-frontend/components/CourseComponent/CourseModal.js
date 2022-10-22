@@ -1,5 +1,6 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
+import Router, { useRouter } from "next/router";
 
 export default function CourseModal({ checkSubmit, skillId, roleId, skillName, roleName, courses }) {
   const [errorMsg, setErrorMsg] = useState("");
@@ -19,11 +20,15 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
       }).then(res => {
         if (res.data.success) {
           console.log("SUCCESS")
-          // Add router.push here
+          Router.push({
+            pathname: "/learning-journey/view-skills/view-courses/confirmation"
+          })
+          
         } else {
           console.log("FAIL")
         }
       }).catch(function (error) {
+        setErrorMsg("Error has occured");
         console.log(error);
       });
     }
@@ -73,6 +78,9 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
                     className="form-control"
                     onChange={({ target }) => setName(target?.value)}
                   />
+                  <br />
+                  {errorMsg ? <label htmlFor="learningJourneyName" className="col-form-label">
+                    {errorMsg} </label>: ''}
                 </div>
               </div>
             </div>
