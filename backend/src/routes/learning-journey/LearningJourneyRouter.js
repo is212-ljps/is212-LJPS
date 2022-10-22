@@ -34,16 +34,7 @@ function learningJourneyRoutes(database) {
     let learningJourneyId = req.params.learningJourneyId;
     let learningJourney = {};
     try {
-      // {
-      //   LearningJourneyID : 1,
-      //   Name: "",
-      //   Courses: {
-      //     cor30001 : {
-      //        name:"",
-      //        description:"",
-      //        skills: {12: {name:"Skill12"}}}
-      //   }
-      // }
+
       const learningJourneyResult = await database.getLearningJourney(
         learningJourneyId
       );
@@ -61,6 +52,9 @@ function learningJourneyRoutes(database) {
         ({ Course_ID }) => Course_ID
       );
 
+      const learningJourneySkillsResult = await database.getLearningJourneySkills(learningJourneyId)
+
+      learningJourney.skills = learningJourneySkillsResult
       const coursesSkillsResult = await database.getCoursesSkills(courses);
 
       const courseSkills = coursesSkillsResult.map(

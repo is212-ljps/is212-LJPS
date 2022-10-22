@@ -19,14 +19,6 @@ export default function LearningJourneyDetails() {
         if (response.data.success) {
           setLearningJourney(response.data.data);
           setCourses(response.data.data.courses);
-
-          for (let course of response.data.data.courses) {
-            for (let skill of course.skills) {
-              if (!skills.includes(skill.trim())) {
-                setSkills(skills => [...skills, skill.trim()]);
-              }
-            }
-          }
         } else {
         }
       });
