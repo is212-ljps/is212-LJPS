@@ -19,6 +19,7 @@ export default function LearningJourneyDetails() {
         if (response.data.success) {
           setLearningJourney(response.data.data);
           setCourses(response.data.data.courses);
+          setSkills(response.data.data.skills);
         } else {
         }
       });
@@ -28,21 +29,23 @@ export default function LearningJourneyDetails() {
   return (
     <div>
       <div className="row py-4">
-        <div className="col-md-5 d-flex flex-column justify-content-center align-items-center">
-          <h3 className="text-primary">
-            {learningJourney.Learning_Journey_Name}
-          </h3>
-          <h4 className="fw-bold">{learningJourney.courses?.length} courses</h4>
-
-          <div className="row">
-            {skills.map((skill) => (
+        <div className="col-md-5 d-flex justify-content-center flex-column">
+          <div className="px-5">
+            <h3 className="text-primary">
+              {learningJourney.Learning_Journey_Name}
+            </h3>
+            <h4 className="fw-bold">
+              {learningJourney.courses?.length} courses
+            </h4>
+          </div>
+          <div className="row mt-4 px-5">
+            <hr></hr>
+            <h5 className="mt-2 mb-4">Selected Skills: </h5>
+            {Object.values(skills).map((skill) => (
               <div className="col-4">
-                <span
-                  className="badge rounded-pill bg-dark p-2"
-                
-                >
+                <span className="badge rounded-pill bg-dark py-2">
                   {" "}
-                  {skill}{" "}
+                  {skill.Skill_Name}{" "}
                 </span>
               </div>
             ))}
