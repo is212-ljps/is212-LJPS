@@ -76,7 +76,7 @@ export default function ViewLearningJourneys() {
               <div className="row">
                 <div className="col-md-8">
                   {learningJourney[learningJourneyID].Skills.map((skill) => (
-                    <span className="badge bg-primary mx-1" key={skill}>
+                    <span className="badge bg-dark mx-1" key={skill}>
                       {skill}
                     </span>
                   ))}
@@ -84,13 +84,13 @@ export default function ViewLearningJourneys() {
 
                 
                 <div className="col-md-4 d-flex justify-content-end mt-4">
-                  <button type="button" className="btn btn-light mx-1" onClick={()=> router.push({
+                  <button type="button" className="btn btn-primary mx-1" onClick={()=> router.push({
                     pathname:'/learning-journey/view/details',
                     query:{learningJourneyID}
                   })} >
                     View <i className="bi bi-eye-fill mx-1"></i>
                   </button>
-                  <button type="button" className="btn btn-secondary">
+                  <button type="button" className="btn btn-outline-primary">
                     Delete <i className="bi bi-trash3 mx-1"></i>
                   </button>
                 </div>
