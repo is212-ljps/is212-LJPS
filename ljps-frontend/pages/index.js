@@ -8,10 +8,19 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    var userDetails={
+      "role": role, 
+      "staffID" : role==='user' ? '14002' : '13001'
+    }
+
     if (role == "User") {
       router.push("/learning-journey");
+      localStorage.setItem(userDetails,JSON.stringify(userDetails));
+
     } else {
       router.push("/roles");
+      localStorage.setItem(userDetails,JSON.stringify(userDetails));
     }
   };
 
