@@ -13,6 +13,27 @@ function MyApp({ Component, pageProps }) {
 
       </Head>
 
+      {/* Navbar here */}
+      <nav class="navbar navbar-expand-lg navbar-light bg-white m-3">
+        <a class="navbar-brand" href="/learning-journey"> <h4>All-in-One LJPS</h4> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="/learning-journey"> <strong>Create Learning Journey</strong></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/learning-journey/view"> <strong> View Learning Journey </strong></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
       <Component {...pageProps} />
 
       <Script
