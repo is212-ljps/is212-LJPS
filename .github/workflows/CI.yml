@@ -10,7 +10,7 @@ on:
     branches:
       - master
   workflow_run:
-    workflows: [Tests]
+    workflows: [Tests on main]
     types: [completed]
 
 
