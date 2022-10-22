@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
               <a class="nav-link" href="/learning-journey/view"> <strong> View Learning Journey </strong></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
+              <a class="nav-link" href="#">User</a>
             </li>
           </ul>
         </div>
