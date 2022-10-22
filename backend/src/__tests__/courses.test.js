@@ -15,7 +15,7 @@ describe("GET /api/courses", () => {
     getCoursesBySkill.mockReset()
   })
 
-  it('get all courses with 200 status code', async (done)=>{
+  it('get all courses with 200 status code', async ()=>{
     var skillId = "1"
     try {
       getCoursesBySkill.mockResolvedValue([
@@ -35,7 +35,6 @@ describe("GET /api/courses", () => {
     } catch(err) {
       console.log(err)
     }
-    done();
 
   })
 })

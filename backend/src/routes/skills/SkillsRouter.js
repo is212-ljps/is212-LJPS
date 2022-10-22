@@ -1,10 +1,10 @@
 const express = require("express");
 
-function skillsRoutes(database) {
+function skillsRoutes(service) {
   const router = express.Router();
   router.get('/', async (req, res) => {
     try {
-      const data = await database.getAllSkills();
+      const data = await service.getAllSkills();
       res.status(200).send({
         success: true,
         data: data
@@ -21,7 +21,7 @@ function skillsRoutes(database) {
   router.get('/:skillID', async (req, res) => {
     var skillID = req.params.skillID
     try {
-      const data = await database.getSkillById(skillID);
+      const data = await service.getSkillById(skillID);
       res.status(200).send({
         success: true,
         data: data
@@ -38,7 +38,7 @@ function skillsRoutes(database) {
   router.get('/:skillID/courses', async (req, res) => {
     let skillID = req.params.skillID
     try {
-      const data = await database.getCoursesAssignedToSkill(skillID);
+      const data = await service.getCoursesAssignedToSkill(skillID);
       res.status(200).send({
         success: true,
         data: data
@@ -57,8 +57,7 @@ function skillsRoutes(database) {
     let skillDescription = req.body.skillDescription;
     let assignedCourses = req.body.assignedCourses;
     try {
-      const data = await database.createSkill(skillName, skillDescription);
-      await database.assignCoursesToSkills(assignedCourses, data.insertId)
+      const data = await service.createSkill(skillName, skillDescription, assignedCourses);
       res.status(201).send({
         success: true,
         message: "A new skill has been successfully created!",
@@ -84,7 +83,7 @@ function skillsRoutes(database) {
     let skillID = req.params.skillID;
 
     try {
-      const data = await database.deleteSkillById(skillID);
+      const data = await service.deleteSkillById(skillID);
       res.status(200).send({
         success: true,
         message: "The skill has been successfully deleted!",
@@ -105,9 +104,7 @@ function skillsRoutes(database) {
     const assignedCourses = req.body.assignedCourses
     
     try {
-      const data = await database.updateSkillById(skillID, skillName, skillDescription);
-      await database.removeCoursesFromSkill(skillID)
-      await database.assignCoursesToSkills(assignedCourses, skillID)
+      const data = await service.updateSkillById(skillID, skillName, skillDescription, assignedCourses);
       res.status(200).send({
         success: true,
         message: "Skill updated",

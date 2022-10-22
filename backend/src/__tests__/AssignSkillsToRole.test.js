@@ -1,22 +1,18 @@
 const request = require('supertest')
+var { makeApp } = require('../app')
 
+const getCourses = jest.fn()
+const getCoursesBySkill = jest.fn()
+
+var app = makeApp({
+  getCourses,
+  getCoursesBySkill
+})
 
 describe("GET /api/courses", () => {
   var app;
   beforeEach(() => {
     app = require('../server');
-  })
-  afterEach(() => {
-    app.close();
-  })
-  it('get all courses with 200 status code', async () => {
-    try {
-      const response = await request(app).get("/api/courses");
-      expect(response.statusCode).toBe(200)
-    } catch (err) {
-      console.log(err)
-    }
-
   })
 
   it('Create 2 skills -> Create a role -> Assign both skills to role', async () => {

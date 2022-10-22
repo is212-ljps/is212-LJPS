@@ -1,6 +1,6 @@
 const express = require("express");
 
-function rolesRoutes(database) {
+function rolesRoutes(service) {
   const router = express.Router();
 
   router.post("/", async (req, res) => {
@@ -10,9 +10,7 @@ function rolesRoutes(database) {
     const assignedSkills = req.body.skills
 
     try {
-      const data = await database.createRole(roleName, roleDescription, department);
-      const result = await database.assignSkillsToRoles(assignedSkills, data.insertId);
-      
+      const data = await service.createRole(roleName, roleDescription, department, assignedSkills);
       res.status(201).send({
         success: true,
         message: "A new role has been successfully created!"
@@ -37,7 +35,7 @@ function rolesRoutes(database) {
     let roleID = req.params.roleID;
   
     try {
-      const data = await database.deleteRoleById(roleID);
+      const data = await service.deleteRoleById(roleID);
       res.status(200).send({
         success: true,
         message: "The skill has been successfully deleted!",
@@ -53,7 +51,7 @@ function rolesRoutes(database) {
   
   router.get('/', async (req, res) => {
     try {
-      const data = await database.getAllRoles();
+      const data = await service.getAllRoles();
       res.status(200).send({
         success: true,
         data: data
@@ -70,7 +68,7 @@ function rolesRoutes(database) {
   router.get('/:roleID', async (req, res) => {
     let roleID = req.params.roleID
     try {
-      const data = await database.getRoleById(roleID);
+      const data = await service.getRoleById(roleID);
       res.status(200).send({
         success: true,
         data: data
@@ -87,7 +85,7 @@ function rolesRoutes(database) {
   router.get('/:roleID/skills', async (req, res) => {
     let roleID = req.params.roleID
     try {
-      const data = await database.getSkillsAssignedToRole(roleID);
+      const data = await service.getSkillsAssignedToRole(roleID);
       res.status(200).send({
         success: true,
         data: data
@@ -111,9 +109,7 @@ function rolesRoutes(database) {
 
     console.log(jobDepartment)
     try {
-      const data = await database.updateRoleDetails(roleID, roleName, roleDescription, jobDepartment);
-      await database.removeSkillsFromRole(roleID)
-      await database.assignSkillsToRoles(assignedSkills, roleID);
+      const data = await service.updateRoleDetails(roleID, roleName, roleDescription, jobDepartment, assignedSkills)
       res.status(200).send({
         success: true,
         message: "Role updated."

@@ -11,6 +11,11 @@ const SkillsRouter = require('./routes/skills/SkillsRouter')
 const CourseRouter = require('./routes/courses/CoursesRouter')
 const LearningJourneyRouter = require('./routes/learning-journey/LearningJourneyRouter');
 
+const RolesService = require('../service/src/RolesService');
+const SkillsService = require('../service/src/SkillsService');
+const CoursesService = require('../service/src/CoursesService');
+const LearningJourneyService = require('../service/src/LearningJourneyService');
+
 
 function makeApp (database) {
   app.use(cors())
@@ -21,14 +26,14 @@ function makeApp (database) {
       
       next()
   })
-  app.use('/api/roles', RolesRouter.rolesRoutes(database));
-  app.use('/api/skills', SkillsRouter.skillsRoutes(database))
-  app.use('/api/courses', CourseRouter.courseRoutes(database));
-  app.use('/api/learning-journey', LearningJourneyRouter.learningJourneyRoutes(database));
+  app.use('/api/roles', RolesRouter.rolesRoutes(RolesService(database)));
+  app.use('/api/skills', SkillsRouter.skillsRoutes(SkillsService(database)))
+  app.use('/api/courses', CourseRouter.courseRoutes(CoursesService(database)));
+  app.use('/api/learning-journey', LearningJourneyRouter.learningJourneyRoutes(LearningJourneyService(database)));
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-  
+
   app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", '*'); // update to match the domain you will make the request from
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
