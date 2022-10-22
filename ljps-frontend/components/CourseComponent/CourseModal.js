@@ -20,7 +20,6 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
       }).then(res => {
         if (res.data.success) {
           console.log("SUCCESS")
-          // Add router.push here
           Router.push({
             pathname: "/learning-journey/view-skills/view-courses/confirmation"
           })
@@ -29,6 +28,7 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
           console.log("FAIL")
         }
       }).catch(function (error) {
+        setErrorMsg("Error has occured");
         console.log(error);
       });
     }
@@ -78,6 +78,9 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
                     className="form-control"
                     onChange={({ target }) => setName(target?.value)}
                   />
+                  <br />
+                  {errorMsg ? <label htmlFor="learningJourneyName" className="col-form-label">
+                    {errorMsg} </label>: ''}
                 </div>
               </div>
             </div>
