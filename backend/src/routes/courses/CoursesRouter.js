@@ -4,7 +4,7 @@ function courseRoutes(service) {
   const router = express.Router();
   router.get('/', async (req, res) => {
     try {
-      const data = await service.getCourses(database);
+      const data = await service.getCourses();
       res.status(200).send({
         success: true,
         data: data
