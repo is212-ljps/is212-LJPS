@@ -8,7 +8,7 @@ export default function LearningJourneyDetails() {
   var learningJourneyId = router.query["learningJourneyID"];
 
   const [learningJourney, setLearningJourney] = useState({});
-  const [ courses , setCourses ] = useState([])
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
     if (learningJourneyId) {
@@ -17,7 +17,7 @@ export default function LearningJourneyDetails() {
       axiosFn(url).then(function (response) {
         if (response.data.success) {
           setLearningJourney(response.data.data);
-          setCourses(response.data.data.courses)
+          setCourses(response.data.data.courses);
         } else {
         }
       });
@@ -44,10 +44,49 @@ export default function LearningJourneyDetails() {
           ></Player>
         </div>
       </div>
+      {console.log(courses)}
 
-      <div className="row p-4">
-        <div className="container px-5">
-          <h4 className="fw-bold"> Courses </h4>
+      <div className="container">
+        <h4 className="fw-bold"> Courses </h4>
+        <div className="row">
+          {courses.map((course) => (
+            <div className="col-md-4 col-sm-6 mb-5">
+              <div className="card mt-2">
+                <div className="card-header bg-primary text-light">
+                  {" "}
+                  <b>{course.Course_Name}</b>{" "}
+                </div>
+                <div className="card-body"></div>
+                <div className="row">
+                  <div className="col-5">
+                    {/* <p className="mx-3">{skillDetails.skillName}</p> */}
+                  </div>
+                  <div className="col-7 px-4" align="right">
+                    <div className=" badge bg-light text-black">
+                      {" "}
+                      {course.Course_Category}{" "}
+                    </div>
+                  </div>
+                </div>
+                <div className="row pe-3">
+                  <div className="col-9">
+                    <div className="col-9 mx-3">
+                      {" "}
+                      <b>Course ID: {course.Course_ID}</b>
+                    </div>
+                  </div>
+
+     
+                </div>
+                <div className="row mx-1">
+                  <div className="col-10">
+                    {" "}
+                    <p>{course.Course_Desc}</p>{" "}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

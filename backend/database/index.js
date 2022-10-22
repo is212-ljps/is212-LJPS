@@ -66,7 +66,7 @@ exports.getLearningJourneyByStaffID = async (staffID) => {
 };
 
 exports.getLearningJourneyCourses = async (learningJourneyID) => {
-  const getLearningJourneyCourses = `SELECT Course.Course_ID, Course.Course_Name, Course.Course_Category, Course.Course_Status from learning_journey INNER JOIN learning_journey_course on learning_journey.Learning_Journey_ID=learning_journey_course.Learning_Journey_ID INNER JOIN course on learning_journey_course.Course_ID= course.Course_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
+  const getLearningJourneyCourses = `SELECT Course.Course_ID, Course.Course_Name, Course.Course_Desc, Course.Course_Category, Course.Course_Status from learning_journey INNER JOIN learning_journey_course on learning_journey.Learning_Journey_ID=learning_journey_course.Learning_Journey_ID INNER JOIN course on learning_journey_course.Course_ID= course.Course_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
   try {
     const result = await promiseQuery(getLearningJourneyCourses);
     return result;
