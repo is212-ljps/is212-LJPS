@@ -6,6 +6,8 @@ import DeleteLearningJourneyModal from "./DeleteModal";
 export default function ViewLearningJourneys() {
   const [learningJourney, setLearningJourney] = useState([]);
 
+  const [ learningJourneyDetails , setLearningJourneyDetails ] = useState({})
+
   useEffect(() => {
     onLearningJourneyUpdate();
   }, []);
@@ -37,6 +39,13 @@ export default function ViewLearningJourneys() {
     setLearningJourney(learningJourney);
   };
 
+  const handleDelete = (learningJourneyID, learningJourneyName) =>{
+    setLearningJourneyDetails({
+      'learningJourneyId': learningJourneyID,
+      'learningJourneyName': learningJourneyName
+    })
+  }
+
   return (
     <div>
       <div className="row p-3">
@@ -53,15 +62,15 @@ export default function ViewLearningJourneys() {
         </div>
       </div>
       {Object.keys(learningJourney).map((learningJourneyID, i) => (
-        <div className="row" key={i}>
+        <div className="row mb-4" key={i} >
           <DeleteLearningJourneyModal
-            learningJourneyName={learningJourney[learningJourneyID].Learning_Journey_Name}
-            learningJourneyId={learningJourneyID}
+            learningJourneyDetails={learningJourneyDetails}
+            onLearningJourneyUpdate = {onLearningJourneyUpdate}
           />
 
           <div
             className="card mx-auto"
-            style={{ width: "90%", border: "1px solid black" }}
+            style={{ width: "90%" }}
           >
             <div className="card-body">
               <div className="row">
@@ -86,6 +95,7 @@ export default function ViewLearningJourneys() {
                     className="btn btn-secondary"
                     data-bs-toggle="modal"
                     data-bs-target="#delete-modal"
+                    onClick={()=> handleDelete(learningJourneyID, learningJourney[learningJourneyID].Learning_Journey_Name)}
                   >
                     Delete <i className="bi bi-trash3 mx-1"></i>
                   </button>

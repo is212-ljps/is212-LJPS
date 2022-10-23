@@ -3,11 +3,10 @@ import React from "react";
 import { useState, useRef, useCallback } from "react";
 
 export default function DeleteLearningJourneyModal({
-  learningJourneyName,
-  learningJourneyId,
+  learningJourneyDetails,
+  onLearningJourneyUpdate,
 }) {
   const [errorMessage, setErrorMessage] = useState("");
-
 
   const modal = useRef();
   const toast = useRef();
@@ -15,12 +14,14 @@ export default function DeleteLearningJourneyModal({
   const handleSubmit = useCallback((e) => {
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current);
+
     axios
-      .delete(`http://localhost:8080/api/learning-journey/${learningJourneyId}`)
+      .delete(`http://localhost:8080/api/learning-journey/${learningJourneyDetails.learningJourneyId}`)
       .then(function (response) {
         if (response.data.success) {
           myModal.hide();
           myToast.show();
+          onLearningJourneyUpdate();
         } else {
           setErrorMessage(response.data.message);
         }
@@ -36,7 +37,7 @@ export default function DeleteLearningJourneyModal({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title text-center w-100 ">
-                Delete {learningJourneyName}
+                Delete {learningJourneyDetails.learningJourneyName}
               </h5>
               <button
                 type="button"
@@ -80,10 +81,11 @@ export default function DeleteLearningJourneyModal({
         aria-live="assertive"
         data-bs-autohide="true"
         aria-atomic="true"
+        style={{ zIndex: 9999}}
       >
         <div className="d-flex ">
           <div className="toast-body">
-            {learningJourneyName} has been successfully deleted !
+            Learning Journey has been successfully deleted !
           </div>
         </div>
       </div>
