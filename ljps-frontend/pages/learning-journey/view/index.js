@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
+import  DeleteLearningJourneyModal from "./DeleteModal"
+
 
 export default function ViewLearningJourneys() {
   const [learningJourney, setLearningJourney] = useState([]);
@@ -10,7 +12,6 @@ export default function ViewLearningJourneys() {
   }, []);
 
   const onLearningJourneyUpdate = useCallback(() => {
-    // currently staffID is hardcoded
     axios
       .get("http://localhost:8080/api/learning-journey/staff/130002")
       .then((res) => {
@@ -37,8 +38,11 @@ export default function ViewLearningJourneys() {
     setLearningJourney(learningJourney);
   };
 
+
+
   return (
     <div>
+      <DeleteLearningJourneyModal />
       <div className="row p-3">
         <div className="col-md-6 d-flex justify-content-center align-items-center flex-column">
           <h3 className="fw-bold"> My Learning Journeys</h3> 
@@ -66,7 +70,7 @@ export default function ViewLearningJourneys() {
                   </div>
                   <div className = 'col-md-4 d-flex justify-content-end mt-4'>
                       <button type="button" className="btn btn-light mx-1">View <i className="bi bi-eye-fill mx-1"></i></button>
-                      <button type="button" className="btn btn-secondary">Delete <i className="bi bi-trash3 mx-1"></i></button>
+                      <button type="button" className="btn btn-secondary"  data-bs-toggle="modal" data-bs-target="#delete-modal">Delete <i className="bi bi-trash3 mx-1"></i></button>
                   </div>
 
               </div>
