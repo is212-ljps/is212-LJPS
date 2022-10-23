@@ -1,33 +1,37 @@
 import axios from "axios";
 import React from "react";
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 
-export default function DeleteLearningJourneyModal({ learningJourneyName }) {
+export default function DeleteLearningJourneyModal({
+  learningJourneyName,
+  learningJourneyId,
+}) {
+  const [errorMessage, setErrorMessage] = useState("");
+
+
   const modal = useRef();
   const toast = useRef();
   const closeButton = useRef();
   const handleSubmit = useCallback((e) => {
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current);
-    // axios
-    //   .delete(`http://localhost:8080/api/skills/${skillId}`)
-    //   .then(function (response) {
-    //     if (response.data.success) {
-    //       setErrorMessage("");
-    //       myModal.hide();
-    //       myToast.show();
-    //       onSkillsUpdate();
-    //     } else {
-    //       setErrorMessage(response.data.message);
-    //     }
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    axios
+      .delete(`http://localhost:8080/api/learning-journey/${learningJourneyId}`)
+      .then(function (response) {
+        if (response.data.success) {
+          myModal.hide();
+          myToast.show();
+        } else {
+          setErrorMessage(response.data.message);
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   });
   return (
     <div>
-      <div className="modal" tabindex="-1" id="delete-modal" ref={modal}>
+      <div className="modal" tabIndex="-1" id="delete-modal" ref={modal}>
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -44,6 +48,10 @@ export default function DeleteLearningJourneyModal({ learningJourneyName }) {
             <div className="modal-body text-center">
               <p>Are you sure you want to delete this Learning Journey?</p>
             </div>
+
+            {errorMessage.length > 0 && (
+              <p className="text-danger text-center">{errorMessage}</p>
+            )}
             <div className="modal-footer d-flex justify-content-center">
               <button
                 type="button"

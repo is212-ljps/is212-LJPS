@@ -56,6 +56,7 @@ export default function ViewLearningJourneys() {
         <div className="row" key={i}>
           <DeleteLearningJourneyModal
             learningJourneyName={learningJourney[learningJourneyID].Learning_Journey_Name}
+            learningJourneyId={learningJourneyID}
           />
 
           <div
