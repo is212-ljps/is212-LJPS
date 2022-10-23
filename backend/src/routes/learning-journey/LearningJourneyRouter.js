@@ -43,6 +43,7 @@ function learningJourneyRoutes(service){
   })
 
   router.delete('/:learningJourneyId', async (req, res) => {
+    console.log('hello delete')
     let learningJourneyId = req.params.learningJourneyId
     try {
       

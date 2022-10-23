@@ -12,6 +12,15 @@ function learningJourneyService(database){
     }
   }
 
+  learningJourneyService.deleteLearningJourney = async (learningJourneyId) => {
+    try{
+      return await database.deleteLearningJourney(learningJourneyId)
+    }
+    catch(err){
+      throw err
+    }
+  }
+
   learningJourneyService.getLearningJourney = async (learningJourneyId) => {
     try {
       return await database.getLearningJourney(learningJourneyId)
@@ -19,6 +28,8 @@ function learningJourneyService(database){
       throw err;
     }
   }
+  
+  
 
   learningJourneyService.getLearningJourneyByStaffId = async (staffId) => {
     try {
