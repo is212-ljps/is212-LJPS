@@ -22,6 +22,18 @@ exports.createLearningJourney = async (learningJourneyName, staffId, jobRoleId) 
   
 }
 
+exports.deleteLearningJourney = async (learningJourneyId) => {
+  const deleteLearningJourney = `DELETE FROM learning_journey WHERE Learning_Journey_ID=${learningJourneyId}`
+
+  try {
+    const result = await promiseQuery(deleteLearningJourney)
+    return result
+  } catch (err){
+    throw err
+  }
+  
+}
+
 exports.createLearningJourneySkill = async (learningJourneyId, skillId) => {
 
   const insertLearningJourneySkill = `INSERT INTO learning_journey_skill (Learning_Journey_ID, Skill_ID) VALUES (${learningJourneyId}, ${skillId})`;

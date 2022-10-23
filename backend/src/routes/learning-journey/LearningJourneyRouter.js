@@ -42,6 +42,25 @@ function learningJourneyRoutes(service){
     }  
   })
 
+  router.delete('/:learningJourneyId', async (req, res) => {
+    let learningJourneyId = req.params.learningJourneyId
+    try {
+      
+      const result = await service.deleteLearningJourney(learningJourneyId);
+      res.status(200).send({
+        success: true,
+        data: ''
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+  })
+
+
 
   router.get("/staff/:staffID", async (req, res) => {
 
@@ -51,6 +70,7 @@ function learningJourneyRoutes(service){
     try {
       
       const result = await service.getLearningJourneyByStaffId(staffID);
+      console.log(result)
 
       res.status(200).send({
         success: true,
