@@ -67,7 +67,7 @@ CREATE TABLE `learning_journey_course` (
 	`Learning_Journey_ID` int, 
 	`Course_ID` varchar(20), 
     CONSTRAINT `learning_journey_course_pk` PRIMARY KEY (`Learning_Journey_ID`, `Course_ID`),
-    CONSTRAINT `learning_journey_course_fk1` FOREIGN KEY (`Learning_Journey_ID`) REFERENCES learning_journey(`Learning_Journey_ID`),
+    CONSTRAINT `learning_journey_course_fk1` FOREIGN KEY (`Learning_Journey_ID`) REFERENCES learning_journey(`Learning_Journey_ID`) ON DELETE CASCADE,
     CONSTRAINT `learning_journey_course_fk2` FOREIGN KEY (`Course_ID`) REFERENCES course(`Course_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -83,7 +83,7 @@ CREATE TABLE `learning_journey_skill` (
 	`Learning_Journey_ID` int,
     `Skill_ID` int,
 	CONSTRAINT `learning_journey_skill_pk` PRIMARY KEY (`Learning_Journey_ID`, `Skill_ID`),
-    CONSTRAINT `learning_journey_skill_fk1` FOREIGN KEY (`Learning_Journey_ID`) REFERENCES learning_journey(`Learning_Journey_ID`),
+    CONSTRAINT `learning_journey_skill_fk1` FOREIGN KEY (`Learning_Journey_ID`) REFERENCES learning_journey(`Learning_Journey_ID`) ON DELETE CASCADE,
     CONSTRAINT `learning_journey_skill_fk2` FOREIGN KEY (`Skill_ID`) REFERENCES skill(`Skill_ID`) 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
