@@ -17,13 +17,16 @@ describe("Integration test for assiging skills to role", () => {
   it('Create 2 skills -> Create a role -> Assign both skills to role', async () => {
     const createSkill1Res = await request(server).post("/api/skills").send({
       skillName: "Skill Test 1",
-      skillDescription: ""
+      skillDescription: "",
+      assignedCourses: ["tch019"]
     })
     const skill1Id = createSkill1Res._body.data
+    console.log(skill1Id)
     
     const createSkill2Res = await request(server).post("/api/skills").send({
       skillName: "Skill Test 2",
-      skillDescription: ""
+      skillDescription: "",
+      assignedCourses: ["tch019"]
     })
     const skill2Id = createSkill2Res._body.data
     const createRoleRes = await request(server).post("/api/roles").send({
