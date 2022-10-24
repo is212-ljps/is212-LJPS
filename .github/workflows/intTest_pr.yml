@@ -39,4 +39,4 @@ jobs:
       - name: Install dependencies
         run: cd ./backend && npm install
       - name: Test
-        run: cd ./backend && npm run testInt
+        run: bash ./backend/src/intTest/runTest.sh
