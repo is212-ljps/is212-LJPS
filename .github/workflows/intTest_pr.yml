@@ -41,3 +41,7 @@ jobs:
       - name: Test
         run: | 
           pwd
+          ll
+          cd ./backend
+          pwd
+          npm run testInt
