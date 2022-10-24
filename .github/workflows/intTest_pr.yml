@@ -2,7 +2,7 @@ name: Integration Tests on PR
 env:
     MYSQL_DATABASE: "ljps_db_test"
     MYSQL_USER: "root"
-    MYSQL_PASSWORD: ""
+    MYSQL_PASSWORD: "root"
     MYSQL_HOST: "localhost"
 on:
   pull_request:
@@ -35,4 +35,5 @@ jobs:
         uses: actions/checkout@v3
       - name: Test
         run: |
+          cd ./backend && npm run resetDatabase
           npx jest ./backend/src/intTest/__tests__/CoursesIntTest.integration.js --forceExit

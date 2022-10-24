@@ -5,7 +5,7 @@ var database = require("../../../database/index");
 var myCon = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: ''
+  password: 'root'
 });
 var rl = readline.createInterface({
   input: fs.createReadStream(__dirname + '/ljps_sql_setup_test.sql'),
