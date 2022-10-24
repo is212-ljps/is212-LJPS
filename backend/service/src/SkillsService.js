@@ -26,9 +26,12 @@ function skillsService(database){
   }
 
   skillsService.createSkill = async (skillName, skillDescription, assignedCourses) => {
+
     try {
       const data = await database.createSkill(skillName, skillDescription);
-      await database.assignCoursesToSkills(assignedCourses, data.insertId)
+      if (assignedCourses) {
+        await database.assignCoursesToSkills(assignedCourses, data.insertId)
+      }
       return data.insertId;
     } catch (err) {
       throw err;
