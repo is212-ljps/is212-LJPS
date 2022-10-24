@@ -3,7 +3,7 @@ import { validateLength } from '../../util/validation'
 import axios from 'axios'
 
 
-export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) {
+export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelectedSkill, ...props }) {
   const [nameErrorMsg, setNameErrorMsg] = useState('')
   const [descErrorMsg, setDescErrorMsg] = useState('')
   const [errorMsg, setErrorMsg] = useState('')
@@ -44,6 +44,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
         setAssignedCourses([])
         setNameErrorMsg("")
         setDescErrorMsg("")
+        resetSelectedSkill()
       })
     }
   }, [modal.current])
@@ -86,7 +87,10 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
             setNameErrorMsg('')
             setDescErrorMsg('')
 
-            e.target.reset();
+            if (!skillID) {
+              e.target.reset();
+              setAssignedCourses([])
+            }
             myToast.show();
             onSkillsUpdate()
           } else {
