@@ -27,7 +27,7 @@ export default function SkillsPage() {
     })
 
     return <div className="container-fluid">
-        <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} />
+        <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill}/>
         <div className="ml-auto my-2"><CreateSkillButton onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill}  /></div>
         <table className="table table-borderless">
             <thead>
