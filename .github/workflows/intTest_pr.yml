@@ -1,0 +1,41 @@
+name: Integration Tests on PR
+env:
+    MYSQL_DATABASE: "ljps_db_test"
+    MYSQL_USER: "root"
+    MYSQL_PASSWORD: "root"
+    MYSQL_HOST: "localhost"
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    container: 
+      image: node:14.5.0-alpine
+    services:
+      mysql:
+        image: mysql:5.7
+        ports:
+          - 3306
+        env:
+          MYSQL_DATABASE: ${{ env.MYSQL_DATABASE }}
+          MYSQL_USER: ${{ env.MYSQL_USER }}
+          MYSQL_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+          MYSQL_ROOT_PASSWORD: ${{ env.MYSQL_PASSWORD }}
+        options: >-
+          --name=mysql
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: cd ./backend && npm install
+      - name: Test
+        run: |
+          cd ./backend && npm run resetDatabase
+          npx jest ./src/intTest/__tests__/CoursesIntTest.integration.js --forceExit

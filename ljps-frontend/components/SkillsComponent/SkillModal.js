@@ -68,7 +68,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
     e.preventDefault();
 
     if (
-      validateLength(nameInput.current.value, 5, 20) &&
+      validateLength(nameInput.current.value, 5, 50) &&
       validateLength(descriptionInput.current.value, 0, 300)
     ) {
       // pass length validation
