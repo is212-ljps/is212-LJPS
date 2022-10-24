@@ -34,6 +34,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Test
+        shell: bash
         run: |
           pwd
           cd ./backend && npm run testInt
