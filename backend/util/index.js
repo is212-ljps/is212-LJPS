@@ -1,4 +1,4 @@
-checkLength = (min, max, item) => {
+const checkLength = (min, max, item) => {
   try {
     return (item.length > max || item.length < min)
   }
