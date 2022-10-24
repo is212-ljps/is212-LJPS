@@ -33,7 +33,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Install dependencies
+        run: cd ./backend && npm install
       - name: Test
         run: |
           cd ./backend && npm run resetDatabase
-          npx jest ./backend/src/intTest/__tests__/CoursesIntTest.integration.js --forceExit
+          npx jest ./src/intTest/__tests__/CoursesIntTest.integration.js --forceExit
