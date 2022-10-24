@@ -1,10 +1,10 @@
 const request = require('supertest');
-var database = require("../../database/index");
+var database = require("../../../database/index");
 
 describe("Integration test for courses", () => {
   var server;
   beforeEach(() => {
-    const { makeApp } = require('../app')
+    const { makeApp } = require('../../app')
   
     server = makeApp(database("ljps_db_test"))
     port = 8000

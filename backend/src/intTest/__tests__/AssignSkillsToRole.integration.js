@@ -1,10 +1,10 @@
 const request = require('supertest');
-var database = require("../../database/index");
+var database = require("../../../database/index");
 
 describe("Integration test for assiging skills to role", () => {
   var server;
   beforeEach(() => {
-    const { makeApp } = require('../app')
+    const { makeApp } = require('../../app')
   
     server = makeApp(database("ljps_db_test"))
     port = 8000
@@ -34,7 +34,6 @@ describe("Integration test for assiging skills to role", () => {
     });
     const roleId = createRoleRes._body.data
     const getRole = await request(server).get("/api/roles/" + roleId + "/skills");
-
     expect(getRole._body.data[0].Skill_ID).toBe(skill1Id)
     expect(getRole._body.data[1].Skill_ID).toBe(skill2Id)
   })  
