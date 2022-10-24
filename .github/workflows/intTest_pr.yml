@@ -39,4 +39,7 @@ jobs:
       - name: Install dependencies
         run: cd ./backend && npm install
       - name: Test
-        run: bash ${GITHUB_WORKSPACE}/runTest.sh
+        run: |
+          chmod +x ./backend/src/intTest/runTest.sh
+          ./backend/src/intTest/runTest.sh
+        shell: bash
