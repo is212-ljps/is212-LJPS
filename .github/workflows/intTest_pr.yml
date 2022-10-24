@@ -40,6 +40,4 @@ jobs:
         run: cd ./backend && npm install
       - name: Test
         run: | 
-          cd ./backend
           pwd
-          npm run testInt
