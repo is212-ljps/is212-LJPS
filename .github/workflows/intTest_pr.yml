@@ -3,7 +3,7 @@ env:
     MYSQL_DATABASE: "ljps_db_test"
     MYSQL_USER: "root"
     MYSQL_PASSWORD: ""
-    MYSQL_HOST: "localhost"
+    MYSQL_HOST: "127.0.0.1"
 on:
   pull_request:
     branches:
@@ -27,6 +27,14 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
+        10 	
+An IDS that creates a model of abnormal network traffic behaviors based on known attacks and that reports network traffic that has similar characteristics to those of the model.
+        8, 12
+        7, drops net work packets 
+        6, registered, perform assignment, web pages
+        5, mandatory access
+        4, 4
+        3, 4
 
     steps:
       - uses: actions/checkout@v3
@@ -34,7 +42,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client
-          mysql --host mydb -u${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }} -e "SHOW DATABASES"
+          mysql --host ${{ env.MYSQL_HOST }} -u${{ env.MYSQL_USER }} -p${{ env.MYSQL_PASSWORD }} -e "SHOW DATABASES"
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
