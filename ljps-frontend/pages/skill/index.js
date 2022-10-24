@@ -7,6 +7,7 @@ import SkillModal from "../../components/SkillsComponent/SkillModal"
 export default function SkillsPage() {
     const [skills, setSkills] = useState([])
     const [selectedSkill, setSelectedSkill] = useState({ skillName: '', skillDescription: '', skillID: null })
+    const [selectedStatus, setStatus] = useState('1')
 
     useEffect(() => {
         onSkillsUpdate()
@@ -23,12 +24,26 @@ export default function SkillsPage() {
     })
 
     const resetSelectedSkill = useCallback(() => {
-        setSelectedSkill({ skillName: '', skillDescription: '', skillID:''  })
+        setSelectedSkill({ skillName: '', skillDescription: '', skillID: '' })
     })
 
     return <div className="container-fluid">
         <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} />
-        <div className="ml-auto my-2"><CreateSkillButton onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill}  /></div>
+        <div className="ml-auto my-2">
+        <div className="row">
+        <div className="col-6">
+            <ul class="nav">
+                <li class="nav-item nav-pills">
+                    <a class="nav-link" href='#"'>Active</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inactive</a>
+                </li>
+            </ul>
+            </div>
+            <CreateSkillButton onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill} />
+        </div>
+        </div>
         <table className="table table-borderless">
             <thead>
                 <tr className=" rounded">

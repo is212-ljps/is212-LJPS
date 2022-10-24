@@ -2,9 +2,7 @@ import React from "react";
 
 export default function CreateSkillButton({ resetSelectedSkill, ...props }) {
   return (
-    <div>
-      <div className="row">
-        <div className="col-12 d-flex flex-row-reverse">
+        <div className="col-6 d-flex flex-row-reverse">
           <button
             type="button"
             className="btn btn-light"
@@ -16,7 +14,5 @@ export default function CreateSkillButton({ resetSelectedSkill, ...props }) {
           </button>
         </div>
 
-      </div>
-    </div>
   );
 }
