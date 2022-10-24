@@ -39,11 +39,11 @@ export default function SkillsPage() {
             <div className="row">
                 <div className="col-6">
                     <ul className="nav">
-                        <li className="nav-item nav-pills">
-                            <button className="nav-link" onClick={() => setActive(true)}>Active</button>
+                        <li>
+                            <button className={active?"btn btn-primary":"btn"} onClick={() => setActive(true)}>Active</button>
                         </li>
-                        <li className="nav-item nav-pills">
-                            <button className="nav-link" onClick={() => setActive(false)}>Inactive</button>
+                        <li>
+                            <button className={active?"btn":"btn btn-primary"} onClick={() => setActive(false)}>Inactive</button>
                         </li>
                     </ul>
                 </div>
