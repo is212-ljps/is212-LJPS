@@ -1,4 +1,4 @@
-function learningJourneyService(database){
+function learningJourneyService(database) {
   const learningJourneyService = {}
 
   learningJourneyService.createLearningJourney = async (learningJourneyName, staffId, jobRoleId, courses, skillId) => {
@@ -13,23 +13,56 @@ function learningJourneyService(database){
   }
 
   learningJourneyService.deleteLearningJourney = async (learningJourneyId) => {
-    try{
+    try {
       return await database.deleteLearningJourney(learningJourneyId)
     }
-    catch(err){
+    catch (err) {
       throw err
     }
   }
 
   learningJourneyService.getLearningJourney = async (learningJourneyId) => {
+    const learningJourney = {};
     try {
-      return await database.getLearningJourney(learningJourneyId)
+      const learningJourneyResult = await database.getLearningJourney(learningJourneyId);
+      learningJourney.Learning_Journey_ID = learningJourneyResult[0].Learning_Journey_ID;
+      learningJourney.Learning_Journey_Name = learningJourneyResult[0].Learning_Journey_Name;
+
+      const learningJourneyCoursesResult = await database.getLearningJourneyCourses(learningJourneyId);
+      learningJourney.courses = learningJourneyCoursesResult;
+
+      const courses = learningJourneyCoursesResult.map(({ Course_ID }) => Course_ID);
+
+      const learningJourneySkillsResult = await database.getLearningJourneySkills(learningJourneyId)
+
+      learningJourney.skills = learningJourneySkillsResult
+      const coursesSkillsResult = await database.getCoursesSkills(courses);
+
+      const courseSkills = coursesSkillsResult.map(
+        ({ Skill_Name, Course_ID }) => {
+          return { Skill_Name, Course_ID };
+        }
+      );
+
+      for (let course of learningJourney.courses) {
+        for (let skill of courseSkills) {
+          if (skill.Course_ID == course.Course_ID) {
+            if (course.skills) {
+              course.skills.push(skill.Skill_Name);
+            }
+            else {
+              course.skills = [skill.Skill_Name]
+            }
+          }
+        }
+      }
+      return learningJourney
     } catch (err) {
       throw err;
     }
   }
-  
-  
+
+
 
   learningJourneyService.getLearningJourneyByStaffId = async (staffId) => {
     try {

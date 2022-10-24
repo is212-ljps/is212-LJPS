@@ -66,10 +66,8 @@ function learningJourneyRoutes(service) {
 
   router.get("/staff/:staffID", async (req, res) => {
     let staffID = req.params.staffID;
-
     try {
       const result = await service.getLearningJourneyByStaffId(staffID);
-      console.log(result);
 
       res.status(200).send({
         success: true,
