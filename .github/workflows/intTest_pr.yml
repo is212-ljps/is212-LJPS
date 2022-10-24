@@ -27,14 +27,6 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
-        10 	
-An IDS that creates a model of abnormal network traffic behaviors based on known attacks and that reports network traffic that has similar characteristics to those of the model.
-        8, 12
-        7, drops net work packets 
-        6, registered, perform assignment, web pages
-        5, mandatory access
-        4, 4
-        3, 4
 
     steps:
       - uses: actions/checkout@v3
