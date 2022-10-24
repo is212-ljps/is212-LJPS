@@ -7,7 +7,7 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "test": "jest --forceExit",
+    "test": "jest --testMatch='**/*.test.js' --forceExit",
     "start": "nodemon src/server.js",
     "testInt": "bash src/intTest/runTest.sh",
     "resetDatabase": "node src/intTest/setup/TestDatabaseSetUp.js"
