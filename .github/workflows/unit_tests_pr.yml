@@ -1,9 +1,9 @@
-name: Tests on main
+name: Unit Tests on PR
 
 on:
-  push:
+  pull_request:
     branches:
-      - main
+      - '**'
 
 jobs:
   test:
@@ -19,9 +19,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
       - name: Install dependencies
         run: |
-          cd ./backend && npm ci
+          cd ./backend && npm install
       - name: Test
         run: cd ./backend && npm test
