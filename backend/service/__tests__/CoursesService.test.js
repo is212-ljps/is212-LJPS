@@ -55,9 +55,10 @@ describe("Tests for Courses Service", () => {
     }
     ]
     getCoursesBySkill.mockResolvedValue(expectedValue)
-    let response = await service.getCoursesBySkill();
+    let response = await service.getCoursesBySkill(skillId);
     expect(response).toBe(expectedValue)
-    expect(getCoursesBySkill.mock.calls.length).toBe(1)
+    expect(getCoursesBySkill.mock.calls.length).toBe(1);
+    expect(getCoursesBySkill.mock.calls[0][0]).toBe(skillId);
 
   })
 })
