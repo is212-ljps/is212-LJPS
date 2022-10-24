@@ -3,20 +3,38 @@ const express = require("express");
 function skillsRoutes(service) {
   const router = express.Router();
   router.get('/', async (req, res) => {
-    try {
-      const data = await service.getAllSkills();
-      res.status(200).send({
-        success: true,
-        data: data
-      });
-    } catch (err) {
-      console.log(err)
-      res.status(500).send({
-        success: false,
-        message: "An error occured, please try again ",
-      })
-    }
+    if (!req.query.active) {
+      try {
+        const data = await service.getAllSkills();
+        res.status(200).send({
+          success: true,
+          data: data
+        });
+      } catch (err) {
+        console.log(err)
+        res.status(500).send({
+          success: false,
+          message: "An error occured, please try again ",
+        })
+      }
+    } else if (req.query.active == 'false') {
+      try {
+        const data = await service.getInactiveSkills();
+        res.status(200).send({
+          success: true,
+          data: data
+        });
+      } catch (err) {
+        console.log(err)
+        res.status(500).send({
+          success: false,
+          message: "An error occured, please try again ",
+        })
+      }
+    } 
   })
+  
+
 
   router.get('/:skillID', async (req, res) => {
     var skillID = req.params.skillID
@@ -49,7 +67,7 @@ function skillsRoutes(service) {
         success: false,
         message: "An error occured, please try again ",
       })
-    }  
+    }
   })
 
   router.post("/", async (req, res) => {
@@ -102,7 +120,7 @@ function skillsRoutes(service) {
     const skillName = req.body.skillName
     const skillDescription = req.body.skillDescription
     const assignedCourses = req.body.assignedCourses
-    
+
     try {
       const data = await service.updateSkillById(skillID, skillName, skillDescription, assignedCourses);
       res.status(200).send({
