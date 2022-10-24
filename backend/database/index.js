@@ -86,7 +86,7 @@ exports.getCoursesBySkill = async (skillId) => {
 }
 
 exports.getAllSkills = async () => {
-  const getSkills = `SELECT * FROM skill`
+  const getSkills = `SELECT * FROM skill WHERE Is_Active=TRUE`
   try {
     const result = await promiseQuery(getSkills)
     return result
