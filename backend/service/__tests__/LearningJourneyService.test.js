@@ -5,13 +5,15 @@ const createLearningJourneyCourse = jest.fn()
 const createLearningJourneySkill = jest.fn()
 const getLearningJourney = jest.fn()
 const getLearningJourneyByStaffID = jest.fn()
+const deleteLearningJourney= jest.fn()
 
 var service = LearningJourneyService({
   createLearningJourney,
   createLearningJourneyCourse,
   createLearningJourneySkill,
   getLearningJourney,
-  getLearningJourneyByStaffID
+  getLearningJourneyByStaffID,
+  deleteLearningJourney
 })
 
 describe("Tests for Learning Journey Service", () => {
@@ -51,6 +53,17 @@ describe("Tests for Learning Journey Service", () => {
 
     expect(getLearningJourneyByStaffID.mock.calls.length).toBe(1)
     expect(getLearningJourneyByStaffID.mock.calls[0][0]).toBe(staffId)
+
+  })
+
+  it('Delete Learning Journey', async ()=>{
+    var learningJourneyId = 1
+    deleteLearningJourney.mockResolvedValue(learningJourneyId)
+
+    let response = await service.deleteLearningJourney(learningJourneyId)
+    expect(deleteLearningJourney.mock.calls.length).toBe(1)
+    expect(deleteLearningJourney.mock.calls[0][0]).toBe(learningJourneyId )
+
 
   })
 })
