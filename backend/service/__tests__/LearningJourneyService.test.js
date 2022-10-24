@@ -25,7 +25,7 @@ describe("Tests for Learning Journey Service", () => {
   })
 
   it('Create learning Journey', async ()=>{
-    var name = "Learning Journey Name"
+    var name = "Learning Journey"
     var staffId = 1
     var jobRoleId = 1
     var skillId = 1
