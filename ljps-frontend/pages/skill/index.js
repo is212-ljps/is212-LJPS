@@ -34,7 +34,7 @@ export default function SkillsPage() {
     })
 
     return <div className="container-fluid">
-        <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} />
+        <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill} />
         <div className="ml-auto my-2">
             <div className="row">
                 <div className="col-6">
