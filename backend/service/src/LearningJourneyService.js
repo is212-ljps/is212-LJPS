@@ -21,6 +21,9 @@ function learningJourneyService(database){
   }
 
   learningJourneyService.deleteLearningJourney = async (learningJourneyId) => {
+    if(!learningJourneyId){
+      return false 
+    }
     try{
       return await database.deleteLearningJourney(learningJourneyId)
     }
