@@ -36,10 +36,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Run mysql
-        run: sudo service mysql start
       - name: Install dependencies
         run: cd ./backend && npm install
       - name: Test
         run: cd ./backend && npm run testInt
-        
