@@ -4,7 +4,7 @@ var readline = require('readline');
 var database = require("../../../database/index");
 var myCon = mysql.createConnection({
   host: 'localhost',
-  user: '',
+  user: 'root',
   password: ''
 });
 var rl = readline.createInterface({

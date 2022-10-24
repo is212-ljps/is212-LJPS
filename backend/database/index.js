@@ -5,7 +5,7 @@ function database(databaseName) {
 
   const connection = mysql.createPool({
     host: "localhost",
-    user: "",
+    user: "root",
     password: "",
     database: databaseName,
   })
