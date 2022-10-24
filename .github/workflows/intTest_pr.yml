@@ -41,6 +41,5 @@ jobs:
         run: cd ./backend && npm install
       - name: Test
         run: |
-          chmod +x ./backend/src/intTest/runTest.sh
-          ./backend/src/intTest/runTest.sh
-        shell: bash
+          pwd
+          cd ./backend && npm run testInt
