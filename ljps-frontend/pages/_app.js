@@ -2,9 +2,15 @@ import "../styles/globals.css";
 import Script from "next/script";
 import Head from "next/head";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import React, { useState } from "react";
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useRouter } from "next/router";
 
 
 function MyApp({ Component, pageProps }) {
+  // Get Role details here
+  const role = window.localStorage("userDetails");
+  console.log(role)
   return (
     <>
       <Head>
