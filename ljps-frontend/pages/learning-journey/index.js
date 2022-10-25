@@ -21,7 +21,11 @@ export default function SelectRole() {
 
   const onRolesUpdate = useCallback(() => {
     axios.get("http://localhost:8080/api/roles").then((res) => {
+<<<<<<< Updated upstream
       console.log(res.data.data)
+=======
+      console.log(res.data);
+>>>>>>> Stashed changes
       setRoles(res.data.data);
     });
   }, []);
@@ -33,7 +37,7 @@ export default function SelectRole() {
     } else {
       router.push({
         pathname: "/learning-journey/view-skills",
-        query: {selectedRole},
+        query: { selectedRole },
       });
     }
   };
@@ -53,10 +57,14 @@ export default function SelectRole() {
         </div>
       </div>
 
+<<<<<<< Updated upstream
       <div
         className="container"
         style={{ maxHeight: "400px", overflowY: "auto" }}
       >
+=======
+      <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+>>>>>>> Stashed changes
         <div className="row mx-4">
           {roles?.length == 0 && (
             <h4 className="text-center"> No Roles Available</h4>
@@ -80,6 +88,13 @@ export default function SelectRole() {
                   onClick={toggleButton}
                 >
                   {role.Job_Role_Name}
+
+                  <i
+                    className="bi bi-info-circle-fill mx-2 "
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="bottom"
+                    title={role.Job_Role_Description}
+                  ></i>
                 </button>
               </div>
             ))}
