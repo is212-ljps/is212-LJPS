@@ -121,8 +121,6 @@ exports.getCoursesBySkill = async (skillId) => {
 };
 
 exports.getCoursesByMultipleSkill = async (skills) => {
-  console.log('hello')
-
   skills = skills.split(",")
   let str = "";
   skills.forEach((skill) => (str += `Skill_ID='${skill}' OR `));
@@ -174,9 +172,7 @@ exports.getSkillByMultipleId = async (skills) => {
   skills.forEach((skillID) => (str += `Skill_ID='${skillID}' OR `));
 
   const getSkill = `SELECT * FROM skill WHERE Is_Active=TRUE AND ${str.slice(0,-4)}`;
-  console.log(str)
 
-  console.log(getSkill)
   try {
     const result = await promiseQuery(getSkill);
     return result;
