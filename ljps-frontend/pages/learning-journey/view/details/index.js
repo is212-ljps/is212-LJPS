@@ -12,22 +12,33 @@ export default function LearningJourneyDetails() {
   const [selectedCourse, setSelectedCourse] = useState()
 
   useEffect(() => {
-    if (learningJourneyId) {
-      const url = `http://localhost:8080/api/learning-journey/${learningJourneyId}`;
-      const axiosFn = axios.get;
-      axiosFn(url).then(function (response) {
-        if (response.data.success) {
-          setLearningJourney(response.data.data);
-        } else {
-        }
-      });
-    }
+    getLearningJourney()
   }, [learningJourneyId]);
 
+  const getLearningJourney = useCallback(() => {
+    if (!learningJourneyId) return
+    const url = `http://localhost:8080/api/learning-journey/${learningJourneyId}`;
+    const axiosFn = axios.get;
+    axiosFn(url).then(function (response) {
+      if (response.data.success) {
+        setLearningJourney(response.data.data);
+      }
+    });
+  }, [learningJourneyId])
+
+  const removeCourse = useCallback(() => {
+    const getUrl = `http://localhost:8080/api/learning-journey/${learningJourneyId}`
+    const removeUrl = `http://localhost:8080/api/learning-journey/${learningJourneyId}/${selectedCourse.Course_ID}`
+    axios.delete(removeUrl).then(() => {
+      axios.get(getUrl).then((res) => {
+        setLearningJourney(res.data.data)
+      })
+    });
+  }, [selectedCourse?.Course_ID])
 
   return (
     <div className="container">
-      <RemoveCourseModal course={selectedCourse}/>
+      <RemoveCourseModal course={selectedCourse} removeCourse={removeCourse} />
       <div className="row py-4">
         <div className="col-md-5 d-flex justify-content-center flex-column">
           <div>
@@ -84,7 +95,7 @@ export default function LearningJourneyDetails() {
               </div>
 
               <div className="px-3">
-                {course.skills.map((skill) => (
+                {course.skills?.map((skill) => (
                   <span className="badge rounded-pill bg-dark py-1 me-2" key={skill} style={{ fontSize: "11px" }}>
                     {skill}
                   </span>
@@ -98,7 +109,7 @@ export default function LearningJourneyDetails() {
               </div>
 
               <div className="d-flex justify-content-end m-2">
-                <button type="button" onClick={()=>{setSelectedCourse(course)}} className="btn btn-outline-primary" data-bs-target="#remove-course-modal" data-bs-toggle="modal">
+                <button type="button" onClick={() => { setSelectedCourse(course) }} className="btn btn-outline-primary" data-bs-target="#remove-course-modal" data-bs-toggle="modal">
                   Remove <i className="bi bi-trash3-fill"></i>
                 </button>
               </div>

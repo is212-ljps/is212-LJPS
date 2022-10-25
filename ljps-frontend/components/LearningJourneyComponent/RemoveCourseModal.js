@@ -1,8 +1,8 @@
 import React from "react"
 
 
-export default function RemoveCourseModal({course}){
-    console.log(course)
+export default function RemoveCourseModal({course, removeCourse}){
+
     return <div className="modal fade" id="remove-course-modal" tabIndex="-1" aria-labelledby="remove-course-modal" aria-hidden="true">
     <div className="modal-dialog">
       <div className="modal-content">
@@ -15,7 +15,7 @@ export default function RemoveCourseModal({course}){
         </div>
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" className="btn btn-primary">Remove</button>
+          <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={removeCourse}>Remove</button>
         </div>
       </div>
     </div>
