@@ -72,6 +72,18 @@ function learningJourneyService(database) {
     }
   }
 
+  learningJourneyService.removeCourseFromLearningJourney = async (learningJourneyId, courseId) => {
+    console.log("hi")
+    if(!learningJourneyId || !courseId){
+      return false
+    }
+    try{
+      return await database.removeCourseFromLearningJourney(learningJourneyId, courseId)
+    } catch (err){
+      throw err
+    }
+  }
+
   return learningJourneyService;
 }
 

@@ -30,10 +30,10 @@ exports.deleteLearningJourney = async (learningJourneyId) => {
   try {
     const result = await promiseQuery(deleteLearningJourney)
     return result
-  } catch (err){
+  } catch (err) {
     throw err
   }
-  
+
 }
 
 exports.createLearningJourneySkill = async (learningJourneyId, skillId) => {
@@ -314,3 +314,15 @@ exports.updateRoleDetails = async (
     throw err;
   }
 };
+
+exports.removeCourseFromLearningJourney = async (learningJourneyId, courseId) => {
+  console.log("hi2")
+  const removeCourseFromLearningJourney = `DELETE FROM learning_journey_course WHERE Learning_Journey_Id=${learningJourneyId} AND Course_ID='${courseId}';`
+  try {
+    const result = await promiseQuery(removeCourseFromLearningJourney);
+    return true;
+  } catch (err) {
+    console.log(err)
+    throw err;
+  }
+}
