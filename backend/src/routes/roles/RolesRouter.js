@@ -28,12 +28,12 @@ function rolesRoutes(service) {
           message: "An error occured, please try again.",
         });
       }
-    }  
+    }
   });
-  
+
   router.delete("/:roleID", async (req, res) => {
     let roleID = req.params.roleID;
-  
+
     try {
       const data = await service.deleteRoleById(roleID);
       res.status(200).send({
@@ -46,25 +46,41 @@ function rolesRoutes(service) {
         success: false,
         message: "An error occured, please try again ",
       })
-    }  
+    }
   });
-  
+
   router.get('/', async (req, res) => {
-    try {
-      const data = await service.getAllRoles();
-      res.status(200).send({
-        success: true,
-        data: data
-      });
-    } catch (err) {
-      console.log(err)
-      res.status(500).send({
-        success: false,
-        message: "An error occured, please try again ",
-      })
-    }  
+    if (!req.query.active) {
+      try {
+        const data = await service.getAllRoles();
+        res.status(200).send({
+          success: true,
+          data: data
+        });
+      } catch (err) {
+        console.log(err)
+        res.status(500).send({
+          success: false,
+          message: "An error occured, please try again ",
+        })
+      }
+    } else if (req.query.active == 'false') {
+      try {
+        const data = await service.getInactiveRoles();
+        res.status(200).send({
+          success: true,
+          data: data
+        });
+      } catch (err) {
+        console.log(err)
+        res.status(500).send({
+          success: false,
+          message: "An error occured, please try again ",
+        })
+      }
+    }
   })
-  
+
   router.get('/:roleID', async (req, res) => {
     let roleID = req.params.roleID
     try {
@@ -79,9 +95,9 @@ function rolesRoutes(service) {
         success: false,
         message: "An error occured, please try again ",
       })
-    }  
+    }
   })
-  
+
   router.get('/:roleID/skills', async (req, res) => {
     let roleID = req.params.roleID
     try {
@@ -96,10 +112,10 @@ function rolesRoutes(service) {
         success: false,
         message: "An error occured, please try again ",
       })
-    }  
+    }
   })
-  
-  
+
+
   router.put('/:roleID', async (req, res) => {
     const roleID = req.params.roleID
     const roleName = req.body.roleName
@@ -127,7 +143,7 @@ function rolesRoutes(service) {
           message: "An error occured, please try again.",
         });
       }
-    }  
+    }
   })
 
   return router;
