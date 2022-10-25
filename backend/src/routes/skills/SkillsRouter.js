@@ -87,6 +87,8 @@ function skillsRoutes(service) {
     }
   })
 
+
+
   router.post("/", async (req, res) => {
     let skillName = req.body.skillName;
     let skillDescription = req.body.skillDescription;

@@ -17,7 +17,18 @@ function coursesService(database){
     }
   }
 
+  coursesService.getCoursesByMultipleSkill = async (skills) => {
+    try {
+      return await database.getCoursesByMultipleSkill(skills);
+    } catch (err) {
+      throw err;
+    }
+  }
+
+
   return coursesService;
 }
+
+
 
 module.exports = coursesService;

@@ -19,6 +19,7 @@ export default function ViewCourses() {
 
   useEffect(() => {
     if (skills && roleID) {
+      console.log(skills.length)
       const url = `http://localhost:8080/api/skills/multiple/${skills}`;
       const axiosFn = axios.get;
       axiosFn(url)
@@ -46,7 +47,7 @@ export default function ViewCourses() {
         .catch(function (error) {
           console.log(error);
         });
-      const skillUrl = `http://localhost:8080/api/courses/skill/${skills}`;
+      const skillUrl = `http://localhost:8080/api/courses/multiple/skill/${skills}`;
       axiosFn(skillUrl)
         .then(function (response) {
           if (response.data.success) {
