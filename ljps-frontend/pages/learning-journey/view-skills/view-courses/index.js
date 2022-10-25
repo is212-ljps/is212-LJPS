@@ -19,7 +19,7 @@ export default function ViewCourses() {
 
   useEffect(() => {
     if (skills && roleID) {
-      console.log(skills.length)
+      console.log(skills.length);
       const url = `http://localhost:8080/api/skills/multiple/${skills}`;
       const axiosFn = axios.get;
       axiosFn(url)
@@ -116,40 +116,37 @@ export default function ViewCourses() {
           {courses.length > 0 &&
             courses.map((course) => (
               <div className="col-12 col-md-6 col-xl-4">
+                {console.log(course)}
                 <div className="card mt-2">
                   <div className="card-header bg-primary text-light">
                     {" "}
                     <b>{course.Course_Name}</b>{" "}
                   </div>
-                  <div className="card-body"></div>
-                  <div className="row">
-                    <div className="col-5">
-                      <p className="mx-3">{skillDetails.skillName}</p>
+                  <div className="row py-3">
+                    <div className="col-7">
+                      <p className="mx-3">Course ID: {course.Course_ID}</p>
                     </div>
-                    <div className="col-7 px-4" align="right">
+                    <div className="col-5 px-4" align="right">
                       <div className=" badge bg-light text-black">
                         {" "}
                         {course.Course_Category}{" "}
                       </div>
                     </div>
                   </div>
-                  <div className="row pe-3">
-                    <div className="col-9">
-                      <div className="col-9 mx-3">
-                        {" "}
-                        <b>Course ID: {course.Course_ID}</b>
-                      </div>
-                    </div>
 
-                    <div className="col-3" align="right">
-                      <label
-                        style={{ cursor: "pointer" }}
-                        for={course.Course_ID}
-                      >
-                        Add
-                      </label>
+                  <div className="row p-2">
+                    <div className="col-12">
+                      {skillDetails?.map((skill) => (
+                        <span
+                          className="badge rounded-pill bg-dark py-2 me-2"
+                          key={skill.Skill_Name}
+                        >
+                          {skill.Skill_Name}
+                        </span>
+                      ))}
                     </div>
                   </div>
+
                   <div className="row mx-1">
                     <div className="col-10">
                       {" "}
@@ -158,6 +155,12 @@ export default function ViewCourses() {
                     <div className="col-2" align="right">
                       <div>
                         {" "}
+                        <label
+                          style={{ cursor: "pointer" }}
+                          for={course.Course_ID}
+                        >
+                          Add
+                        </label>
                         <input
                           type={"checkbox"}
                           id={course.Course_ID}
