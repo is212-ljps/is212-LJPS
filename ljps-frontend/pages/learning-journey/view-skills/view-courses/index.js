@@ -19,7 +19,6 @@ export default function ViewCourses() {
 
   useEffect(() => {
     if (skills && roleID) {
-      console.log(skills.length);
       const url = `http://localhost:8080/api/skills/multiple/${skills}`;
       const axiosFn = axios.get;
       axiosFn(url)
@@ -51,7 +50,7 @@ export default function ViewCourses() {
       axiosFn(skillUrl)
         .then(function (response) {
           if (response.data.success) {
-            setCourses(response.data.data);
+            setCourses(response.data.data.courseDetails);
           } else {
           }
         })
@@ -96,14 +95,24 @@ export default function ViewCourses() {
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
             {" "}
-            Select courses to fulfill your selected skill for{" "}
-            <span className="text-primary fw-bold">
-              {skillDetails.skillName}
-            </span>
+            Select courses to fulfill your selected skill for:{" "}
+            {skillDetails.length == 1 && (
+              <span className="text-primary fw-bold">{skillDetails[0].Skill_Name}</span>
+            )}{" "}
           </h3>
-          <span className="badge text-white bg-dark w-25 mt-3">
-            {skillDetails.skillDescription}
-          </span>
+
+
+          {skillDetails.length > 1 && (
+            <ul className='mt-2'>
+              {skillDetails.map((skill) => (
+                
+                <li className="fw-bold text-primary">
+                  <h5>{skill.Skill_Name}</h5></li>
+                
+              ))}
+            </ul>
+          )}
+
         </div>
 
         <div className="col-md-7 col-sm-12 d-flex justify-content-center">
@@ -112,17 +121,15 @@ export default function ViewCourses() {
       </div>
       <div className="container mx-6 px-3">
         <div className="row">
-          {" "}
-          {courses.length > 0 &&
+          {courses?.length > 0 &&
             courses.map((course) => (
               <div className="col-12 col-md-6 col-xl-4">
-                {console.log(course)}
-                <div className="card mt-2">
+                <div className="card mt-2 shadow border-0">
                   <div className="card-header bg-primary text-light">
                     {" "}
                     <b>{course.Course_Name}</b>{" "}
                   </div>
-                  <div className="row py-3">
+                  <div className="row pt-3">
                     <div className="col-7">
                       <p className="mx-3">Course ID: {course.Course_ID}</p>
                     </div>
@@ -134,14 +141,14 @@ export default function ViewCourses() {
                     </div>
                   </div>
 
-                  <div className="row p-2">
+                  <div className="row p-3">
                     <div className="col-12">
-                      {skillDetails?.map((skill) => (
+                      {course.skills?.map((skill) => (
                         <span
                           className="badge rounded-pill bg-dark py-2 me-2"
-                          key={skill.Skill_Name}
+                          key={skill}
                         >
-                          {skill.Skill_Name}
+                          {skill}
                         </span>
                       ))}
                     </div>
