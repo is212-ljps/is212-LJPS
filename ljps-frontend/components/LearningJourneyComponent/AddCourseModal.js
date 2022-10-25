@@ -2,18 +2,33 @@ import React, { useCallback, useState, useEffect } from "react"
 import axios from "axios"
 
 
-export default function AddCourses({ learningJourneyName, learningJourneyId }) {
+export default function AddCourses({ learningJourneyName, learningJourneyId, getLearningJourney, coursesLength }) {
   const [courses, setCourses] = useState([])
-  console.log(learningJourneyId)
+
   useEffect(() => {
     getUnaddedCourses()
-  }, [learningJourneyId])
+  }, [learningJourneyId, coursesLength])
 
   const getUnaddedCourses = useCallback(() => {
     if (!learningJourneyId) return
     const url = `http://localhost:8080/api/courses/learning-journey/${learningJourneyId}?isAdded=false`
     axios.get(url).then((res) => {
       setCourses(res.data.data)
+    })
+  }, [learningJourneyId])
+
+  const handleSubmit = useCallback(() => {
+    const courseElements = Array.from(document.getElementsByName("course-checkbox")).filter((item) => item.checked)
+    const courseIds = courseElements.map((item) => item.value)
+    updateLearningJourneyCourses(courseIds)
+    courseElements.forEach(item => item.checked = false)
+  })
+
+  const updateLearningJourneyCourses = useCallback((courseIds) => {
+    const url = `http://localhost:8080/api/learning-journey/${learningJourneyId}/courses`
+    axios.put(url, { courseIds }).then(() => {
+      getUnaddedCourses()
+      getLearningJourney()
     })
   }, [learningJourneyId])
 
@@ -25,10 +40,9 @@ export default function AddCourses({ learningJourneyName, learningJourneyId }) {
           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div className="modal-body">
-          <div class="row">
+          <div className="row">
             {courses?.map((course) => (
-              <div className="col-12 col-md-6 col-xl-4">
-                {console.log(course)}
+              <div className="col-12 col-lg-6 col-xl-4" key={course.Course_ID}>
                 <div className="card mt-2 shadow border-0">
                   <div className="card-header bg-primary text-light">
                     <b>{course.Course_Name}</b>
@@ -46,7 +60,7 @@ export default function AddCourses({ learningJourneyName, learningJourneyId }) {
                   <div className="row p-2">
                     <div className="col-12 px-3">
                       {course.Skills?.map((skill) => (
-                        <span className="badge rounded-pill bg-dark py-2 mb-1 me-2" style={{fontSize:"11px"}} key={skill}>
+                        <span className="badge rounded-pill bg-dark py-2 mb-1 me-2" style={{ fontSize: "11px" }} key={skill}>
                           {skill}
                         </span>
                       ))}
@@ -63,11 +77,12 @@ export default function AddCourses({ learningJourneyName, learningJourneyId }) {
                           Add
                         </label>
                         <input
+                          className="form-check-input ms-2"
                           type={"checkbox"}
                           id={course.Course_ID}
                           key={course.Course_ID}
-                        // className={selectedCourses.includes(course.Course_ID)}
-                        // onClick={toggleButton}
+                          name="course-checkbox"
+                          value={course.Course_ID}
                         ></input>
                       </div>
                     </div>
@@ -75,11 +90,12 @@ export default function AddCourses({ learningJourneyName, learningJourneyId }) {
                 </div>
               </div>
             ))}
+            {courses.length == 0 && <p>There are currently no available courses for your selected skills.</p>}
           </div>
         </div>
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Add courses</button>
+          <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleSubmit}>Add courses</button>
         </div>
       </div>
     </div>

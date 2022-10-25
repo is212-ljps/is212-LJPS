@@ -34,13 +34,14 @@ export default function LearningJourneyDetails() {
       axios.get(getUrl).then((res) => {
         setLearningJourney(res.data.data)
       })
+
     });
   }, [selectedCourse?.Course_ID])
 
   return (
     <div className="container">
       <RemoveCourseModal course={selectedCourse} removeCourse={removeCourse} />
-      <AddCourseModal learningJourneyName={learningJourney.Learning_Journey_Name} learningJourneyId={learningJourney.Learning_Journey_ID}/>
+      <AddCourseModal getLearningJourney={getLearningJourney} coursesLength={learningJourney.courses?.length} learningJourneyName={learningJourney.Learning_Journey_Name} learningJourneyId={learningJourney.Learning_Journey_ID}/>
       <div className="row py-4">
         <div className="col-md-5 d-flex justify-content-center flex-column">
           <div>
@@ -81,7 +82,7 @@ export default function LearningJourneyDetails() {
       <div className="row">
         {learningJourney.courses?.map((course) => (
           <div className="col-md-6 col-sm-6 col-lg-4 mb-5" key={course.Course_ID}>
-            <div className="card mt-2">
+            <div className="card mt-2 shadow border-0">
               <div className="card-header bg-primary text-light">
                 <b>{course.Course_Name}</b>
               </div>
