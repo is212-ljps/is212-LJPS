@@ -95,6 +95,16 @@ exports.getAllSkills = async () => {
   }
 }
 
+exports.getInactiveSkills = async () => {
+  const getInActiveSkills = `SELECT * FROM skill WHERE Is_Active=FALSE`
+  try {
+    const result = await promiseQuery(getInActiveSkills)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
 exports.getSkillById = async (skillID) => {
   const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
   try {
