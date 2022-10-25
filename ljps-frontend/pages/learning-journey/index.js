@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-
+import  Tooltip  from "../../components/LearningJourneyComponent/Tooltip.js"
 
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
@@ -80,14 +80,7 @@ export default function SelectRole() {
                   onClick={toggleButton}
                 >
                   {role.Job_Role_Name}
-
-                  <i
-                    className="bi bi-info-circle-fill mx-2 "
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="bottom"
-                    data-trigger="manual"
-                    data-bs-title={role.Job_Role_Description}
-                  ></i>
+                  <Tooltip description = {role.Job_Role_Description}/>
                 </button>
               </div>
             ))}
