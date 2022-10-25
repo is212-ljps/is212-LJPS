@@ -7,28 +7,49 @@ import SkillModal from "../../components/SkillsComponent/SkillModal"
 export default function SkillsPage() {
     const [skills, setSkills] = useState([])
     const [selectedSkill, setSelectedSkill] = useState({ skillName: '', skillDescription: '', skillID: null })
+    const [active, setActive] = useState(true)
 
     useEffect(() => {
         onSkillsUpdate()
-    }, [])
+    }, [active])
 
     const onSkillsUpdate = useCallback(() => {
-        axios.get('http://localhost:8080/api/skills').then(res => {
-            setSkills(res.data.data)
-        })
-    }, [])
+        if (active)
+            axios.get('http://localhost:8080/api/skills').then(res => {
+                setSkills(res.data.data)
+            })
+        else {
+            axios.get('http://localhost:8080/api/skills/?active=false').then(res => {
+                setSkills(res.data.data)
+            })
+        }
+    }, [active])
 
     const parseSkillObj = useCallback((skillObj) => {
         setSelectedSkill(skillObj)
     })
 
     const resetSelectedSkill = useCallback(() => {
-        setSelectedSkill({ skillName: '', skillDescription: '', skillID:''  })
+        setSelectedSkill({ skillName: '', skillDescription: '', skillID: '' })
     })
 
     return <div className="container-fluid">
-        <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill}/>
-        <div className="ml-auto my-2"><CreateSkillButton onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill}  /></div>
+        <SkillModal selectedSkill={selectedSkill} onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill} />
+        <div className="ml-auto my-2">
+            <div className="row">
+                <div className="col-6">
+                    <ul className="nav">
+                        <li>
+                            <button className={active?"btn btn-primary":"btn"} onClick={() => setActive(true)}>Active</button>
+                        </li>
+                        <li>
+                            <button className={active?"btn":"btn btn-primary"} onClick={() => setActive(false)}>Inactive</button>
+                        </li>
+                    </ul>
+                </div>
+                <CreateSkillButton onSkillsUpdate={onSkillsUpdate} resetSelectedSkill={resetSelectedSkill} />
+            </div>
+        </div>
         <table className="table table-borderless">
             <thead>
                 <tr className=" rounded">
@@ -40,6 +61,7 @@ export default function SkillsPage() {
             </thead>
             <tbody>
                 {skills?.map((skill, index) => {
+
                     const skillID = skill.Skill_ID
                     const skillName = skill.Skill_Name
                     const skillDescription = skill.Skill_Description
@@ -52,7 +74,7 @@ export default function SkillsPage() {
                                 onClick={() => parseSkillObj({ skillID, skillName, skillDescription })}>
                                 Edit
                             </button>
-                            <DeleteSkillButton skillName={skillName} skillId={skillID} onSkillsUpdate={onSkillsUpdate} />
+                            { active && <DeleteSkillButton skillName={skillName} skillId={skillID} onSkillsUpdate={onSkillsUpdate} />}
                         </td>
                     </tr>
                 })}
