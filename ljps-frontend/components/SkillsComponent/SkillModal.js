@@ -6,7 +6,7 @@ import axios from 'axios'
 export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelectedSkill, ...props }) {
   const [nameErrorMsg, setNameErrorMsg] = useState('')
   const [descErrorMsg, setDescErrorMsg] = useState('')
-  const [errorMsg, setErrorMsg] = useState('')
+  const [courseErrorMsg, setCourseErrorMsg] = useState('')
   const { skillName, skillDescription, skillID } = selectedSkill
   const [courses, setCourses] = useState([])
   const [assignedCourses, setAssignedCourses] = useState([])
@@ -44,6 +44,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
         setAssignedCourses([])
         setNameErrorMsg("")
         setDescErrorMsg("")
+        setCourseErrorMsg("")
         resetSelectedSkill()
       })
     }
@@ -70,7 +71,8 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
 
     if (
       validateLength(nameInput.current.value, 5, 20) &&
-      validateLength(descriptionInput.current.value, 0, 300)
+      validateLength(descriptionInput.current.value, 0, 300) &&
+      assignedCourses.length > 0
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
@@ -86,6 +88,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
           if (response.data.success) {
             setNameErrorMsg('')
             setDescErrorMsg('')
+            setCourseErrorMsg('')
 
             if (!skillID) {
               e.target.reset();
@@ -108,6 +111,9 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
       }
       if (!validateLength(descriptionInput.current.value, 0, 300)) {
         setDescErrorMsg('Skill Description cannot be more than 300 characters')
+      }
+      if (assignedCourses.length < 1) {
+        setCourseErrorMsg('Please assign the skill to at least 1 course')
       }
     }
   });
@@ -163,6 +169,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
                   })}
                 </div>
                 </div>
+                {!!courseErrorMsg.length && <p className="text-danger">{courseErrorMsg}</p>}
               </div>
             </div>
 
