@@ -9,6 +9,14 @@ function rolesService(database){
     }
   }
 
+  rolesService.getInactiveRoles = async () => {
+    try {
+      return await database.getInactiveRoles();
+    } catch (err) {
+      throw err;
+    }
+  }
+
   rolesService.getRoleById = async (roleId) => {
     try {
       return await database.getRoleById(roleId)
