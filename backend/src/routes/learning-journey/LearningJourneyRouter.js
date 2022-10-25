@@ -1,6 +1,6 @@
 const express = require("express");
 
-function learningJourneyRoutes(database){
+function learningJourneyRoutes(service){
   const router = express.Router();
   router.post('/', async (req, res) => {
     let learningJourneyName = req.body.learningJourneyName;
@@ -10,9 +10,7 @@ function learningJourneyRoutes(database){
     let courses = req.body.courses;
 
     try {
-      const learningJourneyId = await database.createLearningJourney(learningJourneyName, staffId, jobRoleId);
-      await database.createLearningJourneySkill(learningJourneyId, skillId);
-      await database.createLearningJourneyCourse(learningJourneyId, courses);
+      const learningJourneyId = await service.createLearningJourney(learningJourneyName, skillId, jobRoleId, courses, skillId);
       res.status(201).send({
         success: true,
         message: "Learning Journey Created"
@@ -30,7 +28,7 @@ function learningJourneyRoutes(database){
     let learningJourneyId = req.params.learningJourneyId
     try {
       
-      const result = await database.getLearningJourney(learningJourneyId);
+      const result = await service.getLearningJourney(learningJourneyId);
       res.status(200).send({
         success: true,
         data: result
@@ -52,7 +50,7 @@ function learningJourneyRoutes(database){
 
     try {
       
-      const result = await database.getLearningJourneyByStaffID(staffID);
+      const result = await service.getLearningJourneyByStaffId(staffID);
 
       res.status(200).send({
         success: true,

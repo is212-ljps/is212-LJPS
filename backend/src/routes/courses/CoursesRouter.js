@@ -1,10 +1,10 @@
 const express = require("express");
 
-function courseRoutes(database) {
+function courseRoutes(service) {
   const router = express.Router();
   router.get('/', async (req, res) => {
     try {
-      const data = await database.getCourses();
+      const data = await service.getCourses();
       res.status(200).send({
         success: true,
         data: data
@@ -21,7 +21,7 @@ function courseRoutes(database) {
   router.get('/skill/:skillID', async (req, res) => {
     let skillId = req.params.skillID
     try {
-      const data = await database.getCoursesBySkill(skillId);
+      const data = await service.getCoursesBySkill(skillId);
       res.status(200).send({
         success: true,
         data: data
