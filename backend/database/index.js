@@ -213,6 +213,16 @@ exports.getAllRoles = async () => {
   }
 }
 
+exports.getInactiveRoles = async () => {
+  const getInactiveRoles = `SELECT * FROM job_role WHERE Is_Active=FALSE`
+  try {
+    const result = await promiseQuery(getInactiveRoles)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
 exports.getRoleById = async (roleID) => {
   const getRole = `SELECT * FROM job_role WHERE Job_Role_ID=${roleID} AND Is_Active= TRUE`
   try {
