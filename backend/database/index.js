@@ -204,7 +204,7 @@ exports.deleteRoleById = async (roleID) => {
 }
 
 exports.getAllRoles = async () => {
-  const getRoles = `SELECT * FROM job_role`
+  const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
   try {
     const result = await promiseQuery(getRoles)
     return result
