@@ -18,10 +18,6 @@ export default function SelectRole() {
     onRolesUpdate();
   }, []);
 
-  useEffect(() => {
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-  }, [roles]);
 
   const toggleButton = (e) => {
     setSelectedRole(e.target.id);
