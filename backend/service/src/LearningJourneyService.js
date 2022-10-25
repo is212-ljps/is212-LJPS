@@ -73,12 +73,23 @@ function learningJourneyService(database) {
   }
 
   learningJourneyService.removeCourseFromLearningJourney = async (learningJourneyId, courseId) => {
-    if(!learningJourneyId || !courseId){
+    if (!learningJourneyId || !courseId) {
       return false
     }
-    try{
+    try {
       return await database.removeCourseFromLearningJourney(learningJourneyId, courseId)
-    } catch (err){
+    } catch (err) {
+      throw err
+    }
+  }
+
+  learningJourneyService.addCourseToLearningJourney = async (learningJourneyId, courseIds) => {
+    if (!learningJourneyId || !courseIds) {
+      return false
+    }
+    try {
+      return await database.addCourseToLearningJourney(learningJourneyId, courseIds)
+    } catch (err) {
       throw err
     }
   }

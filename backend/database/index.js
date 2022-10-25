@@ -341,3 +341,20 @@ exports.getCoursesBySkills = async (skills) => {
     throw err;
   }
 };
+
+exports.addCourseToLearningJourney = async (learningJourneyId, courseIds) => {
+  var addCourseToLearningJourney = `INSERT into learning_journey_course (Learning_Journey_ID, Course_ID) VALUES `;
+  console.log(courseIds)
+  courseIds.forEach((courseId) => {
+    addCourseToLearningJourney += `(${learningJourneyId}, '${courseId}'), `;
+  });
+  addCourseToLearningJourney = addCourseToLearningJourney.slice(0, -2) + `;`;
+  console.log(addCourseToLearningJourney)
+  try {
+    const result = await promiseQuery(addCourseToLearningJourney);
+    return result;
+  } catch (err) {
+    console.log(err)
+    throw err;
+  }
+}
