@@ -3,11 +3,14 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
+
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
 
   const [selectedRole, setSelectedRole] = useState("");
   const router = useRouter();
+  const toolTip = useRef();
+  
 
   const toast = useRef();
 
@@ -15,17 +18,17 @@ export default function SelectRole() {
     onRolesUpdate();
   }, []);
 
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  }, [roles]);
+
   const toggleButton = (e) => {
     setSelectedRole(e.target.id);
   };
 
   const onRolesUpdate = useCallback(() => {
     axios.get("http://localhost:8080/api/roles").then((res) => {
-<<<<<<< Updated upstream
-      console.log(res.data.data)
-=======
-      console.log(res.data);
->>>>>>> Stashed changes
       setRoles(res.data.data);
     });
   }, []);
@@ -57,14 +60,7 @@ export default function SelectRole() {
         </div>
       </div>
 
-<<<<<<< Updated upstream
-      <div
-        className="container"
-        style={{ maxHeight: "400px", overflowY: "auto" }}
-      >
-=======
       <div style={{ maxHeight: "400px", overflowY: "auto" }}>
->>>>>>> Stashed changes
         <div className="row mx-4">
           {roles?.length == 0 && (
             <h4 className="text-center"> No Roles Available</h4>
@@ -93,7 +89,8 @@ export default function SelectRole() {
                     className="bi bi-info-circle-fill mx-2 "
                     data-bs-toggle="tooltip"
                     data-bs-placement="bottom"
-                    title={role.Job_Role_Description}
+                    data-trigger="manual"
+                    data-bs-title={role.Job_Role_Description}
                   ></i>
                 </button>
               </div>
