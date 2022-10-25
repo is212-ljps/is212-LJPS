@@ -2,14 +2,14 @@ import React, { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Player } from "@lottiefiles/react-lottie-player";
+import RemoveCourseModal from '../../../../components/LearningJourneyComponent/RemoveCourseModal'
 
 export default function LearningJourneyDetails() {
   var router = useRouter();
   var learningJourneyId = router.query["learningJourneyID"];
 
   const [learningJourney, setLearningJourney] = useState({});
-  const [courses, setCourses] = useState([]);
-  const [skills, setSkills] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState()
 
   useEffect(() => {
     if (learningJourneyId) {
@@ -18,16 +18,16 @@ export default function LearningJourneyDetails() {
       axiosFn(url).then(function (response) {
         if (response.data.success) {
           setLearningJourney(response.data.data);
-          setCourses(response.data.data.courses);
-          setSkills(response.data.data.skills);
         } else {
         }
       });
     }
   }, [learningJourneyId]);
 
+
   return (
-    <div class="container">
+    <div className="container">
+      <RemoveCourseModal course={selectedCourse}/>
       <div className="row py-4">
         <div className="col-md-5 d-flex justify-content-center flex-column">
           <div>
@@ -42,10 +42,9 @@ export default function LearningJourneyDetails() {
             <hr></hr>
             <h5 className="mt-2 mb-4">Selected Skills: </h5>
             <div className="col-12">
-              {Object.values(skills).map((skill) => (
-                <span className="badge rounded-pill bg-dark py-2 me-2">
-                  {" "}
-                  {skill.Skill_Name}{" "}
+              {learningJourney.skills?.map((skill) => (
+                <span className="badge rounded-pill bg-dark py-2 me-2" key={skill.Skill_Name}>
+                  {skill.Skill_Name}
                 </span>
               ))}
             </div>
@@ -65,14 +64,13 @@ export default function LearningJourneyDetails() {
       </div>
 
 
-      <h4 className="fw-bold"> Courses </h4>
+      <h4 className="fw-bold"> Courses <span><button className="btn btn-light shadow-sm ms-3">Add courses</button></span></h4>
       <div className="row">
-        {courses.map((course) => (
-          <div className="col-md-6 col-sm-6 col-lg-4 mb-5">
+        {learningJourney.courses?.map((course) => (
+          <div className="col-md-6 col-sm-6 col-lg-4 mb-5" key={course.Course_ID}>
             <div className="card mt-2">
               <div className="card-header bg-primary text-light">
-                {" "}
-                <b>{course.Course_Name}</b>{" "}
+                <b>{course.Course_Name}</b>
               </div>
               <div className="row pt-3 px-3">
                 <div className="col-8">
@@ -80,18 +78,14 @@ export default function LearningJourneyDetails() {
                 </div>
                 <div className="col-4" align="right">
                   <div className=" badge bg-light text-black">
-                    {" "}
-                    {course.Course_Category}{" "}
+                    {course.Course_Category}
                   </div>
                 </div>
               </div>
 
-              <div class="px-3">
+              <div className="px-3">
                 {course.skills.map((skill) => (
-                  <span
-                    className="badge rounded-pill bg-dark py-1 me-2"
-                    style={{ fontSize: "11px" }}
-                  >
+                  <span className="badge rounded-pill bg-dark py-1 me-2" key={skill} style={{ fontSize: "11px" }}>
                     {skill}
                   </span>
                 ))}
@@ -99,14 +93,13 @@ export default function LearningJourneyDetails() {
 
               <div className="row mx-1">
                 <div className="col-12">
-                  {" "}
-                  <p>{course.Course_Desc}</p>{" "}
+                  <p>{course.Course_Desc}</p>
                 </div>
               </div>
 
               <div className="d-flex justify-content-end m-2">
-                <button type="button" className="btn btn-outline-primary">
-                  Delete <i className="bi bi-trash3-fill"></i>
+                <button type="button" onClick={()=>{setSelectedCourse(course)}} className="btn btn-outline-primary" data-bs-target="#remove-course-modal" data-bs-toggle="modal">
+                  Remove <i className="bi bi-trash3-fill"></i>
                 </button>
               </div>
             </div>
@@ -114,6 +107,5 @@ export default function LearningJourneyDetails() {
         ))}
       </div>
     </div>
-
   );
 }
