@@ -22,6 +22,7 @@ function coursesService(database) {
       if (isAdded == "true") {
         return await database.getLearningJourneyCourses(learningJourneyId)
       }
+
       const existingIds = {}
       const learningJourneyCourses = await database.getLearningJourneyCourses(learningJourneyId)
       learningJourneyCourses.forEach(({ Course_ID }) => { existingIds[Course_ID] = true })
@@ -29,6 +30,11 @@ function coursesService(database) {
       const learningJourneySkillIds = learningJourneySkills.map(({ Skill_ID }) => Skill_ID).join(",")
       const learningJourneyAllCourses = await database.getCoursesBySkills(learningJourneySkillIds)
       const unaddedCourseIds = learningJourneyAllCourses.filter((item) => !existingIds[item.Course_ID]).map(({ Course_ID }) => Course_ID)
+
+      if(!unaddedCourseIds.length){
+        return []
+      }
+      
       const unaddedCoursesWithSkills = await database.getCoursesSkills(unaddedCourseIds)
 
       const unaddedCourses = {}
