@@ -325,3 +325,19 @@ exports.removeCourseFromLearningJourney = async (learningJourneyId, courseId) =>
     throw err;
   }
 }
+
+exports.getCoursesBySkills = async (skills) => {
+
+  skills = skills.split(",")
+  let str = "";
+  skills.forEach((skill) => (str += `Skill_ID='${skill}' OR `));
+  const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE ${str.slice(0, -4)});`;
+
+
+  try {
+    const result = await promiseQuery(getCoursesBasedOnSkill);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
