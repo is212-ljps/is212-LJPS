@@ -54,7 +54,6 @@ exports.getLearningJourney = async (learningJourneyId) => {
 }
 
 exports.getLearningJourneyByStaffID= async(staffID) => { 
-  console.log(staffID)
   const getLearningJourneys = `SELECT * from learning_journey INNER join learning_journey_skill on learning_journey.Learning_Journey_ID=learning_journey_skill.Learning_Journey_ID INNER JOIN skill on learning_journey_skill.Skill_ID= skill.Skill_ID WHERE Staff_ID = ${staffID}; `;
   try{
     const result = await promiseQuery(getLearningJourneys)
@@ -90,6 +89,16 @@ exports.getAllSkills = async () => {
   const getSkills = `SELECT * FROM skill WHERE Is_Active=TRUE`
   try {
     const result = await promiseQuery(getSkills)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
+exports.getInactiveSkills = async () => {
+  const getInActiveSkills = `SELECT * FROM skill WHERE Is_Active=FALSE`
+  try {
+    const result = await promiseQuery(getInActiveSkills)
     return result
   } catch (err){
     throw err
@@ -208,6 +217,16 @@ exports.getAllRoles = async () => {
   const getRoles = `SELECT * FROM job_role WHERE Is_Active=TRUE`
   try {
     const result = await promiseQuery(getRoles)
+    return result
+  } catch (err){
+    throw err
+  }
+}
+
+exports.getInactiveRoles = async () => {
+  const getInactiveRoles = `SELECT * FROM job_role WHERE Is_Active=FALSE`
+  try {
+    const result = await promiseQuery(getInactiveRoles)
     return result
   } catch (err){
     throw err
