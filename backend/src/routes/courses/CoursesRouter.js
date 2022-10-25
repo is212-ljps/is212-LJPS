@@ -18,10 +18,11 @@ function courseRoutes(service) {
     }  
   })
   
-  router.get('/skill/:skillID', async (req, res) => {
-    let skillId = req.params.skillID
+  router.get('/skill/:skills', async (req, res) => {
+    let skills = req.params.skills
+
     try {
-      const data = await service.getCoursesBySkill(skillId);
+      const data = await service.getCoursesBySkill(skills);
       res.status(200).send({
         success: true,
         data: data

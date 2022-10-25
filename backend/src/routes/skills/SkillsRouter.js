@@ -53,6 +53,23 @@ function skillsRoutes(service) {
     }
   })
 
+  router.get('/multiple/:skills', async (req, res) => {
+    var skills = req.params.skills
+    try {
+      const data = await service.getSkillByMultipleId (skills);
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }
+  })
+
   router.get('/:skillID/courses', async (req, res) => {
     let skillID = req.params.skillID
     try {
