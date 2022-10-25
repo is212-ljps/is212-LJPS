@@ -73,7 +73,6 @@ function learningJourneyService(database) {
   }
 
   learningJourneyService.removeCourseFromLearningJourney = async (learningJourneyId, courseId) => {
-    console.log("hi")
     if(!learningJourneyId || !courseId){
       return false
     }
