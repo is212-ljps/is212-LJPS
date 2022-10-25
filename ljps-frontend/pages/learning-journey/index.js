@@ -2,15 +2,14 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import  Tooltip  from "../../components/LearningJourneyComponent/Tooltip.js"
+import Tooltip from "../../components/LearningJourneyComponent/Tooltip.js"
 
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
 
   const [selectedRole, setSelectedRole] = useState("");
   const router = useRouter();
-  const toolTip = useRef();
-  
+
 
   const toast = useRef();
 
@@ -80,7 +79,7 @@ export default function SelectRole() {
                   onClick={toggleButton}
                 >
                   {role.Job_Role_Name}
-                  <Tooltip description = {role.Job_Role_Description}/>
+                  <Tooltip description={role.Job_Role_Description ? role.Job_Role_Description : "No description"} />
                 </button>
               </div>
             ))}
