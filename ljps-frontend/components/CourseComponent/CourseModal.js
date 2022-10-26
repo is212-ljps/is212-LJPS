@@ -103,11 +103,11 @@ export default function CourseModal({ checkSubmit, roleId, skillDetails, roleNam
             </div>
           </form>
       
-          {checkSubmit ? <div className="modal-footer">
-            <button type="button" onClick={()=>handleSubmit(nameInput)} className="btn btn-primary">
+          <div className="modal-footer">
+            <button type="button" onClick={()=>handleSubmit(nameInput)} className={checkSubmit ? "btn btn-primary" : "btn btn-primary disabled"} >
               Confirm
             </button>
-          </div>: ''}
+          </div>
         </div>
       </div>
     </div>
