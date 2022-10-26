@@ -7,7 +7,7 @@ export default function Tooltip({ description }) {
     if (!tooltipRef?.current) return
     setTimeout(() => {
       bootstrap.Tooltip.getOrCreateInstance(tooltipRef.current)
-    }, 10);
+    }, 100);
   }, [tooltipRef.current, tooltipRef])
 
 
