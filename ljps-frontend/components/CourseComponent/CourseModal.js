@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
+import { validateLength } from "../../util/validation"
 
 export default function CourseModal({
   checkSubmit,
@@ -12,12 +13,11 @@ export default function CourseModal({
   const [errorMsg, setErrorMsg] = useState("");
   const [name, setName] = useState("");
   const modal = useRef();
-  const nameInput = useRef();
 
   const handleSubmit = () => {
     var myModal = bootstrap.Modal.getInstance(modal.current);
 
-    if (name) {
+    if (validateLength(name,5,50)) {
       const learningJourneyUrl = `http://localhost:8080/api/learning-journey`;
       axios
         .post(learningJourneyUrl, {
@@ -44,7 +44,7 @@ export default function CourseModal({
         });
     }
     else{
-      setErrorMsg("Please enter a learning journey name")
+      setErrorMsg("Learning Journey Name must be between 5 and 50 characters")
     }
   };
 
@@ -123,7 +123,7 @@ export default function CourseModal({
           <div className="modal-footer">
             <button
               type="button"
-              onClick={() => handleSubmit(nameInput)}
+              onClick={() => handleSubmit()}
               className={
                 checkSubmit ? "btn btn-primary" : "btn btn-primary disabled"
               }
