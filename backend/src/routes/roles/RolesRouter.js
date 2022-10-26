@@ -13,7 +13,8 @@ function rolesRoutes(service) {
       const data = await service.createRole(roleName, roleDescription, department, assignedSkills);
       res.status(201).send({
         success: true,
-        message: "A new role has been successfully created!"
+        message: "A new role has been successfully created!",
+        data: data
       });
     } catch (err) {
       console.log(err)

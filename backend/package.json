@@ -7,8 +7,10 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "test": "jest",
-    "start": "nodemon src/server.js"
+    "test": "jest --testMatch='**/*.test.js' --forceExit",
+    "start": "nodemon src/server.js",
+    "testInt": "bash src/intTest/runTest.sh",
+    "resetDatabase": "node src/intTest/setup/TestDatabaseSetUp.js"
   },
   "devDependencies": {
     "jest": "26.6.3",

@@ -11,16 +11,16 @@ export default function Home() {
 
     var userDetails={
       "role": role, 
-      "staffID" : role==='user' ? '14002' : '13001'
+      "staffID" : role==='user' ? '140002' : '130001'
     }
 
     if (role == "User") {
       router.push("/learning-journey");
-      localStorage.setItem(userDetails,JSON.stringify(userDetails));
+      localStorage.setItem("userDetails",JSON.stringify(userDetails));
 
     } else {
       router.push("/roles");
-      localStorage.setItem(userDetails,JSON.stringify(userDetails));
+      localStorage.setItem("userDetails",JSON.stringify(userDetails));
     }
   };
 

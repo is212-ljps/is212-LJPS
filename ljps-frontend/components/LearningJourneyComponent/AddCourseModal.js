@@ -1,13 +1,27 @@
-import React, { useCallback, useState, useEffect } from "react"
+import React, { useCallback, useState, useEffect, useRef } from "react"
 import axios from "axios"
 
 
+const defaultError = {
+  minCourseLength: ''
+}
+
 export default function AddCourses({ learningJourneyName, learningJourneyId, getLearningJourney, coursesLength }) {
   const [courses, setCourses] = useState([])
+  const [error, setError] = useState(defaultError)
+  const modal = useRef()
 
   useEffect(() => {
     getUnaddedCourses()
   }, [learningJourneyId, coursesLength])
+
+  useEffect(() => {
+    if (!modal.current) return
+    modal.current.addEventListener("hidden.bs.modal", (e) => {
+      setError(defaultError)
+    })
+
+  }, [modal.current])
 
   const getUnaddedCourses = useCallback(() => {
     if (!learningJourneyId) return
@@ -20,6 +34,15 @@ export default function AddCourses({ learningJourneyName, learningJourneyId, get
   const handleSubmit = useCallback(() => {
     const courseElements = Array.from(document.getElementsByName("course-checkbox")).filter((item) => item.checked)
     const courseIds = courseElements.map((item) => item.value)
+    if (!courseIds.length) {
+      const err = { ...defaultError, minCourseLength: 'Please select at least one course to add' }
+      setError(err)
+      return
+    }
+    const addCourseModal = bootstrap.Modal.getInstance(modal.current);
+    addCourseModal.hide()
+
+    setError(defaultError)
     updateLearningJourneyCourses(courseIds)
     courseElements.forEach(item => item.checked = false)
   })
@@ -32,7 +55,7 @@ export default function AddCourses({ learningJourneyName, learningJourneyId, get
     })
   }, [learningJourneyId])
 
-  return <div className="modal-xl modal fade" id="add-courses-modal" tabIndex="-1" aria-labelledby="add-courses-modal" aria-hidden="true">
+  return <div ref={modal} className="modal-xl modal fade" id="add-courses-modal" tabIndex="-1" aria-labelledby="add-courses-modal" aria-hidden="true">
     <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
       <div className="modal-content">
         <div className="modal-header">
@@ -94,8 +117,11 @@ export default function AddCourses({ learningJourneyName, learningJourneyId, get
           </div>
         </div>
         <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={handleSubmit}>Add courses</button>
+          {error.minCourseLength && <p className="text-danger">{error.minCourseLength}</p>}
+          <div>
+            <button type="button" className="btn btn-secondary mx-1" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" className="btn btn-primary mx-1" onClick={handleSubmit}>Add courses</button>
+          </div>
         </div>
       </div>
     </div>
