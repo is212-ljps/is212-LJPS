@@ -25,6 +25,14 @@ function skillsService(database){
     }
   }
 
+  skillsService.getSkillByMultipleId = async (skills) => {
+    try {
+      return await database.getSkillByMultipleId (skills)
+    } catch (err) {
+      throw err;
+    }
+  } 
+
   skillsService.getCoursesAssignedToSkill = async (skillId) => {
     try {
       return await database.getCoursesAssignedToSkill(skillId)
