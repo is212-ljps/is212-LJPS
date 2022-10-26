@@ -5,9 +5,9 @@ env:
     MYSQL_PASSWORD: "root"
     MYSQL_HOST: "localhost"
 on:
-  pull_request:
+  push:
     branches:
-      - '**'
+      - master
 
 jobs:
   CI:
