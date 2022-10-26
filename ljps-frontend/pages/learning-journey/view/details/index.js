@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { Player } from "@lottiefiles/react-lottie-player";
@@ -11,6 +11,7 @@ export default function LearningJourneyDetails() {
 
   const [learningJourney, setLearningJourney] = useState({});
   const [selectedCourse, setSelectedCourse] = useState()
+  const toast = useRef()
 
   useEffect(() => {
     getLearningJourney()
@@ -31,6 +32,8 @@ export default function LearningJourneyDetails() {
     const getUrl = `http://localhost:8080/api/learning-journey/${learningJourneyId}`
     const removeUrl = `http://localhost:8080/api/learning-journey/${learningJourneyId}/${selectedCourse.Course_ID}`
     axios.delete(removeUrl).then(() => {
+      const removeToast = new bootstrap.Toast(toast.current)
+      removeToast.show()
       axios.get(getUrl).then((res) => {
         setLearningJourney(res.data.data)
       })
@@ -41,7 +44,7 @@ export default function LearningJourneyDetails() {
   return (
     <div className="container">
       <RemoveCourseModal course={selectedCourse} removeCourse={removeCourse} />
-      <AddCourseModal getLearningJourney={getLearningJourney} coursesLength={learningJourney.courses?.length} learningJourneyName={learningJourney.Learning_Journey_Name} learningJourneyId={learningJourney.Learning_Journey_ID}/>
+      <AddCourseModal getLearningJourney={getLearningJourney} coursesLength={learningJourney.courses?.length} learningJourneyName={learningJourney.Learning_Journey_Name} learningJourneyId={learningJourney.Learning_Journey_ID} />
       <div className="row py-4">
         <div className="col-md-5 d-flex justify-content-center flex-column">
           <div>
@@ -119,6 +122,20 @@ export default function LearningJourneyDetails() {
             </div>
           </div>
         ))}
+      </div>
+      <div
+        className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-success"
+        ref={toast}
+        role="alert"
+        aria-live="assertive"
+        data-bs-autohide="true"
+        aria-atomic="true"
+      >
+        <div className="d-flex ">
+          <div className="toast-body">
+            Course removed from learning journey
+          </div>
+        </div>
       </div>
     </div>
   );
