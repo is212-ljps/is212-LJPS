@@ -15,6 +15,7 @@ exports.createLearningJourney = async (
   staffId,
   jobRoleId
 ) => {
+
   const insertLearningJourney = `INSERT INTO learning_journey (Learning_Journey_Name, Staff_ID, Job_Role_ID) VALUES ("${learningJourneyName}", ${staffId}, ${jobRoleId})`;
 
   try {
@@ -25,8 +26,16 @@ exports.createLearningJourney = async (
   }
 };
 
-exports.createLearningJourneySkill = async (learningJourneyId, skillId) => {
-  const insertLearningJourneySkill = `INSERT INTO learning_journey_skill (Learning_Journey_ID, Skill_ID) VALUES (${learningJourneyId}, ${skillId})`;
+exports.createLearningJourneySkill = async (learningJourneyId, skills) => {
+
+  // update here 
+  let str='VALUES'
+  for(let skill of skills){
+    str+=`(${learningJourneyId},${skill.Skill_ID}),`
+  }
+
+  const insertLearningJourneySkill = `INSERT INTO learning_journey_skill (Learning_Journey_ID, Skill_ID) ${str.slice(0,-1)}`;
+  console.log(insertLearningJourneySkill)
   try {
     const result = await promiseQuery(insertLearningJourneySkill);
   } catch (err) {

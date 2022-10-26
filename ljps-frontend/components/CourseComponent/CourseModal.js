@@ -2,11 +2,12 @@ import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
 
-export default function CourseModal({ checkSubmit, skillId, roleId, skillName, roleName, courses }) {
+export default function CourseModal({ checkSubmit, roleId, skillDetails, roleName, courses }) {
   const [errorMsg, setErrorMsg] = useState("");
   const [name, setName] = useState('');
   const modal = useRef();
   const nameInput = useRef();
+
 
   const handleSubmit = () => {
     if (name) {
@@ -15,7 +16,7 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
         learningJourneyName: name,
         staffId: 130001,
         jobRoleId: roleId,
-        skillId: skillId,
+        skills: skillDetails,
         courses: courses
       }).then(res => {
         if (res.data.success) {
@@ -65,8 +66,14 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
                   </label>
                   <br />
                   <label htmlFor="skillName" className="col-form-label">
-                    Skill Name : {skillName}
+                    Skills Selected: 
                   </label>
+                  <ul>
+                    {skillDetails.map((skill)=> (
+                      <li> {skill.Skill_Name}</li>
+                    ))}
+                    </ul>
+
                   <br />
                   <label htmlFor="learningJourneyName" className="col-form-label">
                     Learning Journey Name
