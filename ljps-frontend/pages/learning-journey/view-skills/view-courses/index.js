@@ -86,8 +86,7 @@ export default function ViewCourses() {
       <CourseModal
         checkSubmit={confirmSubmit}
         roleId={roleID}
-        skillName={skillDetails.skillName}
-        skillId={skills}
+        skillDetails={skillDetails}
         roleName={roleName}
         courses={selectedCourses}
       />

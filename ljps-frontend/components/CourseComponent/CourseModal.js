@@ -35,6 +35,15 @@ export default function CourseModal({ checkSubmit, roleId, skillDetails, roleNam
     }
   }
 
+  useEffect(() => {
+    if (modal.current) {
+      modal.current.addEventListener("hidden.bs.modal", () => {
+        setName("")
+        setErrorMsg("")
+      });
+    }
+  }, [modal]);
+
   
   return (
     <div
@@ -83,6 +92,7 @@ export default function CourseModal({ checkSubmit, roleId, skillDetails, roleNam
                     type="text"
                     id="learningJourneyName"
                     className="form-control"
+                    value={name}
                     onChange={({ target }) => setName(target?.value)}
                   />
                   <br />
