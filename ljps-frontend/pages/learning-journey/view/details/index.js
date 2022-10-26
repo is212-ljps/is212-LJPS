@@ -81,7 +81,7 @@ export default function LearningJourneyDetails() {
       <h4 className="fw-bold"> Courses <span><button className="btn btn-light shadow-sm ms-3" data-bs-target="#add-courses-modal" data-bs-toggle="modal">Add courses +</button></span></h4>
       <div className="row">
         {learningJourney.courses?.map((course) => (
-          <div className="col-md-6 col-sm-6 col-lg-4 mb-5" key={course.Course_ID}>
+          <div className="col-md-6 col-sm-6 col-xl-4 mb-5" key={course.Course_ID}>
             <div className="card mt-2 shadow border-0">
               <div className="card-header bg-primary text-light">
                 <b>{course.Course_Name}</b>
@@ -112,7 +112,7 @@ export default function LearningJourneyDetails() {
               </div>
 
               <div className="d-flex justify-content-end m-2">
-                <button type="button" onClick={() => { setSelectedCourse(course) }} className="btn btn-outline-primary" data-bs-target="#remove-course-modal" data-bs-toggle="modal">
+                <button type="button" disabled={learningJourney?.courses?.length === 1} onClick={() => { setSelectedCourse(course) }} className="btn btn-outline-primary" data-bs-target="#remove-course-modal" data-bs-toggle="modal">
                   Remove <i className="bi bi-trash3-fill"></i>
                 </button>
               </div>
