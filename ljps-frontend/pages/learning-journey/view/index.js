@@ -83,7 +83,7 @@ export default function ViewLearningJourneys() {
           />
 
           <div
-            className="card mx-auto"
+            className="card border shadow-sm mx-auto"
             style={{ width: "90%" }}
           >
             <div className="card-body">
