@@ -78,6 +78,12 @@ export default function ViewSkills() {
     }
   };
 
+  const checkPreviousPage = () => {
+    router.push({
+      pathname: "/learning-journey"
+    })
+  }
+
   return (
     <div>
       <div className="row m-4">
@@ -132,12 +138,32 @@ export default function ViewSkills() {
           ))}
       </div>
 
-      <div className="d-flex justify-content-end m-3">
+      {/* <div className="d-flex justify-content-end m-3">
         <button type="button" className="btn btn-primary" onClick={checkSubmit}>
           {" "}
           Next{" "}
         </button>
+      </div> */}
+
+      <div className="container mt-5">
+        {/* Go back to Previous Page: Learning Journey */}
+        <div className="row">
+          <div className="col-6 justify-content-start">
+                <button type="button" className="btn btn-primary btn-lg" onClick={checkPreviousPage} style={{"width":150}}>{" "} Back {" "}</button>
+          </div>
+
+
+          {/* Go to next page */}
+          <div className="col-6 d-flex justify-content-end">
+            <button type="button" className="btn btn-primary btn-lg" onClick={checkSubmit} style={{"width":150}}>{" "} Next {" "}</button>
+          </div>
+        </div>
+
+
+
       </div>
+
+
 
       <div
         className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
