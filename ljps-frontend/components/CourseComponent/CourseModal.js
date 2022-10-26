@@ -10,6 +10,10 @@ export default function CourseModal({ checkSubmit, roleId, skillDetails, roleNam
 
 
   const handleSubmit = () => {
+
+    var myModal = bootstrap.Modal.getInstance(modal.current)
+
+
     if (name) {
       const learningJourneyUrl = `http://localhost:8080/api/learning-journey`;
       axios.post(learningJourneyUrl, {
@@ -20,13 +24,13 @@ export default function CourseModal({ checkSubmit, roleId, skillDetails, roleNam
         courses: courses
       }).then(res => {
         if (res.data.success) {
-          console.log("SUCCESS")
+          myModal.hide()
           Router.push({
             pathname: "/learning-journey/view-skills/view-courses/confirmation"
           })
           
         } else {
-          console.log("FAIL")
+          setErrorMsg("Error has occured");
         }
       }).catch(function (error) {
         setErrorMsg("Error has occured");
@@ -50,6 +54,7 @@ export default function CourseModal({ checkSubmit, roleId, skillDetails, roleNam
       className="modal fade"
       ref={modal}
       id="role-modal"
+      data-backdrop="static"
       tabIndex="-1"
       aria-hidden="true"
     >
