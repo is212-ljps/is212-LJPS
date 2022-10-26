@@ -11,6 +11,14 @@ function skillsService(database){
     }
   }
 
+  skillsService.getInactiveSkills = async () => {
+    try {
+      return await database.getInactiveSkills();
+    } catch (err) {
+      throw err;
+    }
+  }
+
   skillsService.getSkillById = async (skillId) => {
     if(!skillId){
       return false

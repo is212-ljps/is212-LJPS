@@ -128,6 +128,25 @@ function database(databaseName) {
       throw err
     }
   }
+
+  database.getInactiveSkills = async () => {
+    const getInActiveSkills = `SELECT * FROM skill WHERE Is_Active=FALSE`
+    try {
+      const result = await promiseQuery(getInActiveSkills)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+
+ database.getSkillById = async (skillID) => {
+  const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
+  try {
+    const result = await promiseQuery(getSkill)
+    return result
+  } catch (err){
+    throw err
+  }
   
   database.updateSkillById = async (skillID, skillName, skillDescription) => {
     var update_sql = `UPDATE skill SET Skill_Name='${skillName}', Skill_Description='${skillDescription}' WHERE Skill_ID=${skillID}`
@@ -247,6 +266,26 @@ function database(databaseName) {
         WHERE course.Course_Status="Active" AND Skill_ID=${skillID};`
     try {
       const result = await promiseQuery(getCourses)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+
+  database.getInactiveRoles = async () => {
+    const getInactiveRoles = `SELECT * FROM job_role WHERE Is_Active=FALSE`
+    try {
+      const result = await promiseQuery(getInactiveRoles)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+
+  database.getRoleById = async (roleID) => {
+    const getRole = `SELECT * FROM job_role WHERE Job_Role_ID=${roleID} AND Is_Active= TRUE`
+    try {
+      const result = await promiseQuery(getRole)
       return result
     } catch (err){
       throw err

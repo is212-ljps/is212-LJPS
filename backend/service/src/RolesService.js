@@ -11,6 +11,14 @@ function rolesService(database){
     }
   }
 
+  rolesService.getInactiveRoles = async () => {
+    try {
+      return await database.getInactiveRoles();
+    } catch (err) {
+      throw err;
+    }
+  }
+
   rolesService.getRoleById = async (roleId) => {
     if(!roleId){
       return false

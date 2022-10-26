@@ -84,8 +84,8 @@ export default function SelectRole() {
         </div>
       </div>
 
-      <div className="d-flex justify-content-end m-3">
-        <button type="button" className="btn btn-primary" onClick={checkSubmit}>
+      <div className="d-flex justify-content-end m-4">
+        <button type="button" className="btn btn-primary btn-lg" onClick={checkSubmit}>
           {" "}
           Next{" "}
         </button>
