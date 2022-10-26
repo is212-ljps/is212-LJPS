@@ -139,13 +139,14 @@ function database(databaseName) {
     }
   }
 
- database.getSkillById = async (skillID) => {
-  const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
-  try {
-    const result = await promiseQuery(getSkill)
-    return result
-  } catch (err){
-    throw err
+  database.getSkillById = async (skillID) => {
+    const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
+    try {
+      const result = await promiseQuery(getSkill)
+      return result
+    } catch (err){
+      throw err
+    }
   }
   
   database.updateSkillById = async (skillID, skillName, skillDescription) => {
