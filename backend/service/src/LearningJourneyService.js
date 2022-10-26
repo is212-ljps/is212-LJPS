@@ -4,10 +4,11 @@ function learningJourneyService(database){
   learningJourneyService.createLearningJourney = async (learningJourneyName, staffId, jobRoleId, courses, skills) => {
 
     try {
-      const learningJourneyId = await database.createLearningJourney(learningJourneyName, staffId, jobRoleId);
+      const learningJourneyId = await database.createLearningJourney(learningJourneyName, stafvfId, jobRoleId);
       await database.createLearningJourneySkill(learningJourneyId, skills);
       await database.createLearningJourneyCourse(learningJourneyId, courses);
       return learningJourneyId;
+
     } catch (err) {
       throw err;
     }

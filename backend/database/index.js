@@ -16,10 +16,13 @@ exports.createLearningJourney = async (
   jobRoleId
 ) => {
 
+
+
   const insertLearningJourney = `INSERT INTO learning_journey (Learning_Journey_Name, Staff_ID, Job_Role_ID) VALUES ("${learningJourneyName}", ${staffId}, ${jobRoleId})`;
 
   try {
     const result = await promiseQuery(insertLearningJourney);
+    console.log(result)
     return result.insertId;
   } catch (err) {
     throw err;
