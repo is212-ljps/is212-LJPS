@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -8,19 +8,25 @@ export default function ViewLearningJourneys() {
   const [learningJourney, setLearningJourney] = useState([]);
 
   const [learningJourneyDetails, setLearningJourneyDetails] = useState({})
+  const userDetails = useRef()
   const router = useRouter()
 
   useEffect(() => {
     onLearningJourneyUpdate();
   }, []);
 
+  if (typeof window !== 'undefined') {
+    userDetails.current = localStorage.getItem('userDetails')
+  }
+
   const onLearningJourneyUpdate = useCallback(() => {
-    axios
-      .get("http://localhost:8080/api/learning-journey/staff/130001")
+    if(!userDetails.current) return
+    const userId = JSON.parse(userDetails.current).staffID
+    axios.get(`http://localhost:8080/api/learning-journey/staff/${userId}`)
       .then((res) => {
         parseLearningJourneyObj(res.data.data);
       });
-  }, []);
+  }, [userDetails.current]);
 
   const parseLearningJourneyObj = (data) => {
     const learningJourney = {};
