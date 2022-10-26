@@ -55,7 +55,9 @@ export default function SelectRole() {
         </div>
       </div>
 
+
       <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+
         <div className="row mx-4">
           {roles?.length == 0 && (
             <h4 className="text-center"> No Roles Available</h4>
@@ -86,8 +88,8 @@ export default function SelectRole() {
         </div>
       </div>
 
-      <div className="d-flex justify-content-end m-3">
-        <button type="button" className="btn btn-primary" onClick={checkSubmit}>
+      <div className="d-flex justify-content-end m-4">
+        <button type="button" className="btn btn-primary btn-lg" onClick={checkSubmit}>
           {" "}
           Next{" "}
         </button>
