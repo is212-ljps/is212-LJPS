@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 var fs = require('fs');
 var readline = require('readline');
-var database = require("../../../database/index");
+var database = require("../../../database/DatabaseDao");
 var myCon = mysql.createConnection({
   host: 'localhost',
   user: 'root',

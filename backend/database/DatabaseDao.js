@@ -1,16 +1,19 @@
 var mysql = require("mysql");
 const { promisify } = require('util')
+require('dotenv').config({path:__dirname+'/../.env.local'})
 
 function database(databaseName) {
 
   const connection = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "",
+    host: process.env.host,
+    user: process.env.username,
+    password: process.env.password,
     database: databaseName,
   })
   
   const promiseQuery = promisify(connection.query).bind(connection)
+
+  console.log(process.env.host)
 
   database = {}
   
