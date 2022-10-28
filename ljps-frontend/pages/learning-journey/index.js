@@ -68,6 +68,7 @@ export default function SelectRole() {
               <div
                 className="col-6 col-md-3"
                 style={{ overflowWrap: "break-word" }}
+                key={role.Job_Role_ID}
               >
                 <button
                   type="button"
