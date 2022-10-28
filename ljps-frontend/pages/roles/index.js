@@ -39,7 +39,7 @@ export default function JobRolesPage() {
                         <li className="nav-item nav-pills">
                             <button className={active?"btn btn-primary":"btn"} onClick={() => setActive(true)}>Active</button>
                         </li>
-                        <li class="nav-item nav-pills">
+                        <li className="nav-item nav-pills">
                             <button className={active?"btn":"btn btn-primary"} onClick={() => setActive(false)}>Inactive</button>
                         </li>
                     </ul>
