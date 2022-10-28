@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Tooltip from "../../components/LearningJourneyComponent/Tooltip.js"
+import Tooltip from "../../components/LearningJourneyComponent/Tooltip.js";
 
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
