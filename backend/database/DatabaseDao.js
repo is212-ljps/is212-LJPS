@@ -3,13 +3,8 @@ const { promisify } = require('util')
 require('dotenv').config({path:__dirname+'/../.env.local'})
 
 function database(databaseName) {
-  console.log(process.env.TESTING)
-  console.log(process.env.stagingHost)
-  console.log(process.env.stagingUsername)
-  console.log(process.env.stagingPassword)
   var connection;
   if (process.env.TESTING) {
-    console.log("USING STAGING DATABASE")
     connection = mysql.createPool({
       host: process.env.stagingHost,
       user: process.env.stagingUsername,
@@ -125,7 +120,6 @@ function database(databaseName) {
   }
   
   database.createSkill = async (skillName, skillDescription) => {
-    console.log(skillName)
     var insert_sql = `INSERT into skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`;
     try {
       const result = await promiseQuery(insert_sql)
@@ -191,7 +185,6 @@ function database(databaseName) {
       assignSkillsSql += `(${roleId}, ${item}), ` 
     })
     assignSkillsSql = assignSkillsSql.slice(0, -2) + `;`
-    console.log(assignSkillsSql)
     try {
       const result = await promiseQuery(assignSkillsSql)
       return result
