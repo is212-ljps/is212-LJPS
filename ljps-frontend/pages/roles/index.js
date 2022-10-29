@@ -15,12 +15,12 @@ export default function JobRolesPage() {
 
     const onRolesUpdate = useCallback(() => {
         if (active) {
-            axios.get('http://localhost:8080/api/roles').then(res => {
+            axios.get(`${process.env.BACKEND}/api/roles`).then(res => {
                 setRoles(res.data.data)
             })
         }
         else {
-            axios.get('http://localhost:8080/api/roles/?active=false').then(res => {
+            axios.get(`${process.env.BACKEND}/api/roles/?active=false`).then(res => {
                 setRoles(res.data.data)
             })
         }

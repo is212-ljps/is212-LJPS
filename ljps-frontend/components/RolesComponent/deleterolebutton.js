@@ -16,7 +16,7 @@ export default function DeleteRoleButton({ roleName, onRolesUpdate, roleId }) {
     var myModal = bootstrap.Modal.getInstance(modal.current)
 
     axios
-      .delete(`http://localhost:8080/api/roles/${roleId}`)
+      .delete(`${process.env.BACKEND}/api/roles/${roleId}`)
       .then(function (response) {
         if (response.data.success) {
           setErrorMessage("");

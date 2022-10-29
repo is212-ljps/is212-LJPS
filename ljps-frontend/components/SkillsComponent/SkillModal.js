@@ -51,7 +51,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
   }, [modal.current])
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/courses').then((res) => {
+    axios.get(`${process.env.BACKEND}/api/courses`).then((res) => {
       setCourses(res.data.data)
       console.log(courses)
     })
@@ -59,7 +59,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
 
   useEffect(() => {
     if (!skillID) return
-    axios.get(`http://localhost:8080/api/skills/${skillID}/courses`).then((res) => {
+    axios.get(`${process.env.BACKEND}/api/skills/${skillID}/courses`).then((res) => {
       console.log(res.data.data.map(item => item.Course_ID))
       setAssignedCourses(res.data.data.map(item => item.Course_ID))
     })
@@ -76,7 +76,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
-      const url = skillID ? 'http://localhost:8080/api/skills/' + skillID : 'http://localhost:8080/api/skills'
+      const url = skillID ? `${process.env.BACKEND}/api/skills/` + skillID : `${process.env.BACKEND}/api/skills`
       const axiosFn = skillID ? axios.put : axios.post
     
       axiosFn(url, {

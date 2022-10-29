@@ -15,11 +15,11 @@ export default function SkillsPage() {
 
     const onSkillsUpdate = useCallback(() => {
         if (active)
-            axios.get('http://localhost:8080/api/skills').then(res => {
+            axios.get(`${process.env.BACKEND}/api/skills`).then(res => {
                 setSkills(res.data.data)
             })
         else {
-            axios.get('http://localhost:8080/api/skills/?active=false').then(res => {
+            axios.get(`${process.env.BACKEND}/api/skills/?active=false`).then(res => {
                 setSkills(res.data.data)
             })
         }

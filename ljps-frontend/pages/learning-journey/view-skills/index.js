@@ -19,7 +19,7 @@ export default function ViewSkills() {
 
   useEffect(() => {
     if (roleID) {
-      const url = `http://localhost:8080/api/roles/` + roleID;
+      const url = `${process.env.BACKEND}/api/roles/` + roleID;
       const axiosFn = axios.get;
       axiosFn(url)
         .then(function (response) {
@@ -37,7 +37,7 @@ export default function ViewSkills() {
           console.log(error);
         });
 
-      const skillUrl = `http://localhost:8080/api/roles/${roleID}/skills`;
+      const skillUrl = `${process.env.BACKEND}/api/roles/${roleID}/skills`;
       axiosFn(skillUrl)
         .then(function (response) {
           if (response.data.success) {
