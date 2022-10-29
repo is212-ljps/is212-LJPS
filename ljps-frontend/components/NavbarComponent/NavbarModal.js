@@ -3,8 +3,9 @@ import axios from "axios";
 import Router, { useRouter } from "next/router";
 
 export default function NavBarModal(){
-    const role = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('userDetails')).role : null
-
+    //const role = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('userDetails')).role : 'User'
+    const role = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('userDetails')).role : "User"
+    console.log(role)
     return (
         <div>
         {role == "User" && 
