@@ -1,8 +1,5 @@
 name: Deploy to Cloud Run
 on:
-  pull_request:
-    branches:
-      - '**'
   workflow_run:
     workflows: ["Unit Tests on PR"]
     types:
@@ -17,8 +14,6 @@ env:
   PASSWORD: ${{ secrets.PASSWORD }}
 jobs:
   deploy:
-    name: Deploy to Cloud Run
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
