@@ -66,7 +66,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     const selectedSkills = getSelectedSkillIds()
-    if (validateLength(nameInput.current.value, 5, 20) && validateLength(descriptionInput.current.value, 0, 300) && selectedSkills.length > 0) {
+    if (validateLength(nameInput.current.value, 5, 50) && validateLength(descriptionInput.current.value, 0, 300) && selectedSkills.length > 0) {
       setErrors(errorDefaultVal)
       var myToast = new bootstrap.Toast(toast.current);
       const url = roleID ? "http://localhost:8080/api/roles/" + roleID : "http://localhost:8080/api/roles";

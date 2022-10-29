@@ -83,6 +83,13 @@ export default function ViewCourses() {
     }
   };
 
+  const checkPreviousPage = () => {
+    router.push({
+      pathname: "/learning-journey/view-skills",
+      query: {selectedSkill:skillID, selectedRole:roleID}
+    })
+  }
+
   return (
     <>
       <CourseModal checkSubmit={confirmSubmit} roleId={roleID} skillName={skillDetails.skillName} skillId={skillID} roleName={roleName} courses={selectedCourses} />
@@ -142,9 +149,26 @@ export default function ViewCourses() {
         </div>
         {/* [LJPS-35] Add button here */}
       </div>
+
+      <div className="container p-3" style={{"marginTop":50}}>
+        <div className="row">
+          <div className="col-6">
+            <button type="button" value="back" onClick={checkPreviousPage} className="btn btn-primary" style={{"width":150}}> Back </button>
+          </div>
+
+          <div className="col-6 justify-content-end d-flex ">
+            <button type="button" value="Create Learning Journey" onClick={checkSubmit} data-bs-toggle="modal" data-bs-target="#role-modal" className="btn btn-primary" style={{"width":150}}> {" "}Create{" "}</button>
+          </div>
+        </div>
+      </div>
+      {/* <div className="container d-flex justify-content-start">
+        <button type="button" value="Create Learning Journey" onClick={checkPreviousPage} className="float-left btn btn-outline-primary my-3 active">Back</button>
+      </div>
+
       <div className="container d-flex justify-content-end">
         <button type="button" value="Create Learning Journey" onClick={checkSubmit} data-bs-toggle="modal" data-bs-target="#role-modal" className="float-right btn btn-outline-primary my-3 active">Create Learning Journey</button>
-      </div>
+      </div> */}
+
       <div
         className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
         ref={toast}

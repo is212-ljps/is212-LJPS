@@ -71,6 +71,7 @@ function skillsRoutes(service) {
   })
 
   router.post("/", async (req, res) => {
+
     let skillName = req.body.skillName;
     let skillDescription = req.body.skillDescription;
     let assignedCourses = req.body.assignedCourses;
@@ -79,6 +80,7 @@ function skillsRoutes(service) {
       res.status(201).send({
         success: true,
         message: "A new skill has been successfully created!",
+        data: data
       });
     } catch (err) {
       console.log(err)
