@@ -51,7 +51,7 @@ export default function NavBarModal(){
                 <a className="nav-link" href="/learning-journey/view"> <strong> View My Learning Journey </strong></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">{role}</a>
+                <a className="nav-link">{role}</a>
               </li>
             </ul>
           </div>
@@ -79,7 +79,7 @@ export default function NavBarModal(){
                 <a className="nav-link" href="/learning-journey/view"> <strong> View My Learning Journey </strong></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">{role}</a>
+                <a className="nav-link">{role}</a>
               </li>
             </ul>
           </div>
