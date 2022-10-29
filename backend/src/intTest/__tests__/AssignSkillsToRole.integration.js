@@ -37,6 +37,7 @@ describe("Integration test for assiging skills to role", () => {
     });
     const roleId = createRoleRes._body.data
     const getRole = await request(server).get("/api/roles/" + roleId + "/skills");
+    console.log(getRole)
     expect(getRole._body.data[0].Skill_ID).toBe(skill1Id)
     expect(getRole._body.data[1].Skill_ID).toBe(skill2Id)
   })  
