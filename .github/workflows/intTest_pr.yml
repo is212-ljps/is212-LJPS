@@ -4,10 +4,12 @@ on:
   pull_request:
     branches:
       - '**'
+
 env:
   stagingHost: ${{ secrets.HOST }}
   stagingUsername: ${{ secrets.USER }}
   stagingPassword: ${{ secrets.PASSWORD }}
+  
 jobs:
   test:
     runs-on: ubuntu-latest

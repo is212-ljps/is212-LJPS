@@ -1,4 +1,4 @@
-name: Integration Tests on PR
+name: Integration Tests on main
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   stagingHost: ${{ secrets.HOST }}
   stagingUsername: ${{ secrets.USER }}
   stagingPassword: ${{ secrets.PASSWORD }}
-  
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -27,4 +27,4 @@ jobs:
       - name: Install dependencies
         run: cd ./backend && npm install
       - name: Test
-        run: cd ./backend && npm run testInt
+        run: stagingHost=${{ env.stagingHost }} stagingUsername=${{ env.stagingUsername }} stagingPassword=${{ env.stagingPassword }} cd ./backend && npm run testInt
