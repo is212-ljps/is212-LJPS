@@ -15,11 +15,10 @@ export default function Home() {
 
     if (role == "User") {
       router.push("/learning-journey");
-      localStorage.setItem('userDetails', JSON.stringify(userDetails));
 
     } else {
       router.push("/roles");
-      localStorage.setItem('userDetails', JSON.stringify(userDetails));
+      
     }
   };
 
