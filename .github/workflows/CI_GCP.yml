@@ -1,8 +1,5 @@
 name: Deploy to Cloud Run
 on:
-  pull_request:
-    branches:
-      - '**'
   workflow_run:
     workflows: [Unit Tests on PR, Integration Tests on PR]
     types: [completed]
