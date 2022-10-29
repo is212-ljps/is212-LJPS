@@ -66,6 +66,7 @@ CREATE TABLE `course_skill` (
 
 LOCK TABLES `course_skill` WRITE;
 /*!40000 ALTER TABLE `course_skill` DISABLE KEYS */;
+INSERT INTO `course_skill` VALUES (5,'COR001'),(1,'MGT001'),(1,'MGT002'),(1,'MGT004'),(2,'SAL003'),(3,'tch003'),(4,'tch013'),(4,'tch014'),(4,'tch015');
 /*!40000 ALTER TABLE `course_skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,13 +79,13 @@ DROP TABLE IF EXISTS `job_role`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `job_role` (
   `Job_Role_ID` int NOT NULL AUTO_INCREMENT,
-  `Job_Role_Name` varchar(25) NOT NULL,
+  `Job_Role_Name` varchar(50) NOT NULL,
   `Job_Role_Description` varchar(500) DEFAULT NULL,
   `Job_Department` varchar(25) DEFAULT NULL,
   `Is_Active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`Job_Role_ID`),
   UNIQUE KEY `Job_Role_Name` (`Job_Role_Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +94,7 @@ CREATE TABLE `job_role` (
 
 LOCK TABLES `job_role` WRITE;
 /*!40000 ALTER TABLE `job_role` DISABLE KEYS */;
+INSERT INTO `job_role` VALUES (1,'Marketing Manager','Manage marketing','Marketing',1),(2,'Operations Manager','Manages daily operations','Operations',1),(3,'HR and Admin Manager','Manages HR processes','HR',1),(4,'Sales Rep','Carry out sales','Operations',1),(5,'Repair Engineer','Carry out repairs','Operations',1),(6,'Roving Service Engineer','Carry out servicing','Operations',1),(7,'Operation Planning','Plans for operations','Operations',1),(8,'Admin and Call Centre','Handles administrative tasks','Operations',1);
 /*!40000 ALTER TABLE `job_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,6 +121,7 @@ CREATE TABLE `job_role_skill` (
 
 LOCK TABLES `job_role_skill` WRITE;
 /*!40000 ALTER TABLE `job_role_skill` DISABLE KEYS */;
+INSERT INTO `job_role_skill` VALUES (1,1),(2,1),(3,1),(8,1),(1,2),(5,3),(6,3),(5,4),(6,4),(5,5),(6,5);
 /*!40000 ALTER TABLE `job_role_skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +134,7 @@ DROP TABLE IF EXISTS `learning_journey`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `learning_journey` (
   `Learning_Journey_ID` int NOT NULL AUTO_INCREMENT,
-  `Learning_Journey_Name` varchar(25) NOT NULL,
+  `Learning_Journey_Name` varchar(50) NOT NULL,
   `Staff_ID` int DEFAULT NULL,
   `Job_Role_ID` int DEFAULT NULL,
   PRIMARY KEY (`Learning_Journey_ID`),
@@ -139,7 +142,7 @@ CREATE TABLE `learning_journey` (
   KEY `learning_journey_fk2` (`Job_Role_ID`),
   CONSTRAINT `learning_journey_fk1` FOREIGN KEY (`Staff_ID`) REFERENCES `staff` (`Staff_ID`),
   CONSTRAINT `learning_journey_fk2` FOREIGN KEY (`Job_Role_ID`) REFERENCES `job_role` (`Job_Role_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,6 +151,7 @@ CREATE TABLE `learning_journey` (
 
 LOCK TABLES `learning_journey` WRITE;
 /*!40000 ALTER TABLE `learning_journey` DISABLE KEYS */;
+INSERT INTO `learning_journey` VALUES (1,'Repair Engineer Learning Journ',130002,5);
 /*!40000 ALTER TABLE `learning_journey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,6 +178,7 @@ CREATE TABLE `learning_journey_course` (
 
 LOCK TABLES `learning_journey_course` WRITE;
 /*!40000 ALTER TABLE `learning_journey_course` DISABLE KEYS */;
+INSERT INTO `learning_journey_course` VALUES (1,'COR001'),(1,'tch003'),(1,'tch013');
 /*!40000 ALTER TABLE `learning_journey_course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,6 +205,7 @@ CREATE TABLE `learning_journey_skill` (
 
 LOCK TABLES `learning_journey_skill` WRITE;
 /*!40000 ALTER TABLE `learning_journey_skill` DISABLE KEYS */;
+INSERT INTO `learning_journey_skill` VALUES (1,3),(1,4),(1,5);
 /*!40000 ALTER TABLE `learning_journey_skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -267,12 +273,12 @@ DROP TABLE IF EXISTS `skill`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `skill` (
   `Skill_ID` int NOT NULL AUTO_INCREMENT,
-  `Skill_Name` varchar(25) NOT NULL,
+  `Skill_Name` varchar(50) NOT NULL,
   `Skill_Description` varchar(500) DEFAULT NULL,
   `Is_Active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`Skill_ID`),
   UNIQUE KEY `Skill_Name` (`Skill_Name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,6 +287,7 @@ CREATE TABLE `skill` (
 
 LOCK TABLES `skill` WRITE;
 /*!40000 ALTER TABLE `skill` DISABLE KEYS */;
+INSERT INTO `skill` VALUES (1,'People Management','Ability to manage people at the workplace',1),(2,'Online Marketing','Marketing on digital platforms to reach online users',1),(3,'Canon Product Servicing','Troubleshooting of Canon products',1),(4,'Network Security','Maintain network security and fix vulnerabilities',1),(5,'System Architecture','Knowledge on fundamental concepts of system architecture',1);
 /*!40000 ALTER TABLE `skill` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,4 +330,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-29 12:26:35
+-- Dump completed on 2022-10-29 17:11:40
