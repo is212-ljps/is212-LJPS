@@ -4,7 +4,7 @@ on:
     branches:
       - '**'
   workflow_run:
-    workflows: [Unit Tests on main, Integration Tests on main]
+    workflows: [Unit Tests on PR, Integration Tests on PR]
     types: [completed]
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
