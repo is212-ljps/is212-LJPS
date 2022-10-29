@@ -111,7 +111,7 @@ export default function ViewCourses() {
       </div>
       <div className="container mx-6 px-3">
         <div className="row"> {courses.length > 0 && courses.map((course) => (
-          <div className="col-12 col-md-6 col-xl-4">
+          <div className="col-12 col-md-6 col-xl-4" key={course.Course_ID}>
             <div className="card mt-2">
               <div className="card-header bg-primary text-light"> <b>{course.Course_Name}</b> </div>
               <div className="card-body"></div>
@@ -130,7 +130,7 @@ export default function ViewCourses() {
                 </div>
 
                 <div className="col-3" align="right">
-                  <label style={{ cursor: "pointer" }} for={course.Course_ID}>Add</label>
+                  <label style={{ cursor: "pointer" }} htmlFor={course.Course_ID}>Add</label>
                 </div>
 
 
@@ -138,7 +138,7 @@ export default function ViewCourses() {
               <div className="row mx-1">
                 <div className="col-10"> <p>{course.Course_Desc}</p> </div>
                 <div className="col-2" align="right">
-                  <div > <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} className={selectedCourses.includes(course.Course_ID)} onClick={toggleButton}></input></div>
+                  <div > <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} onClick={toggleButton}></input></div>
                 </div>
               </div>
             </div>
@@ -147,7 +147,6 @@ export default function ViewCourses() {
         ))}
 
         </div>
-        {/* [LJPS-35] Add button here */}
       </div>
 
       <div className="container p-3" style={{"marginTop":50}}>
@@ -161,13 +160,7 @@ export default function ViewCourses() {
           </div>
         </div>
       </div>
-      {/* <div className="container d-flex justify-content-start">
-        <button type="button" value="Create Learning Journey" onClick={checkPreviousPage} className="float-left btn btn-outline-primary my-3 active">Back</button>
-      </div>
 
-      <div className="container d-flex justify-content-end">
-        <button type="button" value="Create Learning Journey" onClick={checkSubmit} data-bs-toggle="modal" data-bs-target="#role-modal" className="float-right btn btn-outline-primary my-3 active">Create Learning Journey</button>
-      </div> */}
 
       <div
         className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
