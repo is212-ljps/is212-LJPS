@@ -1,6 +1,9 @@
 #!/bin/bash
 search_dir=./src/intTest/__tests__
-export $(grep -v '^#' .env.local | xargs)
+if [ -z ${stagingHost+x} ]; 
+then 
+  export $(grep -v '^#' .env.local | xargs)
+fi;
 
 for entry in "$search_dir"/*
 do

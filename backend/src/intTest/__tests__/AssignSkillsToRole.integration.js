@@ -21,6 +21,7 @@ describe("Integration test for assiging skills to role", () => {
       assignedCourses: ["tch019"]
     })
     const skill1Id = createSkill1Res._body.data
+    console.log("first skill")
     console.log(skill1Id)
     
     const createSkill2Res = await request(server).post("/api/skills").send({
