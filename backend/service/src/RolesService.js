@@ -42,7 +42,6 @@ function rolesService(database){
   }
 
   rolesService.createRole = async (roleName, roleDescription, department, assignedSkills) => {
-    console.log(roleName, roleDescription, department, assignedSkills)
     if(!roleName || !department || !assignedSkills){
       return false
     } else if (utils.checkLength(5,50, roleName) || utils.checkLength(0,300, roleDescription) || utils.checkLength(1,9999, assignedSkills)) {

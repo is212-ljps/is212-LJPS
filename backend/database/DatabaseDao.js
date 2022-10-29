@@ -1,14 +1,24 @@
 var mysql = require("mysql");
 const { promisify } = require('util')
+require('dotenv').config({path:__dirname+'/../.env.local'})
 
 function database(databaseName) {
-
-  const connection = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: databaseName,
-  })
+  var connection;
+  if (process.env.TESTING) {
+    connection = mysql.createPool({
+      host: process.env.stagingHost,
+      user: process.env.stagingUsername,
+      password: process.env.stagingPassword,
+      database: databaseName,
+    })
+  } else {
+    connection = mysql.createPool({
+      host: process.env.host,
+      user: process.env.username,
+      password: process.env.password,
+      database: databaseName,
+    })
+  }
   
   const promiseQuery = promisify(connection.query).bind(connection)
 
@@ -110,7 +120,7 @@ function database(databaseName) {
   }
   
   database.createSkill = async (skillName, skillDescription) => {
-    var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`;
+    var insert_sql = `INSERT into skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`;
     try {
       const result = await promiseQuery(insert_sql)
       return result
@@ -118,9 +128,9 @@ function database(databaseName) {
       throw err
     }
   }
-  
+
   database.deleteSkillById = async (skillID) => {
-    var update_sql = `UPDATE Skill SET Is_Active=${false} WHERE Skill_ID=${skillID};`;
+    var update_sql = `UPDATE skill SET Is_Active=${false} WHERE Skill_ID=${skillID};`;
     try {
       const result = await promiseQuery(update_sql)
       return result
