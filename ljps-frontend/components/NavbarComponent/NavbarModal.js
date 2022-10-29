@@ -1,10 +1,12 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
+import { store } from "../../store";
 
 export default function NavBarModal(){
-    //const role = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('userDetails')).role : 'User'
-    const role = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('userDetails')).role : "User"
+
+    const role = store.role
+
     console.log(role)
     return (
         <div>
