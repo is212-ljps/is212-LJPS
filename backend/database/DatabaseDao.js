@@ -122,6 +122,7 @@ function database(databaseName) {
   }
   
   database.createSkill = async (skillName, skillDescription) => {
+    console.log(skillName)
     var insert_sql = `INSERT into skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`;
     try {
       const result = await promiseQuery(insert_sql)
