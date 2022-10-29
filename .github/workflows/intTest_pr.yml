@@ -27,4 +27,4 @@ jobs:
       - name: Install dependencies
         run: cd ./backend && npm install
       - name: Test
-        run: stagingHost=${{ env.testingHost }} stagingUsername=${{ env.testingUsername }} stagingPassword=${{ env.testingPassword }} cd ./backend && npm run testInt
+        run: testingHost=${{ env.testingHost }} testingUsername=${{ env.testingUsername }} testingPassword=${{ env.testingPassword }} cd ./backend && npm run testInt
