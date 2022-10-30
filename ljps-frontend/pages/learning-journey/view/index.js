@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
+import { store } from "../../../store";
 
 export default function ViewLearningJourneys() {
   const [learningJourney, setLearningJourney] = useState([]);
@@ -12,7 +13,7 @@ export default function ViewLearningJourneys() {
   const onLearningJourneyUpdate = useCallback(() => {
     // currently staffID is hardcoded
     axios
-      .get("http://localhost:8080/api/learning-journey/staff/130002")
+      .get("http://localhost:8080/api/learning-journey/staff/" + store.staffId)
       .then((res) => {
         parseLearningJourneyObj(res.data.data);
       });
