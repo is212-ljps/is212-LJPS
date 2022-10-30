@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Tooltip from "../../../components/LearningJourneyComponent/Tooltip";
 import Image from "next/image";
+
+
 
 export default function ViewSkills() {
   var router = useRouter();
@@ -130,10 +133,10 @@ export default function ViewSkills() {
                   onChange={handleChange}
                 />
                 {skill.Skill_Name}
-                <i
-                  className="bi bi-info-circle-fill"
-                  style={{ marginLeft: "auto", marginRight: "0px" }}
-                ></i>
+                
+                <span style={{ marginLeft: "auto", marginRight: "0px" }}>
+                <Tooltip description={skill.Skill_Description ? skill.Skill_Description : "No description"} />
+                </span>
               </div>
             </div>
           ))}

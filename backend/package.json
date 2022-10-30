@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest --testMatch='**/*.test.js' --forceExit",
     "start": "nodemon src/server.js",
-    "testInt": "bash src/intTest/runTest.sh",
+    "testInt": "TESTING=true bash src/intTest/runTest.sh",
     "resetDatabase": "node src/intTest/setup/TestDatabaseSetUp.js"
   },
   "devDependencies": {

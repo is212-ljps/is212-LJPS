@@ -8,7 +8,6 @@ export default function JobRolesPage() {
     const [roles, setRoles] = useState([])
     const [selectedRole, setSelectedRole] = useState({ roleName: '', roleDescription: '', roleDepartment: '', roleID: null })
     const [active, setActive] = useState(true)
-
     useEffect(() => {
         onRolesUpdate()
     }, [active])
