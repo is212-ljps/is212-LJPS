@@ -19,7 +19,7 @@ export default function LearningJourneyDetails() {
 
   const getLearningJourney = useCallback(() => {
     if (!learningJourneyId) return
-    const url = `http://localhost:8080/api/learning-journey/${learningJourneyId}`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey/${learningJourneyId}`;
     const axiosFn = axios.get;
     axiosFn(url).then(function (response) {
       if (response.data.success) {
@@ -29,8 +29,8 @@ export default function LearningJourneyDetails() {
   }, [learningJourneyId])
 
   const removeCourse = useCallback(() => {
-    const getUrl = `http://localhost:8080/api/learning-journey/${learningJourneyId}`
-    const removeUrl = `http://localhost:8080/api/learning-journey/${learningJourneyId}/${selectedCourse.Course_ID}`
+    const getUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey/${learningJourneyId}`
+    const removeUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey/${learningJourneyId}/${selectedCourse.Course_ID}`
     axios.delete(removeUrl).then(() => {
       const removeToast = new bootstrap.Toast(toast.current)
       removeToast.show()

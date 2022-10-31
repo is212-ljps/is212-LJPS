@@ -25,7 +25,7 @@ export default function AddCourses({ learningJourneyName, learningJourneyId, get
 
   const getUnaddedCourses = useCallback(() => {
     if (!learningJourneyId) return
-    const url = `http://localhost:8080/api/courses/learning-journey/${learningJourneyId}?isAdded=false`
+    const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/courses/learning-journey/${learningJourneyId}?isAdded=false`
     axios.get(url).then((res) => {
       setCourses(res.data.data)
     })
