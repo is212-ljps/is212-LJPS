@@ -18,8 +18,8 @@ export default function ViewCourses() {
   const [roleName, setRoleName] = useState("");
 
   useEffect(() => {
-    if (skillID && roleID) {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/skills/${skillID}`
+    if (skills && roleID) {
+      const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/skills/${skills}`
       const axiosFn = axios.get;
       axiosFn(url)
         .then(function (response) {

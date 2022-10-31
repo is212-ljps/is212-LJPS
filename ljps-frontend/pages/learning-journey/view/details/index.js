@@ -27,7 +27,7 @@ export default function LearningJourneyDetails() {
   }, [learningJourneyId]);
 
   return (
-    <div classname="container">
+    <div className="container">
       <div className="row py-4">
         <div className="col-md-5 d-flex justify-content-center flex-column">
           <div>
@@ -43,7 +43,10 @@ export default function LearningJourneyDetails() {
             <h5 className="mt-2 mb-4">Selected Skills: </h5>
             <div className="col-12">
               {Object.values(skills).map((skill) => (
-                <span className="badge rounded-pill bg-dark py-2 me-2">
+                <span
+                  key={skill.Skill_Name}
+                  className="badge rounded-pill bg-dark py-2 me-2"
+                >
                   {" "}
                   {skill.Skill_Name}{" "}
                 </span>
@@ -51,7 +54,6 @@ export default function LearningJourneyDetails() {
             </div>
           </div>
         </div>
-
 
         <div className="col-md-7 d-flex justify-content-center">
           <Player
@@ -64,11 +66,10 @@ export default function LearningJourneyDetails() {
         </div>
       </div>
 
-
       <h4 className="fw-bold"> Courses </h4>
       <div className="row">
         {courses.map((course) => (
-          <div className="col-md-6 col-sm-6 col-lg-4 mb-5">
+          <div className="col-md-6 col-sm-6 col-lg-4 mb-5" key={course.Course_ID}>
             <div className="card mt-2">
               <div className="card-header bg-primary text-light">
                 {" "}
@@ -86,9 +87,10 @@ export default function LearningJourneyDetails() {
                 </div>
               </div>
 
-              <div classname="px-3">
+              <div className="px-3">
                 {course.skills.map((skill) => (
                   <span
+                    key={skill}
                     className="badge rounded-pill bg-dark py-1 me-2"
                     style={{ fontSize: "11px" }}
                   >
@@ -114,6 +116,5 @@ export default function LearningJourneyDetails() {
         ))}
       </div>
     </div>
-
   );
 }
