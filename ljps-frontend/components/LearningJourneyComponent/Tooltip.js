@@ -12,7 +12,7 @@ export default function Tooltip({ description }) {
 
 
   return <i
-    className="bi bi-info-circle-fill mx-2 "
+    className="bi bi-info-circle-fill"
     data-bs-toggle="tooltip"
     data-bs-placement="bottom"
     ref={tooltipRef}
