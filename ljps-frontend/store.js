@@ -1,4 +1,4 @@
 export const store = {
-    staffId: "130001",
+    staffId: "130002",
     role: "User"
 }

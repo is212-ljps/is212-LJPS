@@ -29,6 +29,7 @@ function learningJourneyService(database){
   }
 
   learningJourneyService.getLearningJourney = async (learningJourneyId) => {
+    let learningJourney= {}
     if(!learningJourneyId){
       return false
     }
