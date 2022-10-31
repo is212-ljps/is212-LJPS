@@ -44,14 +44,14 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
   }, [modal.current]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/skills').then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/api/skills`).then((res) => {
       setSkills(parseSkillsObj(res.data.data))
     })
   }, [])
 
   useEffect(() => {
     if (!roleID) return
-    axios.get(`http://localhost:8080/api/roles/${roleID}/skills`).then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/api/roles/${roleID}/skills`).then((res) => {
       const skillIds = Object.values(res.data.data)
       const newState = { ...skills }
       skillIds.forEach(item => {
@@ -69,7 +69,7 @@ export default function RoleModal({ selectedRole, onRolesUpdate, resetSelectedRo
     if (validateLength(nameInput.current.value, 5, 50) && validateLength(descriptionInput.current.value, 0, 300) && selectedSkills.length > 0) {
       setErrors(errorDefaultVal)
       var myToast = new bootstrap.Toast(toast.current);
-      const url = roleID ? "http://localhost:8080/api/roles/" + roleID : "http://localhost:8080/api/roles";
+      const url = roleID ? `${process.env.NEXT_PUBLIC_BACKEND}/api/roles/` + roleID : `${process.env.NEXT_PUBLIC_BACKEND}/api/roles`;
       const axiosFn = roleID ? axios.put : axios.post;
       axiosFn(url, {
         roleName: nameInput.current.value,

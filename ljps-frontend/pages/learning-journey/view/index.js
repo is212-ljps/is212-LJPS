@@ -17,7 +17,7 @@ export default function ViewLearningJourneys() {
 
   const onLearningJourneyUpdate = useCallback(() => {
     axios
-      .get("http://localhost:8080/api/learning-journey/staff/" + store.staffId)
+      .get(`${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey/staff/` + store.staffId)
       .then((res) => {
         parseLearningJourneyObj(res.data.data);
       });

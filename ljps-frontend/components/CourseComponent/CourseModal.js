@@ -10,7 +10,7 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
 
   const handleSubmit = () => {
     if (name) {
-      const learningJourneyUrl = `http://localhost:8080/api/learning-journey`;
+      const learningJourneyUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey`;
       axios.post(learningJourneyUrl, {
         learningJourneyName: name,
         staffId: 130001,
