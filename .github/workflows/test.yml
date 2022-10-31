@@ -1,14 +1,9 @@
-name: Integration Tests on main
+name: Tests on main
 
 on:
   push:
     branches:
       - main
-
-env:
-  stagingHost: ${{ secrets.HOST }}
-  stagingUsername: ${{ secrets.USER }}
-  stagingPassword: ${{ secrets.PASSWORD }}
 
 jobs:
   test:
@@ -24,7 +19,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
       - name: Install dependencies
-        run: cd ./backend && npm install
+        run: |
+          cd ./backend && npm ci
       - name: Test
-        run: stagingHost=${{ env.stagingHost }} stagingUsername=${{ env.stagingUsername }} stagingPassword=${{ env.stagingPassword }} cd ./backend && npm run testInt
+        run: cd ./backend && npm test

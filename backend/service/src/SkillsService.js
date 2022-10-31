@@ -1,5 +1,3 @@
-const utils = require('../../util')
-
 function skillsService(database){
   const skillsService = {}
 
@@ -20,9 +18,6 @@ function skillsService(database){
   }
 
   skillsService.getSkillById = async (skillId) => {
-    if(!skillId){
-      return false
-    }
     try {
       return await database.getSkillById(skillId)
     } catch (err) {
@@ -39,9 +34,6 @@ function skillsService(database){
   } 
 
   skillsService.getCoursesAssignedToSkill = async (skillId) => {
-    if(!skillId){
-      return false
-    }
     try {
       return await database.getCoursesAssignedToSkill(skillId)
     } catch (err) {
@@ -50,17 +42,9 @@ function skillsService(database){
   }
 
   skillsService.createSkill = async (skillName, skillDescription, assignedCourses) => {
-    if(!skillName || !assignedCourses){
-      return false
-    } else if (utils.checkLength(5,50, skillName) || utils.checkLength(0,300, skillDescription) || utils.checkLength(1,9999, assignedCourses)) {
-      return false
-    }
-
     try {
       const data = await database.createSkill(skillName, skillDescription);
-      if (assignedCourses) {
-        await database.assignCoursesToSkills(assignedCourses, data.insertId)
-      }
+      await database.assignCoursesToSkills(assignedCourses, data.insertId)
       return data.insertId;
     } catch (err) {
       throw err;
@@ -68,9 +52,6 @@ function skillsService(database){
   }
 
   skillsService.deleteSkillById = async (skillId) => {
-    if(!skillId){
-      return false
-    }
     try {
       return await database.deleteSkillById(skillId)
     } catch (err) {
@@ -79,11 +60,6 @@ function skillsService(database){
   }
 
   skillsService.updateSkillById = async (skillId, skillName, skillDescription, assignedCourses) => {
-    if(!skillId || !skillName || !assignedCourses){
-      return false
-    } else if (utils.checkLength(5,50, skillName) || utils.checkLength(0,300, skillDescription) || utils.checkLength(1,9999, assignedCourses)) {
-      return false
-    }
     try {
       const data = await database.updateSkillById(skillId, skillName, skillDescription);
       await database.removeCoursesFromSkill(skillId)

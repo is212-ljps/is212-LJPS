@@ -19,6 +19,10 @@ export default function ViewConfirmation() {
   return (
     <div className="pb-5">
       <div>
+        <nav className="navbar navbar-light bg-light px-3">
+          <span className="navbar-brand mb-0 h1"> All-in-one LJPS </span>
+        </nav>
+
         <div className="container">
           <div className="row">
             <div className="col-md d-flex justify-content-center align-items-center ">

@@ -10,9 +10,6 @@ function coursesService(database) {
   };
 
   coursesService.getCoursesBySkill = async (skillId) => {
-    if(!skillId){
-      return false
-    }
     try {
       return await database.getCoursesBySkill(skillId);
     } catch (err) {

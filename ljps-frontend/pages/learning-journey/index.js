@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Tooltip from "../../components/LearningJourneyComponent/Tooltip.js";
 
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
@@ -10,13 +9,11 @@ export default function SelectRole() {
   const [selectedRole, setSelectedRole] = useState("");
   const router = useRouter();
 
-
   const toast = useRef();
 
   useEffect(() => {
     onRolesUpdate();
   }, []);
-
 
   const toggleButton = (e) => {
     setSelectedRole(e.target.id);
@@ -35,7 +32,7 @@ export default function SelectRole() {
     } else {
       router.push({
         pathname: "/learning-journey/view-skills",
-        query: { selectedRole },
+        query: {selectedRole},
       });
     }
   };
@@ -55,9 +52,9 @@ export default function SelectRole() {
         </div>
       </div>
 
-
-      <div style={{ maxHeight: "400px", overflowY: "auto" }}>
-
+      <div
+        style={{ maxHeight: "400px", overflowY: "auto" }}
+      >
         <div className="row mx-4">
           {roles?.length == 0 && (
             <h4 className="text-center"> No Roles Available</h4>
@@ -68,7 +65,6 @@ export default function SelectRole() {
               <div
                 className="col-6 col-md-3"
                 style={{ overflowWrap: "break-word" }}
-                key={role.Job_Role_ID}
               >
                 <button
                   type="button"
@@ -82,15 +78,14 @@ export default function SelectRole() {
                   onClick={toggleButton}
                 >
                   {role.Job_Role_Name}
-                  <Tooltip description={role.Job_Role_Description ? role.Job_Role_Description : "No description"} />
                 </button>
               </div>
             ))}
         </div>
       </div>
 
-      <div className="d-flex justify-content-end m-4">
-        <button type="button" className="btn btn-primary btn-lg" onClick={checkSubmit}>
+      <div className="d-flex justify-content-end m-3">
+        <button type="button" className="btn btn-primary" onClick={checkSubmit}>
           {" "}
           Next{" "}
         </button>

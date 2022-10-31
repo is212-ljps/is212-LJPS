@@ -13,8 +13,7 @@ function rolesRoutes(service) {
       const data = await service.createRole(roleName, roleDescription, department, assignedSkills);
       res.status(201).send({
         success: true,
-        message: "A new role has been successfully created!",
-        data: data
+        message: "A new role has been successfully created!"
       });
     } catch (err) {
       console.log(err)
@@ -103,7 +102,6 @@ function rolesRoutes(service) {
     let roleID = req.params.roleID
     try {
       const data = await service.getSkillsAssignedToRole(roleID);
-      console.log(data)
       res.status(200).send({
         success: true,
         data: data
