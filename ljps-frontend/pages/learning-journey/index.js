@@ -110,7 +110,6 @@ export default function SelectRole() {
         data-bs-autohide="true"
         aria-atomic="true"
       >
-        {console.log('test')}
         <div className="d-flex ">
           <div className="toast-body">Please select a Role first !</div>
         </div>
