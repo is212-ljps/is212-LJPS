@@ -23,7 +23,7 @@ export default function SelectRole() {
   };
 
   const onRolesUpdate = useCallback(() => {
-    axios.get("http://localhost:8080/api/roles").then((res) => {
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/api/roles`).then((res) => {
       setRoles(res.data.data);
     });
   }, []);

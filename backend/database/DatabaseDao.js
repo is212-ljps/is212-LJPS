@@ -6,9 +6,9 @@ function database(databaseName) {
   var connection;
   if (process.env.TESTING) {
     connection = mysql.createPool({
-      host: process.env.stagingHost,
-      user: process.env.stagingUsername,
-      password: process.env.stagingPassword,
+      host: process.env.testingHost,
+      user: process.env.testingUsername,
+      password: process.env.testingPassword,
       database: databaseName,
     });
   } else {
