@@ -426,9 +426,9 @@ describe("Tests for Learning Journey Service", () => {
     expect(response).toBe(true)
   })
 
-  // it("Get unadded courses from learning journey", async () => {
+  it("Get unadded courses from learning journey", async () => {
 
-  // })
+  })
 
 
 });
