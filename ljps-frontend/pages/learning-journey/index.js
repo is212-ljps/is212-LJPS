@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Tooltip from "../../components/LearningJourneyComponent/Tooltip.js"
+import Tooltip from "../../components/LearningJourneyComponent/Tooltip.js";
 
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
@@ -68,6 +68,7 @@ export default function SelectRole() {
               <div
                 className="col-6 col-md-3"
                 style={{ overflowWrap: "break-word" }}
+                key={role.Job_Role_ID}
               >
                 <button
                   type="button"

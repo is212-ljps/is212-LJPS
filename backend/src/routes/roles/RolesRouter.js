@@ -103,6 +103,7 @@ function rolesRoutes(service) {
     let roleID = req.params.roleID
     try {
       const data = await service.getSkillsAssignedToRole(roleID);
+      console.log(data)
       res.status(200).send({
         success: true,
         data: data

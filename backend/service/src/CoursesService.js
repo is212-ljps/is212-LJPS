@@ -31,7 +31,7 @@ function coursesService(database) {
       learningJourneyCourses.forEach(({ Course_ID }) => { existingIds[Course_ID] = true })
       const learningJourneySkills = await database.getLearningJourneySkills(learningJourneyId)
       const learningJourneySkillIds = learningJourneySkills.map(({ Skill_ID }) => Skill_ID).join(",")
-      const learningJourneyAllCourses = await database.getCoursesBySkills(learningJourneySkillIds)
+      const learningJourneyAllCourses = await database.getCoursesByMultipleSkill(learningJourneySkillIds)
       const unaddedCourseIds = learningJourneyAllCourses.filter((item) => !existingIds[item.Course_ID]).map(({ Course_ID }) => Course_ID)
 
       if(!unaddedCourseIds.length){

@@ -37,7 +37,7 @@ export default function DeleteLearningJourneyModal({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title text-center w-100 ">
-                Delete {learningJourneyDetails.learningJourneyName}
+                Delete {learningJourneyDetails?.learningJourneyName}
               </h5>
               <button
                 type="button"

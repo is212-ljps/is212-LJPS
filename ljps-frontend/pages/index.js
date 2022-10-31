@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useRouter } from "next/router";
+import { store } from "../store";
 
 export default function Home() {
   const [role, setRole] = useState("User");
@@ -9,18 +10,15 @@ export default function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    var userDetails={
-      "role": role, 
-      "staffID" : role==='user' ? '140002' : '130001'
-    }
+    store.role = role
+    store.staffId = role === 'User' ? '140002' : '130001'
 
     if (role == "User") {
       router.push("/learning-journey");
-      localStorage.setItem("userDetails",JSON.stringify(userDetails));
 
     } else {
       router.push("/roles");
-      localStorage.setItem("userDetails",JSON.stringify(userDetails));
+      
     }
   };
 

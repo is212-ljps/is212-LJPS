@@ -3,30 +3,25 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import { useRouter } from "next/router";
 import axios from "axios";
 import DeleteLearningJourneyModal from "./DeleteModal";
+import { store } from "../../../store";
 
 export default function ViewLearningJourneys() {
   const [learningJourney, setLearningJourney] = useState([]);
 
   const [learningJourneyDetails, setLearningJourneyDetails] = useState({})
-  const userDetails = useRef()
   const router = useRouter()
 
   useEffect(() => {
     onLearningJourneyUpdate();
   }, []);
 
-  if (typeof window !== 'undefined') {
-    userDetails.current = localStorage.getItem('userDetails')
-  }
-
   const onLearningJourneyUpdate = useCallback(() => {
-    if(!userDetails.current) return
-    const userId = JSON.parse(userDetails.current).staffID
-    axios.get(`http://localhost:8080/api/learning-journey/staff/${userId}`)
+    axios
+      .get("http://localhost:8080/api/learning-journey/staff/" + store.staffId)
       .then((res) => {
         parseLearningJourneyObj(res.data.data);
       });
-  }, [userDetails.current]);
+  }, [store.staffId]);
 
   const parseLearningJourneyObj = (data) => {
     const learningJourney = {};
@@ -49,8 +44,8 @@ export default function ViewLearningJourneys() {
 
   const handleDelete = (learningJourneyID, learningJourneyName) => {
     setLearningJourneyDetails({
-      'learningJourneyId': learningJourneyID,
-      'learningJourneyName': learningJourneyName
+      learningJourneyId: learningJourneyID,
+      learningJourneyName: learningJourneyName,
     })
   }
 
@@ -76,7 +71,7 @@ export default function ViewLearningJourneys() {
         </div>
       </div>
       {Object.keys(learningJourney).map((learningJourneyID, i) => (
-        <div className="row mb-4" key={i} >
+        <div className="row mb-4" key={i}>
           <DeleteLearningJourneyModal
             learningJourneyDetails={learningJourneyDetails}
             onLearningJourneyUpdate={onLearningJourneyUpdate}
@@ -101,10 +96,16 @@ export default function ViewLearningJourneys() {
                   ))}
                 </div>
                 <div className="col-md-4 d-flex justify-content-end mt-4">
-                  <button type="button" className="btn btn-primary mx-1" onClick={() => router.push({
-                    pathname: '/learning-journey/view/details',
-                    query: { learningJourneyID }
-                  })} >
+                  <button
+                    type="button"
+                    className="btn btn-primary mx-1"
+                    onClick={() =>
+                      router.push({
+                        pathname: "/learning-journey/view/details",
+                        query: { learningJourneyID },
+                      })
+                    }
+                  >
                     View <i className="bi bi-eye-fill mx-1"></i>
                   </button>
                   <button
@@ -112,7 +113,12 @@ export default function ViewLearningJourneys() {
                     className="btn btn-outline-primary"
                     data-bs-toggle="modal"
                     data-bs-target="#delete-modal"
-                    onClick={() => handleDelete(learningJourneyID, learningJourney[learningJourneyID].Learning_Journey_Name)}
+                    onClick={() =>
+                      handleDelete(
+                        learningJourneyID,
+                        learningJourney[learningJourneyID].Learning_Journey_Name
+                      )
+                    }
                   >
                     Delete <i className="bi bi-trash3 mx-1"></i>
                   </button>
@@ -122,6 +128,8 @@ export default function ViewLearningJourneys() {
           </div>
         </div>
       ))}
+
+ 
     </div>
   );
 }
