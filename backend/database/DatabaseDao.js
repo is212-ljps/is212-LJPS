@@ -1,5 +1,5 @@
 var mysql = require("mysql");
-const { promisify } = require('util')
+const { promisify } = require("util");
 require('dotenv').config({path:__dirname+'/../.env.local'})
 
 function database(databaseName) {
@@ -77,6 +77,45 @@ function database(databaseName) {
     }
   }
   
+  database.getLearningJourneySkills = async (learningJourneyID) => {
+    const getLearningJourneySkills = `SELECT Skill.Skill_ID, Skill.Skill_Name, Skill.Skill_Description from learning_journey INNER JOIN learning_journey_skill on learning_journey.Learning_Journey_ID=learning_journey_skill.Learning_Journey_ID INNER JOIN skill on learning_journey_skill.Skill_ID= skill.Skill_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
+    try {
+      const result = await promiseQuery(getLearningJourneySkills);
+      return result;
+    } catch (error) {
+      throw err;
+    }
+  };
+  
+  
+  
+  database.getCoursesSkills = async (courses) => {
+    let str = "";
+    courses.forEach((item) => (str += `course.Course_ID='${item}' OR `));
+  
+    const getCoursesSkills = `select * FROM course INNER JOIN course_skill ON course.Course_ID=course_skill.Course_ID INNER JOIN skill on course_skill.Skill_ID= skill.Skill_ID WHERE ${str.slice(
+      0,
+      -4
+    )};`;
+    try {
+      const result = await promiseQuery(getCoursesSkills);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  
+  database.getLearningJourneyCourses = async (learningJourneyID) => {
+    const getLearningJourneyCourses = `SELECT Course.Course_ID, Course.Course_Name, Course.Course_Category, Course.Course_Status from learning_journey INNER JOIN learning_journey_course on learning_journey.Learning_Journey_ID=learning_journey_course.Learning_Journey_ID INNER JOIN course on learning_journey_course.Course_ID= course.Course_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
+    try {
+      const result = await promiseQuery(getLearningJourneyCourses);
+      return result;
+    } catch (error) {
+      throw err;
+    }
+  };
+
   database.getCourses = async () => {
     const getCourses = `SELECT * FROM course WHERE Course_Status="Active"`
     try {
