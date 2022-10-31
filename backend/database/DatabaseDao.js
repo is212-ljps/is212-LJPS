@@ -50,6 +50,7 @@ function database(databaseName) {
     const deleteLearningJourney = `DELETE FROM learning_journey WHERE Learning_Journey_ID=${learningJourneyId}`
     try {
       const result = await promiseQuery(deleteLearningJourney)
+      console.log(result)
       return result
     } catch (err){
       throw err
