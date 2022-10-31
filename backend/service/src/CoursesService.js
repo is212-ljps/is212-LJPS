@@ -58,7 +58,9 @@ function coursesService(database) {
     }
   };
 
-  coursesService.getUnaddedCoursesFromLearningJourney = async (learningJourneyId, isAdded) => {
+  coursesService.getCoursesFromLearningJourney = async (learningJourneyId, isAdded) => {
+    if(!learningJourneyId) return false
+
     try {
       if (isAdded == "true") {
         return await database.getLearningJourneyCourses(learningJourneyId)
@@ -72,9 +74,7 @@ function coursesService(database) {
       const learningJourneyAllCourses = await database.getCoursesByMultipleSkill(learningJourneySkillIds)
       const unaddedCourseIds = learningJourneyAllCourses.filter((item) => !existingIds[item.Course_ID]).map(({ Course_ID }) => Course_ID)
 
-      if(!unaddedCourseIds.length){
-        return []
-      }
+      if(!unaddedCourseIds.length) return []
       
       const unaddedCoursesWithSkills = await database.getCoursesSkills(unaddedCourseIds)
 

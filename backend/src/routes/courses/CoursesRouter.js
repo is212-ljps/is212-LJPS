@@ -61,7 +61,7 @@ function courseRoutes(service) {
     const isAdded = req.query.isAdded
 
     try {
-      const data = await service.getUnaddedCoursesFromLearningJourney(learningJourneyId, isAdded);
+      const data = await service.getCoursesFromLearningJourney(learningJourneyId, isAdded);
       res.status(200).send({
         success: true,
         data: data

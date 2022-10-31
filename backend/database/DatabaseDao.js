@@ -130,7 +130,6 @@ function database(databaseName) {
     skills.forEach((skill) => (str += `Skill_ID='${skill}' OR `));
     const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE ${str.slice(0,-4)})`;
   
-  
     try {
       const result = await promiseQuery(getCoursesBasedOnSkill);
       return result;
