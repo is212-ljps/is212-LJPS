@@ -95,7 +95,11 @@ function learningJourneyService(database){
   learningJourneyService.addCourseToLearningJourney = async (learningJourneyId, courseIds) => {
     if (!learningJourneyId || !courseIds) {
       return false
+    } else if(utils.checkLength(1,9999, courseIds)) {
+      return false
     }
+
+
     try {
       return await database.addCourseToLearningJourney(learningJourneyId, courseIds)
     } catch (err) {
