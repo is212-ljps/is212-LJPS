@@ -27,7 +27,7 @@ export default function LearningJourneyDetails() {
   }, [learningJourneyId]);
 
   return (
-    <div class="container">
+    <div classname="container">
       <div className="row py-4">
         <div className="col-md-5 d-flex justify-content-center flex-column">
           <div>
@@ -86,7 +86,7 @@ export default function LearningJourneyDetails() {
                 </div>
               </div>
 
-              <div class="px-3">
+              <div classname="px-3">
                 {course.skills.map((skill) => (
                   <span
                     className="badge rounded-pill bg-dark py-1 me-2"
