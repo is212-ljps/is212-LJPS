@@ -117,6 +117,22 @@ function database(databaseName) {
   };
   
   
+  database.getCoursesByMultipleSkill = async (skills) => {
+    skills = skills.split(",")
+    let str = "";
+    skills.forEach((skill) => (str += `Skill_ID='${skill}' OR `));
+    const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE ${str.slice(0,-4)});`;
+  
+  
+    try {
+      const result = await promiseQuery(getCoursesBasedOnSkill);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  
   database.getLearningJourneyCourses = async (learningJourneyID) => {
     const getLearningJourneyCourses = `SELECT Course.Course_ID, Course.Course_Name, Course.Course_Category, Course.Course_Status from learning_journey INNER JOIN learning_journey_course on learning_journey.Learning_Journey_ID=learning_journey_course.Learning_Journey_ID INNER JOIN course on learning_journey_course.Course_ID= course.Course_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
     try {
@@ -208,6 +224,21 @@ function database(databaseName) {
       throw err
     }
   }
+
+  database.getSkillByMultipleId = async (skills) => {
+    skills = skills.split(",")
+    let str = "";
+    skills.forEach((skillID) => (str += `Skill_ID='${skillID}' OR `));
+  
+    const getSkill = `SELECT * FROM skill WHERE Is_Active=TRUE AND ${str.slice(0,-4)}`;
+  
+    try {
+      const result = await promiseQuery(getSkill);
+      return result;
+    } catch (err) {
+      throw err;
+    }
+  };
   
   database.updateSkillById = async (skillID, skillName, skillDescription) => {
     var update_sql = `UPDATE skill SET Skill_Name='${skillName}', Skill_Description='${skillDescription}' WHERE Skill_ID=${skillID}`

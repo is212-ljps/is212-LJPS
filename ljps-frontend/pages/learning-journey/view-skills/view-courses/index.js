@@ -127,71 +127,62 @@ export default function ViewCourses() {
       <div className="container mx-6 px-3">
         <div className="row">
           {" "}
-          {courses.length > 0 &&
+          {courses?.length > 0 &&
             courses.map((course) => (
               <div className="col-12 col-md-6 col-xl-4" key={course.Course_ID}>
-                <div className="card mt-2">
+                <div className="card mt-2 shadow border-0">
                   <div className="card-header bg-primary text-light">
                     {" "}
                     <b>{course.Course_Name}</b>{" "}
                   </div>
-                  <div className="card-body"></div>
-                  <div className="row">
-                    <div className="col-5">
-                      <p className="mx-3">{skillDetails.skillName}</p>
-                    </div>
-                    <div className="col-7 px-4" align="right">
-                      <div className=" badge bg-light text-black">
-                        {" "}
-                        {course.Course_Category}{" "}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row pe-3">
+                  <div className="row p-3">
                     <div className="col-9">
-                      <div className="col-9 mx-3">
-                        {" "}
-                        <b>Course ID: {course.Course_ID}</b>
-                      </div>
+                      {" "}
+                      <b>Course ID: {course.Course_ID}</b>
                     </div>
 
                     <div className="col-3" align="right">
-                      <label
+                    <div className=" badge bg-light text-black">
+                        {" "}
+                        {course.Course_Category}{" "}
+                      </div>
+         
+                    </div>
+                  </div>
+
+                  <div className="row p-3">
+                    <div className="col-12">
+                      {course.skills?.map((skill) => (
+                        <span
+                          className="badge rounded-pill bg-dark py-2 me-2"
+                          key={skill}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="row mx-1">
+                    <div className="col-10">
+                      {" "}
+                      <p>{course.Course_Desc}</p>{" "}
+                    </div>
+                    <div className="col-2" align="right">
+                    <label
                         style={{ cursor: "pointer" }}
                         htmlFor={course.Course_ID}
                       >
                         Add
                       </label>
-                    </div>
-
-                    <div className="row p-3">
-                      <div className="col-12">
-                        {course.skills?.map((skill) => (
-                          <span
-                            className="badge rounded-pill bg-dark py-2 me-2"
-                            key={skill}
-                          >
-                            {skill}
-                          </span>
-                        ))}
+                      <div>
+                        <input
+                          type={"checkbox"}
+                          id={course.Course_ID}
+                          key={course.Course_ID}
+                          onClick={toggleButton}
+                        ></input>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="row mx-1">
-                  <div className="col-10">
-                    {" "}
-                    <p>{course.Course_Desc}</p>{" "}
-                  </div>
-                  <div className="col-2" align="right">
-                    <div>
-                      {" "}
-                      <input
-                        type={"checkbox"}
-                        id={course.Course_ID}
-                        key={course.Course_ID}
-                        onClick={toggleButton}
-                      ></input>
                     </div>
                   </div>
                 </div>
