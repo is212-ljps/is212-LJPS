@@ -42,30 +42,170 @@ describe("Tests for Learning Journey Service", () => {
     removeCourseFromLearningJourney.mockReset()
   });
 
-  it("Create learning Journey", async () => {
-    var name = "Learning Journey";
-    var staffId = 1;
-    var jobRoleId = 1;
-    var skillId = 1;
-    var courses = ["tch012", "tch013"];
-    var learningJourneyId = 1;
-    createLearningJourney.mockResolvedValue(learningJourneyId);
-    let response = await service.createLearningJourney(
-      name,
-      staffId,
-      jobRoleId,
-      courses,
-      skillId
-    );
+  it("Create Learning Journey with Learning Journey Name at 51 characters ", async () => {
+    var learningJourneyDetails = {
+      Learning_Journey_ID: 1,
+      Learning_Journey_Name:
+        "Learning Journey Test That Exceeds 50 Characters!!!",
+      Staff_ID: 130002,
+      Job_Role_ID: 1,
+    };
 
-    expect(createLearningJourney.mock.calls.length).toBe(1);
-    expect(createLearningJourney.mock.calls[0][0]).toBe(name);
-    expect(createLearningJourney.mock.calls[0][1]).toBe(staffId);
-    expect(createLearningJourney.mock.calls[0][2]).toBe(jobRoleId);
-    expect(createLearningJourneySkill.mock.calls[0][0]).toBe(learningJourneyId);
-    expect(createLearningJourneySkill.mock.calls[0][1]).toBe(skillId);
-    expect(createLearningJourneyCourse.mock.calls[0][0]).toBe(learningJourneyId);
-    expect(createLearningJourneyCourse.mock.calls[0][1]).toStrictEqual(courses);
+    let response = await service.createLearningJourney(learningJourneyDetails);
+    expect(response).toBe(false);
+  });
+
+  it("Create Learning Journey with Learning Journey Name at 4 characters ", async () => {
+    var learningJourneyDetails = {
+      Learning_Journey_ID: 1,
+      Learning_Journey_Name: "Test",
+      Staff_ID: 130002,
+      Job_Role_ID: 1,
+    };
+
+    let response = await service.createLearningJourney(learningJourneyDetails);
+    expect(response).toBe(false);
+  });
+
+  it("Create Learning Journey with Valid Learning Journey Details", async () => {
+    var skill = [
+      {
+        Skill_ID: 1,
+        Skill_Name: "Python Programming",
+        Skill_Description: "",
+      },
+    ];
+
+    var course1 = ["MGT002"];
+
+    var learningJourneyDetails = {
+      Learning_Journey_Name: "Test Learning Journey",
+      Staff_ID: 130002,
+      Job_Role_ID: 1,
+      skills: skill,
+      courses: course1,
+    };
+
+
+    createLearningJourney.mockResolvedValue(1)
+    createLearningJourneySkill.mockResolvedValue(true)
+    createLearningJourneyCourse.mockResolvedValue(true)
+
+    let response = await service.createLearningJourney(
+      learningJourneyDetails.Learning_Journey_Name,
+      learningJourneyDetails.Staff_ID,
+      learningJourneyDetails.Job_Role_ID,
+      learningJourneyDetails.courses,
+      learningJourneyDetails.skills
+    );
+    expect(response).toBe(1);
+  });
+
+  it("Create Learning Journey with Invalid Learning Journey Details (Empty Skill)", async () => {
+    var skill = [];
+    var course1 = ["MGT002"];
+
+    var learningJourneyDetails = {
+      Learning_Journey_Name: "Test Learning Journey ",
+      Staff_ID: 130002,
+      Job_Role_ID: 1,
+      skills: skill,
+      courses: course1,
+    };
+
+    let response = await service.createLearningJourney(
+      learningJourneyDetails.Learning_Journey_Name,
+      learningJourneyDetails.Staff_ID,
+      learningJourneyDetails.Job_Role_ID,
+      learningJourneyDetails.courses,
+      learningJourneyDetails.skills
+    );
+    expect(response).toBe(false);
+  });
+
+  it("Create Learning Journey with Invalid Learning Journey Details (Empty Course)", async () => {
+    var skill = [
+      {
+        Skill_ID: 1,
+        Skill_Name: "Python Programming",
+        Skill_Description: "",
+      },
+    ];
+
+    var course1 = [];
+
+    var learningJourneyDetails = {
+      Learning_Journey_Name: "Test Learning Journey",
+      Staff_ID: 130002,
+      Job_Role_ID: 1,
+      skills: skill,
+      courses: course1,
+    };
+
+    let response = await service.createLearningJourney(
+      learningJourneyDetails.Learning_Journey_Name,
+      learningJourneyDetails.Staff_ID,
+      learningJourneyDetails.Job_Role_ID,
+      learningJourneyDetails.courses,
+      learningJourneyDetails.skills
+    );
+    expect(response).toBe(false);
+  });
+
+  it("Create Learning Journey with Invalid Learning Journey Details (Invalid Staff ID)", async () => {
+    var skill = [
+      {
+        Skill_ID: 1,
+        Skill_Name: "Python Programming",
+        Skill_Description: "",
+      },
+    ];
+
+    var course1 = ["MGT002"];
+    var learningJourneyDetails = {
+      Learning_Journey_Name: "Test Learning Journey",
+      Staff_ID: null,
+      Job_Role_ID: 1,
+      skills: skill,
+      courses: course1,
+    };
+
+    let response = await service.createLearningJourney(
+      learningJourneyDetails.Learning_Journey_Name,
+      learningJourneyDetails.Staff_ID,
+      learningJourneyDetails.Job_Role_ID,
+      learningJourneyDetails.courses,
+      learningJourneyDetails.skills
+    );
+    expect(response).toBe(false);
+  });
+
+  it("Create Learning Journey with Invalid Learning Journey Details (Invalid Job Role ID)", async () => {
+    var skill = [
+      {
+        Skill_ID: 1,
+        Skill_Name: "Python Programming",
+        Skill_Description: "",
+      },
+    ];
+
+    var course1 = ["MGT002"];
+    var learningJourneyDetails = {
+      Learning_Journey_Name: "Test Learning Journey",
+      Staff_ID: 130002,
+      Job_Role_ID: null,
+      skills: skill,
+      courses: course1,
+    };
+
+    let response = await service.createLearningJourney(
+      learningJourneyDetails.Learning_Journey_Name,
+      learningJourneyDetails.Staff_ID,
+      learningJourneyDetails.Job_Role_ID,
+      learningJourneyDetails.courses,
+      learningJourneyDetails.skills
+    );
+    expect(response).toBe(false);
   });
 
   it("Get Learning Journey By Staff Id", async () => {
@@ -181,7 +321,7 @@ describe("Tests for Learning Journey Service", () => {
       },
     ];
 
-    var learningJourneyCourses = [course1,course2];
+    var learningJourneyCourses = [course1, course2];
 
     const learningJourneySkills = [skill];
 
@@ -236,10 +376,9 @@ describe("Tests for Learning Journey Service", () => {
   it("Delete learning journey without ID", async () => {
     let response = await service.deleteLearningJourney();
     expect(response).toBe(false);
-  })
+  });
 
   it("Delete learning journey by ID", async () => {
-    
     deleteLearningJourney.mockResolvedValue(true);
     let response = await service.deleteLearningJourney(4);
     expect(response).toBe(true)
