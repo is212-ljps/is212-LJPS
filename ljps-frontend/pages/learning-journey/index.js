@@ -65,19 +65,19 @@ export default function SelectRole() {
                 className="col-6 col-md-3"
                 style={{ overflowWrap: "break-word" }}
               >
-                <button
-                  type="button"
+                <div
                   id={role.Job_Role_ID}
                   key={role.Job_Role_ID}
                   className={
                     role.Job_Role_ID === Number(selectedRole)
-                      ? "btn btn-outline-primary my-3 w-100 active"
-                      : "btn btn-outline-primary my-3 w-100"
+                      ? "btn btn-outline-primary my-3 w-100 active d-flex justify-content-between px-3 py-2"
+                      : "btn btn-outline-primary my-3 w-100 d-flex justify-content-between px-3 py-2"
                   }
                   onClick={toggleButton}
                 >
                   {role.Job_Role_Name}
-                  <span style={{ marginLeft: "auto", marginRight: "0px" }}>
+
+
                     <Tooltip
                       description={
                         role.Job_Role_Description
@@ -85,8 +85,7 @@ export default function SelectRole() {
                           : "No description"
                       }
                     />
-                  </span>
-                </button>
+                </div>
               </div>
             ))}
         </div>
