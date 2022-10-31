@@ -1,14 +1,24 @@
 var mysql = require("mysql");
 const { promisify } = require("util");
+require('dotenv').config({path:__dirname+'/../.env.local'})
 
 function database(databaseName) {
-
-  const connection = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: databaseName,
-  })
+  var connection;
+  if (process.env.TESTING) {
+    connection = mysql.createPool({
+      host: process.env.stagingHost,
+      user: process.env.stagingUsername,
+      password: process.env.stagingPassword,
+      database: databaseName,
+    })
+  } else {
+    connection = mysql.createPool({
+      host: process.env.host,
+      user: process.env.username,
+      password: process.env.password,
+      database: databaseName,
+    })
+  }
   
   const promiseQuery = promisify(connection.query).bind(connection)
 
@@ -110,7 +120,7 @@ function database(databaseName) {
   }
   
   database.createSkill = async (skillName, skillDescription) => {
-    var insert_sql = `INSERT into Skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`;
+    var insert_sql = `INSERT into skill (Skill_Name, Skill_Description, Is_Active) VALUES ('${skillName}', '${skillDescription}', TRUE );`;
     try {
       const result = await promiseQuery(insert_sql)
       return result
@@ -118,11 +128,31 @@ function database(databaseName) {
       throw err
     }
   }
-  
+
   database.deleteSkillById = async (skillID) => {
-    var update_sql = `UPDATE Skill SET Is_Active=${false} WHERE Skill_ID=${skillID};`;
+    var update_sql = `UPDATE skill SET Is_Active=${false} WHERE Skill_ID=${skillID};`;
     try {
       const result = await promiseQuery(update_sql)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+
+  database.getInactiveSkills = async () => {
+    const getInActiveSkills = `SELECT * FROM skill WHERE Is_Active=FALSE`
+    try {
+      const result = await promiseQuery(getInActiveSkills)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+
+  database.getSkillById = async (skillID) => {
+    const getSkill = `SELECT * FROM skill WHERE Skill_ID=${skillID} AND Is_Active=TRUE`
+    try {
+      const result = await promiseQuery(getSkill)
       return result
     } catch (err){
       throw err
@@ -247,6 +277,26 @@ function database(databaseName) {
         WHERE course.Course_Status="Active" AND Skill_ID=${skillID};`
     try {
       const result = await promiseQuery(getCourses)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+
+  database.getInactiveRoles = async () => {
+    const getInactiveRoles = `SELECT * FROM job_role WHERE Is_Active=FALSE`
+    try {
+      const result = await promiseQuery(getInactiveRoles)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+
+  database.getRoleById = async (roleID) => {
+    const getRole = `SELECT * FROM job_role WHERE Job_Role_ID=${roleID} AND Is_Active= TRUE`
+    try {
+      const result = await promiseQuery(getRole)
       return result
     } catch (err){
       throw err

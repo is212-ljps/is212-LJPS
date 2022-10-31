@@ -11,6 +11,14 @@ function skillsService(database){
     }
   }
 
+  skillsService.getInactiveSkills = async () => {
+    try {
+      return await database.getInactiveSkills();
+    } catch (err) {
+      throw err;
+    }
+  }
+
   skillsService.getSkillById = async (skillId) => {
     if(!skillId){
       return false
@@ -63,7 +71,6 @@ function skillsService(database){
   }
 
   skillsService.updateSkillById = async (skillId, skillName, skillDescription, assignedCourses) => {
-    console.log(skillId, skillName, skillDescription, assignedCourses)
     if(!skillId || !skillName || !assignedCourses){
       return false
     } else if (utils.checkLength(5,50, skillName) || utils.checkLength(0,300, skillDescription) || utils.checkLength(1,9999, assignedCourses)) {

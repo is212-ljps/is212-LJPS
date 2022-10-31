@@ -13,7 +13,6 @@ function learningJourneyService(database){
       const learningJourneyId = await database.createLearningJourney(learningJourneyName, staffId, jobRoleId);
       await database.createLearningJourneySkill(learningJourneyId, skillId);
       await database.createLearningJourneyCourse(learningJourneyId, courses);
-      console.log(learningJourneyId)
       return learningJourneyId;
     } catch (err) {
       throw err;

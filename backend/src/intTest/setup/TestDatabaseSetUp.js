@@ -1,11 +1,11 @@
 var mysql = require('mysql');
 var fs = require('fs');
 var readline = require('readline');
-var database = require("../../../database/index");
+require('dotenv').config({path:__dirname+'/../../../.env.local'})
 var myCon = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root'
+  host: process.env.host,
+  user: process.env.username,
+  password: process.env.password
 });
 var rl = readline.createInterface({
   input: fs.createReadStream(__dirname + '/ljps_sql_setup_test.sql'),

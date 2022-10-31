@@ -3,6 +3,7 @@ import { Player } from "@lottiefiles/react-lottie-player";
 import { useRouter } from "next/router";
 import axios from "axios";
 import DeleteLearningJourneyModal from "./DeleteModal";
+import { store } from "../../../store";
 
 export default function ViewLearningJourneys() {
   const [learningJourney, setLearningJourney] = useState([]);
@@ -16,7 +17,7 @@ export default function ViewLearningJourneys() {
 
   const onLearningJourneyUpdate = useCallback(() => {
     axios
-      .get("http://localhost:8080/api/learning-journey/staff/130001")
+      .get("http://localhost:8080/api/learning-journey/staff/" + store.staffId)
       .then((res) => {
         parseLearningJourneyObj(res.data.data);
       });
