@@ -1,5 +1,5 @@
 const request = require('supertest');
-var database = require("../../../database/index");
+var database = require("../../../database/DatabaseDao");
 
 describe("Integration test for courses", () => {
   var server;

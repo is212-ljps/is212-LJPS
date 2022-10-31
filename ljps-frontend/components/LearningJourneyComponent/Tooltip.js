@@ -18,5 +18,6 @@ export default function Tooltip({ description }) {
     ref={tooltipRef}
     data-trigger="manual"
     data-bs-title={description}
+    
   ></i>
 }
