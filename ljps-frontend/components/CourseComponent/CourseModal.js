@@ -18,6 +18,8 @@ export default function CourseModal({
     var myModal = bootstrap.Modal.getInstance(modal.current);
 
     if (validateLength(name,5,50)) {
+      console.log(skillDetails)
+      console.log(courses)
       const learningJourneyUrl = `http://localhost:8080/api/learning-journey`;
       axios
         .post(learningJourneyUrl, {
