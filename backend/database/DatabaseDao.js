@@ -46,6 +46,17 @@ function database(databaseName) {
     }
   }
   
+  database.deleteLearningJourney = async (learningJourneyId) => {
+    const deleteLearningJourney = `DELETE FROM learning_journey WHERE Learning_Journey_ID=${learningJourneyId}`
+    try {
+      const result = await promiseQuery(deleteLearningJourney)
+      console.log(result)
+      return result
+    } catch (err){
+      throw err
+    }
+  }
+  
   database.createLearningJourneyCourse = async (learningJourneyId, courses) => {
     for (var course of courses) {
       const insertLearningJourneyCourse = `INSERT INTO learning_journey_course (Learning_Journey_ID, Course_ID) VALUES (${learningJourneyId}, "${course}")`;

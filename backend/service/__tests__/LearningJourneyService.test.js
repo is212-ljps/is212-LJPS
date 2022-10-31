@@ -9,6 +9,7 @@ const getLearningJourneyByStaffID = jest.fn();
 const getLearningJourneyCourses = jest.fn();
 const getLearningJourneySkills = jest.fn();
 const getCoursesSkills = jest.fn();
+const deleteLearningJourney = jest.fn();
 
 var service = LearningJourneyService({
   createLearningJourney,
@@ -19,6 +20,7 @@ var service = LearningJourneyService({
   getLearningJourneyCourses,
   getLearningJourneySkills,
   getCoursesSkills,
+  deleteLearningJourney
 });
 
 describe("Tests for Learning Journey Service", () => {
@@ -31,6 +33,7 @@ describe("Tests for Learning Journey Service", () => {
     getLearningJourneyCourses.mockReset();
     getLearningJourneySkills.mockReset();
     getCoursesSkills.mockReset();
+    deleteLearningJourney.mockReset();
   });
 
   it("Create learning Journey", async () => {
@@ -223,4 +226,16 @@ describe("Tests for Learning Journey Service", () => {
     const isEqual = utils.deepEqual(response, expectedValue);
     expect(isEqual).toBe(true);
   });
+
+  it("Delete learning journey without ID", async () => {
+    let response = await service.deleteLearningJourney();
+    expect(response).toBe(false);
+  })
+
+  it("Delete learning journey by ID", async () => {
+    
+    deleteLearningJourney.mockResolvedValue(true);
+    let response = await service.deleteLearningJourney(4);
+    expect(response).toBe(true)
+  })
 });
