@@ -1,4 +1,6 @@
-function learningJourneyService(database) {
+const utils = require('../../util')
+
+function learningJourneyService(database){
   const learningJourneyService = {}
 
   learningJourneyService.createLearningJourney = async (learningJourneyName, staffId, jobRoleId, courses, skillId) => {
@@ -25,7 +27,10 @@ function learningJourneyService(database) {
   }
 
   learningJourneyService.getLearningJourney = async (learningJourneyId) => {
-    const learningJourney = {};
+    let learningJourney= {}
+    if(!learningJourneyId){
+      return false
+    }
     try {
       const learningJourneyResult = await database.getLearningJourney(learningJourneyId);
       learningJourney.Learning_Journey_ID = learningJourneyResult[0].Learning_Journey_ID;

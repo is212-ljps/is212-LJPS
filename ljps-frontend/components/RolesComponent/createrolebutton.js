@@ -5,9 +5,8 @@ export default function CreateRoleButton({
   ...props
 }) {
   return (
-    <div>
-      <div className="row">
-        <div className="col-12 d-flex flex-row-reverse">
+   
+        <div className="col-6 d-flex flex-row-reverse">
           <button
             type="button"
             className="btn btn-light"
@@ -18,7 +17,6 @@ export default function CreateRoleButton({
             Create Role <i className="bi bi-plus-lg"></i>
           </button>
         </div>
-      </div>
-    </div>
+    
   );
 }

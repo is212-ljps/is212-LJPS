@@ -1,5 +1,5 @@
 const request = require('supertest');
-var database = require("../../../database/index");
+var database = require("../../../database/DatabaseDao");
 
 describe("Integration test for assiging skills to role", () => {
   var server;
@@ -21,6 +21,7 @@ describe("Integration test for assiging skills to role", () => {
       assignedCourses: ["tch019"]
     })
     const skill1Id = createSkill1Res._body.data
+    console.log("first skill")
     console.log(skill1Id)
     
     const createSkill2Res = await request(server).post("/api/skills").send({
@@ -37,6 +38,7 @@ describe("Integration test for assiging skills to role", () => {
     });
     const roleId = createRoleRes._body.data
     const getRole = await request(server).get("/api/roles/" + roleId + "/skills");
+    console.log(getRole)
     expect(getRole._body.data[0].Skill_ID).toBe(skill1Id)
     expect(getRole._body.data[1].Skill_ID).toBe(skill2Id)
   })  

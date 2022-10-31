@@ -3,10 +3,10 @@ import { validateLength } from '../../util/validation'
 import axios from 'axios'
 
 
-export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) {
+export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelectedSkill, ...props }) {
   const [nameErrorMsg, setNameErrorMsg] = useState('')
   const [descErrorMsg, setDescErrorMsg] = useState('')
-  const [errorMsg, setErrorMsg] = useState('')
+  const [courseErrorMsg, setCourseErrorMsg] = useState('')
   const { skillName, skillDescription, skillID } = selectedSkill
   const [courses, setCourses] = useState([])
   const [assignedCourses, setAssignedCourses] = useState([])
@@ -44,6 +44,8 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
         setAssignedCourses([])
         setNameErrorMsg("")
         setDescErrorMsg("")
+        setCourseErrorMsg("")
+        resetSelectedSkill()
       })
     }
   }, [modal.current])
@@ -68,8 +70,9 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
     e.preventDefault();
 
     if (
-      validateLength(nameInput.current.value, 5, 50) &&
-      validateLength(descriptionInput.current.value, 0, 300)
+      validateLength(nameInput.current.value, 5, 20) &&
+      validateLength(descriptionInput.current.value, 0, 300) &&
+      assignedCourses.length > 0
     ) {
       // pass length validation
       var myToast = new bootstrap.Toast(toast.current);
@@ -85,8 +88,12 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
           if (response.data.success) {
             setNameErrorMsg('')
             setDescErrorMsg('')
+            setCourseErrorMsg('')
 
-            e.target.reset();
+            if (!skillID) {
+              e.target.reset();
+              setAssignedCourses([])
+            }
             myToast.show();
             onSkillsUpdate()
           } else {
@@ -104,6 +111,9 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
       }
       if (!validateLength(descriptionInput.current.value, 0, 300)) {
         setDescErrorMsg('Skill Description cannot be more than 300 characters')
+      }
+      if (assignedCourses.length < 1) {
+        setCourseErrorMsg('Please assign the skill to at least 1 course')
       }
     }
   });
@@ -159,6 +169,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, ...props }) 
                   })}
                 </div>
                 </div>
+                {!!courseErrorMsg.length && <p className="text-danger">{courseErrorMsg}</p>}
               </div>
             </div>
 
