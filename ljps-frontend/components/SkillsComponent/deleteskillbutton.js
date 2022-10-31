@@ -14,7 +14,7 @@ export default function DeleteSkillButton({ skillName, skillId, onSkillsUpdate }
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current)
     axios
-      .delete(`http://localhost:8080/api/skills/${skillId}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND}/api/skills/${skillId}`)
       .then(function (response) {
         if (response.data.success) {
           setErrorMessage("");
