@@ -6,9 +6,9 @@ on:
       - '**'
 
 env:
-  stagingHost: ${{ secrets.HOST }}
-  stagingUsername: ${{ secrets.USER }}
-  stagingPassword: ${{ secrets.PASSWORD }}
+  testingHost: ${{ secrets.TESTING_HOST }}
+  testingUsername: ${{ secrets.USER }}
+  testingPassword: ${{ secrets.PASSWORD }}
   
 jobs:
   test:
@@ -27,4 +27,4 @@ jobs:
       - name: Install dependencies
         run: cd ./backend && npm install
       - name: Test
-        run: stagingHost=${{ env.stagingHost }} stagingUsername=${{ env.stagingUsername }} stagingPassword=${{ env.stagingPassword }} cd ./backend && npm run testInt
+        run: testingHost=${{ env.testingHost }} testingUsername=${{ env.testingUsername }} testingPassword=${{ env.testingPassword }} cd ./backend && npm run testInt
