@@ -16,7 +16,6 @@ export default function ViewLearningJourneys() {
   }, []);
 
   const onLearningJourneyUpdate = useCallback(() => {
-    console.log(store)
     axios
       .get(`${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey/staff/` + store.staffId)
       .then((res) => {

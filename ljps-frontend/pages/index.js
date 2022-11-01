@@ -14,8 +14,7 @@ export default function Home() {
     store.staffId = role === 'User' ? '130001' : '140002'
 
     if (role == "User") {
-      router.push("/learning-journey");
-
+      router.push("/learning-journey/view");
     } else {
       router.push("/roles");
     }
