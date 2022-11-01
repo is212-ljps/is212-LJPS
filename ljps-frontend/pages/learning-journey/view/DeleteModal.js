@@ -14,9 +14,9 @@ export default function DeleteLearningJourneyModal({
   const handleSubmit = useCallback((e) => {
     var myToast = new bootstrap.Toast(toast.current);
     var myModal = bootstrap.Modal.getInstance(modal.current);
-
+    console.log(learningJourneyDetails.learningJourneyId)
     axios
-      .delete(`http://localhost:8080/api/learning-journey/${learningJourneyDetails.learningJourneyId}`)
+      .delete(`${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey/${learningJourneyDetails.learningJourneyId}`)
       .then(function (response) {
         if (response.data.success) {
           myModal.hide();
