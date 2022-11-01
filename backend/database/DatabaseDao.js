@@ -99,12 +99,12 @@ function database(databaseName) {
   };
 
   database.getLearningJourneySkills = async (learningJourneyID) => {
-    const getLearningJourneySkills = `SELECT Skill.Skill_ID, Skill.Skill_Name, Skill.Skill_Description from learning_journey INNER JOIN learning_journey_skill on learning_journey.Learning_Journey_ID=learning_journey_skill.Learning_Journey_ID INNER JOIN skill on learning_journey_skill.Skill_ID= skill.Skill_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
+    const getLearningJourneySkills = `SELECT * from learning_journey INNER JOIN learning_journey_skill on learning_journey.Learning_Journey_ID=learning_journey_skill.Learning_Journey_ID INNER JOIN skill on learning_journey_skill.Skill_ID= skill.Skill_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
     try {
       const result = await promiseQuery(getLearningJourneySkills);
       return result;
     } catch (error) {
-      throw err;
+      throw error;
     }
   };
 
@@ -145,7 +145,7 @@ function database(databaseName) {
       console.log(result)
       return result;
     } catch (error) {
-      throw err;
+      throw error;
     }
   };
 
