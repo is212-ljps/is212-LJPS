@@ -8,6 +8,7 @@ const createSkill = jest.fn();
 const deleteSkillById = jest.fn();
 const updateSkillById = jest.fn();
 const assignCoursesToSkills = jest.fn();
+const removeCoursesFromSkill = jest.fn();
 
 var service = SkillsService({
   getAllSkills,
@@ -17,7 +18,8 @@ var service = SkillsService({
   createSkill,
   deleteSkillById,
   updateSkillById,
-  assignCoursesToSkills
+  assignCoursesToSkills,
+  removeCoursesFromSkill
 });
 
 describe("Tests for Skills Service", () => {
@@ -30,6 +32,7 @@ describe("Tests for Skills Service", () => {
     deleteSkillById.mockReset();
     updateSkillById.mockReset();
     assignCoursesToSkills.mockReset();
+    removeCoursesFromSkill.mockReset();
   });
 
   it("Get active skills", async () => {
@@ -176,16 +179,34 @@ describe("Tests for Skills Service", () => {
     expect(getCoursesAssignedToSkill.mock.calls.length).toBe(1)
   });
 
-  it("Assign courses to skill", async () => {
-
-  })
-
   it("Update skill with Id", async () => {
-    
+    var skillId = 1
+    var name = "Kotlin Programming"
+    var desc = "Proficiency in Kotlin Programming"
+    var courses = ["tch012", "tch013"];
+
+    expectedValue = {
+      Skill_ID: 1,
+      Skill_Name: "Kotlin Programming",
+      Skill_Description: "Proficiency in Kotlin Programming",
+      Is_Active: 1
+    }
+
+    updateSkillById.mockResolvedValue(expectedValue)
+    let response = await service.updateSkillById(skillId, name, desc, courses)
+
+    expect(updateSkillById.mock.calls.length).toBe(1);
+    expect(removeCoursesFromSkill.mock.calls.length).toBe(1);
+    expect(assignCoursesToSkills.mock.calls.length).toBe(1);
+    expect(updateSkillById.mock.calls[0][1]).toBe(name);
+    expect(updateSkillById.mock.calls[0][2]).toBe(desc);
+    expect(assignCoursesToSkills.mock.calls[0][0]).toBe(courses);
+    expect(response).toBe(expectedValue)
   })
 
   it("Update skill without Id", async () => {
-
+    let response = await service.updateSkillById();
+    expect(response).toBe(false)
   })
 
 
