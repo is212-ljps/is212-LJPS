@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -21,7 +21,7 @@ export default function ViewLearningJourneys() {
       .then((res) => {
         parseLearningJourneyObj(res.data.data);
       });
-  }, []);
+  }, [store.staffId]);
 
   const parseLearningJourneyObj = (data) => {
     const learningJourney = {};
@@ -77,7 +77,10 @@ export default function ViewLearningJourneys() {
             onLearningJourneyUpdate={onLearningJourneyUpdate}
           />
 
-          <div className="card mx-auto" style={{ width: "90%" }}>
+          <div
+            className="card border shadow-sm mx-auto"
+            style={{ width: "90%" }}
+          >
             <div className="card-body">
               <div className="row">
                 <h5 className="card-title">

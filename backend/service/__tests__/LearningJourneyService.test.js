@@ -10,6 +10,8 @@ const getLearningJourneyCourses = jest.fn();
 const getLearningJourneySkills = jest.fn();
 const getCoursesSkills = jest.fn();
 const deleteLearningJourney = jest.fn();
+const addCourseToLearningJourney = jest.fn();
+const removeCourseFromLearningJourney = jest.fn();
 
 var service = LearningJourneyService({
   createLearningJourney,
@@ -21,6 +23,8 @@ var service = LearningJourneyService({
   getLearningJourneySkills,
   getCoursesSkills,
   deleteLearningJourney,
+  addCourseToLearningJourney,
+  removeCourseFromLearningJourney
 });
 
 describe("Tests for Learning Journey Service", () => {
@@ -34,6 +38,8 @@ describe("Tests for Learning Journey Service", () => {
     getLearningJourneySkills.mockReset();
     getCoursesSkills.mockReset();
     deleteLearningJourney.mockReset();
+    addCourseToLearningJourney.mockReset();
+    removeCourseFromLearningJourney.mockReset()
   });
 
   it("Create Learning Journey with Learning Journey Name at 51 characters ", async () => {
@@ -211,8 +217,8 @@ describe("Tests for Learning Journey Service", () => {
   });
 
   it("Get Learning Journey Based on Courses and Skills Without Learning Journey ID", async () => {
-    let response2 = await service.getLearningJourney();
-    expect(response2).toBe(false);
+    let response = await service.getLearningJourney();
+    expect(response).toBe(false);
   });
 
   it("Get Learning Journey by Id With One Course", async () => {
@@ -375,6 +381,49 @@ describe("Tests for Learning Journey Service", () => {
   it("Delete learning journey by ID", async () => {
     deleteLearningJourney.mockResolvedValue(true);
     let response = await service.deleteLearningJourney(4);
-    expect(response).toBe(true);
-  });
+    expect(response).toBe(true)
+  })
+
+  it("Remove course from learning journey without learning journey id", async () => {
+    let response = await service.removeCourseFromLearningJourney(null, 1);
+    expect(response).toBe(false)
+  })
+
+  it("Remove course from learning journey without course id", async () => {
+    let response = await service.removeCourseFromLearningJourney(1);
+    expect(response).toBe(false)
+  })
+
+  it("Remove course from learning journey without course id and learning journey id", async () => {
+    let response = await service.removeCourseFromLearningJourney();
+    expect(response).toBe(false)
+  })
+
+  it("Remove course from learning journey without course id and learning journey id", async () => {
+    removeCourseFromLearningJourney.mockResolvedValue(true)
+    let response = await service.removeCourseFromLearningJourney(1,1);
+    expect(response).toBe(true)
+  })
+
+  it("Add courses to learning journey without learning journey id", async () => {
+    let response = await service.addCourseToLearningJourney(null, ["COR001"]);
+    expect(response).toBe(false)
+  })
+
+  it("Add null courses variable array to learning journey", async () => {
+    let response = await service.addCourseToLearningJourney(1, null);
+    expect(response).toBe(false)
+  })
+  
+  it("Add empty courses array to learning journey", async () => {
+    let response = await service.addCourseToLearningJourney(1, []);
+    expect(response).toBe(false)
+  })
+
+  it("Add courses into learning journey", async () => {
+    addCourseToLearningJourney.mockResolvedValue(true)
+    let response = await service.addCourseToLearningJourney(1, ["COR001"]);
+    expect(response).toBe(true)
+  })
+
 });

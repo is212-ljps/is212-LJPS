@@ -78,6 +78,42 @@ function learningJourneyRoutes(service) {
     }
   });
 
+  router.delete('/:learningJourneyId/:courseId', async (req, res) => {
+    const courseId = req.params.courseId
+    const learningJourneyId = req.params.learningJourneyId
+    try {
+      const result = await service.removeCourseFromLearningJourney(learningJourneyId, courseId);
+
+      res.status(200).send({
+        success: true,
+        data: result,
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      });
+    }
+  })
+
+  router.put('/:learningJourneyId/courses', async (req, res) => {
+    const learningJourneyId = req.params.learningJourneyId
+    const courseIds = req.body.courseIds
+
+    try {
+      await service.addCourseToLearningJourney(learningJourneyId, courseIds)
+      res.status(200).send({
+        success: true,
+        data: true,
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      });
+    }
+  })
+
   return router;
 }
 

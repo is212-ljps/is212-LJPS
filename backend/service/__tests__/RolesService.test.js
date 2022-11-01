@@ -1,4 +1,5 @@
-var RolesService = require('../src/RolesService');
+var RolesService = require("../src/RolesService");
+var utils = require("../../util");
 
 const getAllRoles = jest.fn()
 const getInactiveRoles = jest.fn()
@@ -21,7 +22,8 @@ var service = RolesService({
 })
 
 describe("Tests for Roles Service", () => {
-  beforeEach(()=>{
+  beforeEach(() => {
+    beforeEach(()=>{
     getAllRoles.mockReset()
     getInactiveRoles.mockReset()
     getRoleById.mockReset()
@@ -30,7 +32,8 @@ describe("Tests for Roles Service", () => {
     deleteRoleById.mockReset()
     updateRoleDetails.mockReset()
   })
-
+  });
+  
   it('Get all roles', async ()=>{
     expectedValue = [
       {
@@ -98,23 +101,6 @@ describe("Tests for Roles Service", () => {
     expect(getRoleById.mock.calls.length).toBe(0);
   })
 
-  it('Get skills assigned to role', async ()=>{
-    roleId = 1
-    expectedValue = [
-      {
-        "Job_Role_ID": roleId,
-        "Skill_ID": 1,
-        "Skill_Name": "Skill name",
-        "Skill_Description": "Skill description",
-      }
-    ]
-    getSkillsAssignedToRole.mockResolvedValue(expectedValue)
-    let response = await service.getSkillsAssignedToRole(roleId);
-    expect(response).toBe(expectedValue)
-    expect(getSkillsAssignedToRole.mock.calls.length).toBe(1);
-    expect(getSkillsAssignedToRole.mock.calls[0][0]).toBe(roleId)
-  })
-
   it('Get skills assigned to role when no roleId', async ()=>{
 
     let response = await service.getSkillsAssignedToRole();
@@ -143,4 +129,36 @@ describe("Tests for Roles Service", () => {
     expect(createRole.mock.calls[0][2]).toBe(department)
     expect(assignSkillsToRoles.mock.calls[0][0]).toBe(assignSkills)
   })
-})
+
+  it("Get Skills for Role Selected With Role Id", async () => {
+    var jobRoleId = 1;
+
+    var expectedValue = [
+      {
+        Job_Role_ID: 1,
+        Skill_ID: 1,
+        Skill_Name: "Python Programming",
+        Skill_Description: "",
+      },
+
+      {
+        Job_Role_ID: 1,
+        Skill_ID: 2,
+        Skill_Name: "Java Programming",
+        Skill_Description: "",
+      },
+    ];
+
+    getSkillsAssignedToRole.mockResolvedValue(expectedValue);
+    let response = await service.getSkillsAssignedToRole(jobRoleId);
+    const isEqual = utils.deepEqual(response, expectedValue);
+    expect(isEqual).toBe(true);
+  });
+
+  it("Get All Skill for Role Selected Without Role Id", async () => {
+    var jobRoleId = null;
+    let response = await service.getSkillsAssignedToRole(jobRoleId);
+    expect(response).toBe(false);
+  });
+});
+

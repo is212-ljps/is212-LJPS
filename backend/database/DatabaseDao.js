@@ -123,16 +123,13 @@ function database(databaseName) {
       throw error;
     }
   };
-
+  
   database.getCoursesByMultipleSkill = async (skills) => {
-    skills = skills.split(",");
+    skills = skills.split(",")
     let str = "";
     skills.forEach((skill) => (str += `Skill_ID='${skill}' OR `));
-    const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE ${str.slice(
-      0,
-      -4
-    )});`;
-
+    const getCoursesBasedOnSkill = `SELECT * FROM course WHERE Course_ID in (SELECT Course_ID FROM course_skill WHERE ${str.slice(0,-4)})`;
+  
     try {
       const result = await promiseQuery(getCoursesBasedOnSkill);
       return result;
@@ -142,7 +139,7 @@ function database(databaseName) {
   };
 
   database.getLearningJourneyCourses = async (learningJourneyID) => {
-    const getLearningJourneyCourses = `SELECT Course.Course_ID, Course.Course_Name, Course.Course_Category, Course.Course_Status from learning_journey INNER JOIN learning_journey_course on learning_journey.Learning_Journey_ID=learning_journey_course.Learning_Journey_ID INNER JOIN course on learning_journey_course.Course_ID= course.Course_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
+    const getLearningJourneyCourses = `SELECT Course.Course_ID, Course.Course_Name, Course.Course_Category, Course.Course_Desc, Course.Course_Status from learning_journey INNER JOIN learning_journey_course on learning_journey.Learning_Journey_ID=learning_journey_course.Learning_Journey_ID INNER JOIN course on learning_journey_course.Course_ID= course.Course_ID WHERE learning_journey.Learning_Journey_ID=${learningJourneyID};`;
     try {
       const result = await promiseQuery(getLearningJourneyCourses);
       return result;
@@ -411,7 +408,35 @@ function database(databaseName) {
     }
   };
 
-  return database;
+  database.removeCourseFromLearningJourney = async (learningJourneyId, courseId) => {
+    const removeCourseFromLearningJourney = `DELETE FROM learning_journey_course WHERE Learning_Journey_Id=${learningJourneyId} AND Course_ID='${courseId}';`
+    try {
+      const result = await promiseQuery(removeCourseFromLearningJourney);
+      return true;
+    } catch (err) {
+      console.log(err)
+      throw err;
+    }
+  }
+
+  database.addCourseToLearningJourney = async (learningJourneyId, courseIds) => {
+    var addCourseToLearningJourney = `INSERT into learning_journey_course (Learning_Journey_ID, Course_ID) VALUES `;
+    console.log(courseIds)
+    courseIds.forEach((courseId) => {
+      addCourseToLearningJourney += `(${learningJourneyId}, '${courseId}'), `;
+    });
+    addCourseToLearningJourney = addCourseToLearningJourney.slice(0, -2) + `;`;
+    console.log(addCourseToLearningJourney)
+    try {
+      const result = await promiseQuery(addCourseToLearningJourney);
+      return result;
+    } catch (err) {
+      console.log(err)
+      throw err;
+    }
+  }
+
+  return database
 }
 
 module.exports = database;

@@ -37,6 +37,8 @@ function skillsRoutes(service) {
 
 
   router.get('/:skillID', async (req, res) => {
+
+
     var skillID = req.params.skillID
     try {
       const data = await service.getSkillById(skillID);
