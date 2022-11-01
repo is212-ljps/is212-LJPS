@@ -39,8 +39,8 @@ export default function SelectRole() {
 
   return (
     <div class="container pb-4">
-      <div className="row">
-        <div className="col-md-5 col-sm-12 d-flex justify-content-center align-items-center">
+      <div className="row px-3">
+        <div className="col-md-5 col-sm-12 d-flex justify-content-center align-items-center p-2">
           <h3>
             Select a Role to kickstart your Learning Journey
           </h3>
@@ -78,7 +78,7 @@ export default function SelectRole() {
       </div>
 
       <div className="d-flex justify-content-end mt-3">
-        <button type="button" className="btn btn-primary btn-lg" onClick={checkSubmit}>
+        <button type="button" className="btn btn-primary px-5" onClick={checkSubmit}>
           Next
         </button>
       </div>
