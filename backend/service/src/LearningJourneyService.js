@@ -48,6 +48,7 @@ function learningJourneyService(database){
 
       const learningJourneyCoursesResult = await database.getLearningJourneyCourses(learningJourneyId);
       learningJourney.courses = learningJourneyCoursesResult;
+      console.log(learningJourney.courses)
 
       const courses = learningJourneyCoursesResult.map(({ Course_ID }) => Course_ID);
 
@@ -87,6 +88,32 @@ function learningJourneyService(database){
       return await database.getLearningJourneyByStaffID(staffId);
     } catch (err) {
       throw err;
+    }
+  }
+
+  learningJourneyService.removeCourseFromLearningJourney = async (learningJourneyId, courseId) => {
+    if (!learningJourneyId || !courseId) {
+      return false
+    }
+    try {
+      return await database.removeCourseFromLearningJourney(learningJourneyId, courseId)
+    } catch (err) {
+      throw err
+    }
+  }
+
+  learningJourneyService.addCourseToLearningJourney = async (learningJourneyId, courseIds) => {
+    if (!learningJourneyId || !courseIds) {
+      return false
+    } else if(utils.checkLength(1,9999, courseIds)) {
+      return false
+    }
+
+
+    try {
+      return await database.addCourseToLearningJourney(learningJourneyId, courseIds)
+    } catch (err) {
+      throw err
     }
   }
 

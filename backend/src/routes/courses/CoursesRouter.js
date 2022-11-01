@@ -56,7 +56,25 @@ function courseRoutes(service) {
     }  
   }) 
   
-  
+  router.get('/learning-journey/:learningJourneyId', async (req, res) => {
+    const learningJourneyId = req.params.learningJourneyId
+    const isAdded = req.query.isAdded
+
+    try {
+      const data = await service.getCoursesFromLearningJourney(learningJourneyId, isAdded);
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }  
+  })
+
   return router;
 }
 

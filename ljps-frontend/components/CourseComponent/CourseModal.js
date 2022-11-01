@@ -2,6 +2,7 @@ import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
 import { validateLength } from "../../util/validation"
+import {store} from '../../store'
 
 export default function CourseModal({
   checkSubmit,
@@ -18,13 +19,11 @@ export default function CourseModal({
     var myModal = bootstrap.Modal.getInstance(modal.current);
 
     if (validateLength(name,5,50)) {
-      console.log(skillDetails)
-      console.log(courses)
       const learningJourneyUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey`;
       axios
         .post(learningJourneyUrl, {
           learningJourneyName: name,
-          staffId: 130001,
+          staffId: store.staffId,
           jobRoleId: roleId,
           skills: skillDetails,
           courses: courses,
