@@ -47,7 +47,7 @@ export default function LearningJourneyDetails() {
       <AddCourseModal getLearningJourney={getLearningJourney} coursesLength={learningJourney.courses?.length} learningJourneyName={learningJourney.Learning_Journey_Name} learningJourneyId={learningJourney.Learning_Journey_ID} />
       <div className="row py-4">
         <div className="col-md-5 d-flex justify-content-center flex-column">
-          <div>
+          <div style={{borderBottom:"1px solid #dcdcdc"}}>
             <h3 className="text-primary">
               {learningJourney.Learning_Journey_Name}
             </h3>
@@ -56,7 +56,6 @@ export default function LearningJourneyDetails() {
             </h4>
           </div>
           <div className="row mt-4 ">
-            <hr></hr>
             <h5 className="mt-2 mb-4">Selected Skills: </h5>
             <div className="col-12">
               {learningJourney.skills?.map((skill) => (
@@ -83,7 +82,7 @@ export default function LearningJourneyDetails() {
       <h4 className="fw-bold"> Courses <span><button className="btn btn-light shadow-sm ms-3" data-bs-target="#add-courses-modal" data-bs-toggle="modal">Add courses +</button></span></h4>
       <div className="row">
         {learningJourney.courses?.map((course) => (
-          <div className="col-md-6 col-sm-6 col-xl-4 mb-5" key={course.Course_ID}>
+          <div className="col-md-6 col-sm-6 col-xl-4 mb-2" key={course.Course_ID}>
             <div className="card mt-2 shadow border-0">
               <div className="card-header bg-primary text-light">
                 <b>{course.Course_Name}</b>
