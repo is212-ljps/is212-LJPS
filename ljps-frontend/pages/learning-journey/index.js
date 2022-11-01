@@ -4,19 +4,16 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Tooltip from "../../components/LearningJourneyComponent/Tooltip.js";
 
+
 export default function SelectRole() {
   const [roles, setRoles] = useState([]);
-
   const [selectedRole, setSelectedRole] = useState("");
   const router = useRouter();
-
-
   const toast = useRef();
 
   useEffect(() => {
     onRolesUpdate();
   }, []);
-
 
   const toggleButton = (e) => {
     setSelectedRole(e.target.id);
@@ -41,11 +38,10 @@ export default function SelectRole() {
   };
 
   return (
-    <div>
+    <div class="container pb-4">
       <div className="row">
         <div className="col-md-5 col-sm-12 d-flex justify-content-center align-items-center">
-          <h3 className="p-5">
-            {" "}
+          <h3>
             Select a Role to kickstart your Learning Journey
           </h3>
         </div>
@@ -56,42 +52,34 @@ export default function SelectRole() {
       </div>
 
 
-      <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+      <div style={{ maxHeight: "400px", overflowY: "auto", overflowX: "hidden" }} className="p-2">
 
-        <div className="row mx-4">
+        <div className="row">
           {roles?.length == 0 && (
             <h4 className="text-center"> No Roles Available</h4>
           )}
 
-          {roles?.length > 0 &&
-            roles.map((role) => (
-              <div
-                className="col-6 col-md-3"
-                style={{ overflowWrap: "break-word" }}
-                key={role.Job_Role_ID}
+          {roles.map((role) => (
+            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3" style={{ overflowWrap: "break-word" }} key={role.Job_Role_ID} >
+              <div id={role.Job_Role_ID} key={role.Job_Role_ID}
+                className={
+                  role.Job_Role_ID === Number(selectedRole)
+                    ? "btn btn-outline-primary my-3 w-100 active d-flex justify-content-between p-3"
+                    : "btn btn-outline-primary my-3 w-100 d-flex justify-content-between p-3"
+                }
+                onClick={toggleButton}
               >
-                <div
-                  id={role.Job_Role_ID}
-                  key={role.Job_Role_ID}
-                  className={
-                    role.Job_Role_ID === Number(selectedRole)
-                      ? "btn btn-outline-primary my-3 w-100 active d-flex justify-content-between p-3"
-                      : "btn btn-outline-primary my-3 w-100 d-flex justify-content-between p-3"
-                  }
-                  onClick={toggleButton}
-                >
-                  {role.Job_Role_Name}
-                  <Tooltip description={role.Job_Role_Description ? role.Job_Role_Description : "No description"} />
-                </div>
+                {role.Job_Role_Name}
+                <Tooltip description={role.Job_Role_Description ? role.Job_Role_Description : "No description"} />
               </div>
-            ))}
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="d-flex justify-content-end m-4">
+      <div className="d-flex justify-content-end mt-3">
         <button type="button" className="btn btn-primary btn-lg" onClick={checkSubmit}>
-          {" "}
-          Next{" "}
+          Next
         </button>
       </div>
 
