@@ -1,6 +1,6 @@
+DROP DATABASE IF EXISTS ljps_db;
 CREATE DATABASE ljps_db;
-USE ljps_db;
-
+use ljps_db;
 CREATE TABLE `role` (
 	`Role_ID` int AUTO_INCREMENT,
     `Role_Name` varchar(20) NOT NULL,
