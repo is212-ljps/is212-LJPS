@@ -9,8 +9,6 @@ function learningJourneyRoutes(service) {
     let skills = req.body.skills;
     let courses = req.body.courses;
 
-    
-
     try {
       const learningJourneyId = await service.createLearningJourney(learningJourneyName, staffId, jobRoleId, courses, skills);
       res.status(201).send({
