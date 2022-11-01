@@ -38,7 +38,7 @@ export default function SelectRole() {
   };
 
   return (
-    <div class="container pb-4">
+    <div className="container pb-4">
       <div className="row px-3">
         <div className="col-md-5 col-sm-12 d-flex justify-content-center align-items-center p-2">
           <h3>

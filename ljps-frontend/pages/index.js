@@ -11,7 +11,7 @@ export default function Home() {
     e.preventDefault();
 
     store.role = role
-    store.staffId = role === 'User' ? '140002' : '130001'
+    store.staffId = role === 'User' ? '130001' : '140002'
 
     if (role == "User") {
       router.push("/learning-journey");

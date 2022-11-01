@@ -42,7 +42,7 @@ export default function LearningJourneyDetails() {
   }, [selectedCourse?.Course_ID])
 
   return (
-    <div className="container">
+    <div className="container p-2">
       <RemoveCourseModal course={selectedCourse} removeCourse={removeCourse} />
       <AddCourseModal getLearningJourney={getLearningJourney} coursesLength={learningJourney.courses?.length} learningJourneyName={learningJourney.Learning_Journey_Name} learningJourneyId={learningJourney.Learning_Journey_ID} />
       <div className="row py-4">
