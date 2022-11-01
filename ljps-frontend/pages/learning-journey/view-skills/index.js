@@ -92,7 +92,6 @@ export default function ViewSkills() {
       <div className="row m-4">
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-1">
           <h3>
-            {" "}
             Select your skill(s) to kickstart your Learning Journey as a{" "}
             <span className="text-primary fw-bold">{roleDetails.roleName}</span>
           </h3>
@@ -146,14 +145,10 @@ export default function ViewSkills() {
         <div className="col-6 justify-content-start">
           <button type="button" className="btn btn-primary px-5" onClick={checkPreviousPage}>Back</button>
         </div>
-
-
-        {/* Go to next page */}
         <div className="col-6 d-flex justify-content-end">
           <button type="button" className="btn btn-primary px-5" onClick={checkSubmit}>Next</button>
         </div>
       </div>
-
       <div
         className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
         ref={toast}
