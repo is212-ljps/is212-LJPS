@@ -6,17 +6,13 @@ function learningJourneyRoutes(service) {
     let learningJourneyName = req.body.learningJourneyName;
     let staffId = req.body.staffId;
     let jobRoleId = req.body.jobRoleId;
-    let skillId = req.body.skillId;
+    let skills = req.body.skills;
     let courses = req.body.courses;
 
+    
+
     try {
-      const learningJourneyId = await service.createLearningJourney(
-        learningJourneyName,
-        staffId,
-        jobRoleId,
-        courses,
-        skillId
-      );
+      const learningJourneyId = await service.createLearningJourney(learningJourneyName, staffId, jobRoleId, courses, skills);
       res.status(201).send({
         success: true,
         message: "Learning Journey Created",
