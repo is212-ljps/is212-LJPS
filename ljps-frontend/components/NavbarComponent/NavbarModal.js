@@ -40,6 +40,11 @@ export default function NavBarModal() {
                 </li>
               </>
             }
+            <li className="nav-item">
+              <span className="nav-link">
+                <Link href="/">Logout</Link>
+              </span>
+            </li>
           </ul>
         </div>
       </div>
