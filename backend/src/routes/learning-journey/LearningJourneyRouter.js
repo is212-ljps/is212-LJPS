@@ -6,17 +6,13 @@ function learningJourneyRoutes(service) {
     let learningJourneyName = req.body.learningJourneyName;
     let staffId = req.body.staffId;
     let jobRoleId = req.body.jobRoleId;
-    let skillId = req.body.skillId;
+    let skills = req.body.skills;
     let courses = req.body.courses;
 
+    
+
     try {
-      const learningJourneyId = await service.createLearningJourney(
-        learningJourneyName,
-        skillId,
-        jobRoleId,
-        courses,
-        skillId
-      );
+      const learningJourneyId = await service.createLearningJourney(learningJourneyName, staffId, jobRoleId, courses, skills);
       res.status(201).send({
         success: true,
         message: "Learning Journey Created",
@@ -80,6 +76,42 @@ function learningJourneyRoutes(service) {
       });
     }
   });
+
+  router.delete('/:learningJourneyId/:courseId', async (req, res) => {
+    const courseId = req.params.courseId
+    const learningJourneyId = req.params.learningJourneyId
+    try {
+      const result = await service.removeCourseFromLearningJourney(learningJourneyId, courseId);
+
+      res.status(200).send({
+        success: true,
+        data: result,
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      });
+    }
+  })
+
+  router.put('/:learningJourneyId/courses', async (req, res) => {
+    const learningJourneyId = req.params.learningJourneyId
+    const courseIds = req.body.courseIds
+
+    try {
+      await service.addCourseToLearningJourney(learningJourneyId, courseIds)
+      res.status(200).send({
+        success: true,
+        data: true,
+      });
+    } catch (err) {
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      });
+    }
+  })
 
   return router;
 }

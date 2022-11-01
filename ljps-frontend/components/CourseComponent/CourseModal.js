@@ -1,45 +1,69 @@
 import React, { useCallback, useRef, useEffect, useState } from "react";
 import axios from "axios";
 import Router, { useRouter } from "next/router";
+import { validateLength } from "../../util/validation"
+import {store} from '../../store'
 
-export default function CourseModal({ checkSubmit, skillId, roleId, skillName, roleName, courses }) {
+export default function CourseModal({
+  checkSubmit,
+  roleId,
+  skillDetails,
+  roleName,
+  courses,
+}) {
   const [errorMsg, setErrorMsg] = useState("");
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const modal = useRef();
-  const nameInput = useRef();
 
   const handleSubmit = () => {
-    if (name) {
+    var myModal = bootstrap.Modal.getInstance(modal.current);
+
+    if (validateLength(name,5,50)) {
       const learningJourneyUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/learning-journey`;
-      axios.post(learningJourneyUrl, {
-        learningJourneyName: name,
-        staffId: 130001,
-        jobRoleId: roleId,
-        skillId: skillId,
-        courses: courses
-      }).then(res => {
-        if (res.data.success) {
-          console.log("SUCCESS")
-          Router.push({
-            pathname: "/learning-journey/view-skills/view-courses/confirmation"
-          })
-          
-        } else {
-          console.log("FAIL")
-        }
-      }).catch(function (error) {
-        setErrorMsg("Error has occured");
-        console.log(error);
+      axios
+        .post(learningJourneyUrl, {
+          learningJourneyName: name,
+          staffId: store.staffId,
+          jobRoleId: roleId,
+          skills: skillDetails,
+          courses: courses,
+        })
+        .then((res) => {
+          if (res.data.success) {
+            myModal.hide();
+            Router.push({
+              pathname:
+                "/learning-journey/view-skills/view-courses/confirmation",
+            });
+          } else {
+            setErrorMsg("An error has occured, please try again");
+          }
+        })
+        .catch(function (error) {
+          setErrorMsg("An error has occured, please try again");
+          console.log(error);
+        });
+    }
+    else{
+      setErrorMsg("Learning Journey Name must be between 5 and 50 characters")
+    }
+  };
+
+  useEffect(() => {
+    if (modal.current) {
+      modal.current.addEventListener("hidden.bs.modal", () => {
+        setName("");
+        setErrorMsg("");
       });
     }
-  }
+  }, [modal]);
 
-  
   return (
     <div
       className="modal fade"
       ref={modal}
       id="role-modal"
+      data-backdrop="static"
       tabIndex="-1"
       aria-hidden="true"
     >
@@ -47,7 +71,9 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="createRoleModalLabel">
-              {checkSubmit ? 'Confirm Learning Journey' : "You have not selected a course yet. Please select at least a single course."}
+              {checkSubmit
+                ? "Confirm Learning Journey"
+                : "You have not selected a course yet. Please select at least a single course."}
             </h5>
             <button
               type="button"
@@ -65,10 +91,19 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
                   </label>
                   <br />
                   <label htmlFor="skillName" className="col-form-label">
-                    Skill Name : {skillName}
+                    Skills Selected:
                   </label>
+                  <ul>
+                    {skillDetails.map((skill) => (
+                      <li key={skill.Skill_Name}> {skill.Skill_Name}</li>
+                    ))}
+                  </ul>
+
                   <br />
-                  <label htmlFor="learningJourneyName" className="col-form-label">
+                  <label
+                    htmlFor="learningJourneyName"
+                    className="col-form-label"
+                  >
                     Learning Journey Name
                   </label>
 
@@ -76,21 +111,27 @@ export default function CourseModal({ checkSubmit, skillId, roleId, skillName, r
                     type="text"
                     id="learningJourneyName"
                     className="form-control"
+                    value={name}
                     onChange={({ target }) => setName(target?.value)}
                   />
                   <br />
-                  {errorMsg ? <label htmlFor="learningJourneyName" className="col-form-label">
-                    {errorMsg} </label>: ''}
+                  {errorMsg ? <p className="text-danger">{errorMsg} </p> : ""}
                 </div>
               </div>
             </div>
           </form>
-      
-          {checkSubmit ? <div className="modal-footer">
-            <button type="button" onClick={()=>handleSubmit(nameInput)} className="btn btn-primary">
+
+          <div className="modal-footer">
+            <button
+              type="button"
+              onClick={() => handleSubmit()}
+              className={
+                checkSubmit ? "btn btn-primary" : "btn btn-primary disabled"
+              }
+            >
               Confirm
             </button>
-          </div>: ''}
+          </div>
         </div>
       </div>
     </div>

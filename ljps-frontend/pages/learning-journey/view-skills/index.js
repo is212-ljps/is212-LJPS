@@ -142,12 +142,6 @@ export default function ViewSkills() {
           ))}
       </div>
 
-      {/* <div className="d-flex justify-content-end m-3">
-        <button type="button" className="btn btn-primary" onClick={checkSubmit}>
-          {" "}
-          Next{" "}
-        </button>
-      </div> */}
 
       <div className="container mt-5">
         {/* Go back to Previous Page: Learning Journey */}

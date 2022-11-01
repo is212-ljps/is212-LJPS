@@ -37,9 +37,28 @@ function skillsRoutes(service) {
 
 
   router.get('/:skillID', async (req, res) => {
+
+
     var skillID = req.params.skillID
     try {
       const data = await service.getSkillById(skillID);
+      res.status(200).send({
+        success: true,
+        data: data
+      });
+    } catch (err) {
+      console.log(err)
+      res.status(500).send({
+        success: false,
+        message: "An error occured, please try again ",
+      })
+    }
+  })
+
+  router.get('/multiple/:skills', async (req, res) => {
+    var skills = req.params.skills
+    try {
+      const data = await service.getSkillByMultipleId (skills);
       res.status(200).send({
         success: true,
         data: data
@@ -69,6 +88,8 @@ function skillsRoutes(service) {
       })
     }
   })
+
+
 
   router.post("/", async (req, res) => {
 

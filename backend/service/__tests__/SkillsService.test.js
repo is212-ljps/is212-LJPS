@@ -9,6 +9,7 @@ const deleteSkillById = jest.fn();
 const updateSkillById = jest.fn();
 const assignCoursesToSkills = jest.fn();
 const removeCoursesFromSkill = jest.fn();
+const getSkillByMultipleId = jest.fn();
 
 var service = SkillsService({
   getAllSkills,
@@ -19,7 +20,8 @@ var service = SkillsService({
   deleteSkillById,
   updateSkillById,
   assignCoursesToSkills,
-  removeCoursesFromSkill
+  removeCoursesFromSkill,
+  getSkillByMultipleId
 });
 
 describe("Tests for Skills Service", () => {
@@ -33,6 +35,7 @@ describe("Tests for Skills Service", () => {
     updateSkillById.mockReset();
     assignCoursesToSkills.mockReset();
     removeCoursesFromSkill.mockReset();
+    getSkillByMultipleId.mockReset();
   });
 
   it("Get active skills", async () => {
@@ -208,6 +211,49 @@ describe("Tests for Skills Service", () => {
     let response = await service.updateSkillById();
     expect(response).toBe(false)
   })
+  
+  it("Get Skills with No Skill Id", async () => {
+    let response = await service.getSkillByMultipleId();
+    expect(response).toBe(false);
+  });
+
+  it("Get Skills with 1 Skill Id", async () => {
+    var skills = '1';
+
+    var skillResult = [
+      {
+        Skill_ID: 1,
+        Skill_Name: "Python Programming",
+        Skill_Description: "",
+      },
+    ];
+
+    getSkillByMultipleId.mockResolvedValue(skillResult);
+    let response = await service.getSkillByMultipleId(skills);
+    expect(response).toBe(skillResult);
+  });
+
+
+  it("Get Skills with 2 Skill Id", async () => {
+    var skills = '1,2';
+
+    var skillResult = [
+      {
+        Skill_ID: 1,
+        Skill_Name: "Python Programming",
+        Skill_Description: "",
+      },
+      {
+        Skill_ID: 2,
+        Skill_Name: "Java Programming",
+        Skill_Description: "",
+      },
+    ];
+
+    getSkillByMultipleId.mockResolvedValue(skillResult);
+    let response = await service.getSkillByMultipleId(skills);
+    expect(response).toBe(skillResult);
+  });
 
 
 

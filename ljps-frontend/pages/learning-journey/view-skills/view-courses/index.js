@@ -2,19 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import CourseModal from "../../../../components/CourseComponent/CourseModal"
+import CourseModal from "../../../../components/CourseComponent/CourseModal";
 
 export default function ViewCourses() {
   var router = useRouter();
-  var skillID = router.query["selectedSkill"];
+  var skills = router.query["selectedSkill"];
   var roleID = router.query["selectedRole"];
   const toast = useRef();
 
-
-  const [skillDetails, setSkillDetails] = useState({
-    skillName: "",
-    skillDescription: "",
-  });
+  const [skillDetails, setSkillDetails] = useState([]);
 
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
@@ -22,17 +18,17 @@ export default function ViewCourses() {
   const [roleName, setRoleName] = useState("");
 
   useEffect(() => {
-    if (skillID && roleID) {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/skills/${skillID}`
+    if (skills && roleID) {
+      const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/skills/multiple/${skills}`
       const axiosFn = axios.get;
       axiosFn(url)
         .then(function (response) {
           if (response.data.success) {
-            let newSkillDetails = {
-              skillName: response.data.data[0].Skill_Name,
-              skillDescription: response.data.data[0].Skill_Description,
-            };
-            setSkillDetails(newSkillDetails)
+            let skills = [];
+            Object.values(response.data.data).forEach((skill) => {
+              skills.push(skill);
+            });
+            setSkillDetails(skills);
           } else {
           }
         })
@@ -50,11 +46,11 @@ export default function ViewCourses() {
         .catch(function (error) {
           console.log(error);
         });
-      const skillUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/courses/skill/${skillID}`;
+      const skillUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/courses/skills/${skills}`;
       axiosFn(skillUrl)
         .then(function (response) {
           if (response.data.success) {
-            setCourses(response.data.data);
+            setCourses(response.data.data.courseDetails);
           } else {
           }
         })
@@ -62,16 +58,18 @@ export default function ViewCourses() {
           console.log(error);
         });
     } else {
-      // router.push("/learning-journey");
+      router.push("/learning-journey");
     }
-  }, [skillID]);
+  }, [skills]);
 
   const toggleButton = (e) => {
     var id = e.target.id;
     if (!selectedCourses.includes(id)) {
-      setSelectedCourses(() => [...selectedCourses, id])
+      setSelectedCourses(() => [...selectedCourses, id]);
     } else {
-      setSelectedCourses((currentCourses) => currentCourses.filter((course) => course != id))
+      setSelectedCourses((currentCourses) =>
+        currentCourses.filter((course) => course != id)
+      );
     }
   };
 
@@ -86,23 +84,40 @@ export default function ViewCourses() {
   const checkPreviousPage = () => {
     router.push({
       pathname: "/learning-journey/view-skills",
-      query: {selectedSkill:skillID, selectedRole:roleID}
-    })
-  }
+      query: { selectedSkill: skillID, selectedRole: roleID },
+    });
+  };
 
   return (
     <>
-      <CourseModal checkSubmit={confirmSubmit} roleId={roleID} skillName={skillDetails.skillName} skillId={skillID} roleName={roleName} courses={selectedCourses} />
+      <CourseModal
+        checkSubmit={confirmSubmit}
+        roleId={roleID}
+        skillDetails={skillDetails}
+        roleName={roleName}
+        courses={selectedCourses}
+      />
       <div className="row m-4">
         <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
           <h3>
             {" "}
-            Select courses to fulfill your selected skill for {" "}
-            <span className="text-primary fw-bold">{skillDetails.skillName}</span>
+            Select courses to fulfill your selected skill for:{" "}
+            {skillDetails.length == 1 && (
+              <span className="text-primary fw-bold">
+                {skillDetails[0].Skill_Name}
+              </span>
+            )}{" "}
           </h3>
-          <span className="badge text-white bg-dark w-25 mt-3">
-            {skillDetails.skillDescription}
-          </span>
+
+          {skillDetails.length > 1 && (
+            <ul className="mt-2">
+              {skillDetails.map((skill) => (
+                <li className="fw-bold text-primary">
+                  <h5>{skill.Skill_Name}</h5>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <div className="col-md-7 col-sm-12 d-flex justify-content-center">
@@ -110,57 +125,103 @@ export default function ViewCourses() {
         </div>
       </div>
       <div className="container mx-6 px-3">
-        <div className="row"> {courses.length > 0 && courses.map((course) => (
-          <div className="col-12 col-md-6 col-xl-4" key={course.Course_ID}>
-            <div className="card mt-2">
-              <div className="card-header bg-primary text-light"> <b>{course.Course_Name}</b> </div>
-              <div className="card-body"></div>
-              <div className="row">
-                <div className="col-5">
-                  <p className="mx-3">{skillDetails.skillName}</p>
-                </div>
-                <div className="col-7 px-4" align="right">
-                  <div className=" badge bg-light text-black"> {course.Course_Category} </div>
-                </div>
+        <div className="row">
+          {" "}
+          {courses?.length > 0 &&
+            courses.map((course) => (
+              <div className="col-12 col-md-6 col-xl-4" key={course.Course_ID}>
+                <div className="card mt-2 shadow border-0">
+                  <div className="card-header bg-primary text-light">
+                    {" "}
+                    <b>{course.Course_Name}</b>{" "}
+                  </div>
+                  <div className="row p-3">
+                    <div className="col-9">
+                      {" "}
+                      <b>Course ID: {course.Course_ID}</b>
+                    </div>
 
+                    <div className="col-3" align="right">
+                    <div className=" badge bg-light text-black">
+                        {" "}
+                        {course.Course_Category}{" "}
+                      </div>
+         
+                    </div>
+                  </div>
+
+                  <div className="row p-3">
+                    <div className="col-12">
+                      {course.skills?.map((skill) => (
+                        <span
+                          className="badge rounded-pill bg-dark py-2 me-2"
+                          key={skill}
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="row mx-1">
+                    <div className="col-10">
+                      {" "}
+                      <p>{course.Course_Desc}</p>{" "}
+                    </div>
+                    <div className="col-2" align="right">
+                    <label
+                        style={{ cursor: "pointer" }}
+                        htmlFor={course.Course_ID}
+                      >
+                        Add
+                      </label>
+                      <div>
+                        <input
+                          type={"checkbox"}
+                          id={course.Course_ID}
+                          key={course.Course_ID}
+                          onClick={toggleButton}
+                        ></input>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="row pe-3">
-                <div className="col-9">
-                  <div className="col-9 mx-3"> <b>Course ID: {course.Course_ID}</b></div>
-                </div>
-
-                <div className="col-3" align="right">
-                  <label style={{ cursor: "pointer" }} htmlFor={course.Course_ID}>Add</label>
-                </div>
-
-
-              </div>
-              <div className="row mx-1">
-                <div className="col-10"> <p>{course.Course_Desc}</p> </div>
-                <div className="col-2" align="right">
-                  <div > <input type={"checkbox"} id={course.Course_ID} key={course.Course_ID} onClick={toggleButton}></input></div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        ))}
-
+            ))}
         </div>
       </div>
 
-      <div className="container p-3" style={{"marginTop":50}}>
+      <div className="container p-3" style={{ marginTop: 50 }}>
         <div className="row">
           <div className="col-6">
-            <button type="button" value="back" onClick={checkPreviousPage} className="btn btn-primary" style={{"width":150}}> Back </button>
+            <button
+              type="button"
+              value="back"
+              onClick={checkPreviousPage}
+              className="btn btn-primary"
+              style={{ width: 150 }}
+            >
+              {" "}
+              Back{" "}
+            </button>
           </div>
 
           <div className="col-6 justify-content-end d-flex ">
-            <button type="button" value="Create Learning Journey" onClick={checkSubmit} data-bs-toggle="modal" data-bs-target="#role-modal" className="btn btn-primary" style={{"width":150}}> {" "}Create{" "}</button>
+            <button
+              type="button"
+              value="Create Learning Journey"
+              onClick={checkSubmit}
+              data-bs-toggle="modal"
+              data-bs-target="#role-modal"
+              className="btn btn-primary"
+              style={{ width: 150 }}
+            >
+              {" "}
+              Create{" "}
+            </button>
           </div>
         </div>
       </div>
-
 
       <div
         className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
