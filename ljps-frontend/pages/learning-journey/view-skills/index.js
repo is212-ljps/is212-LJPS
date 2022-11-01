@@ -88,11 +88,10 @@ export default function ViewSkills() {
   }
 
   return (
-    <div>
+    <div className="container pb-5">
       <div className="row m-4">
-        <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
+        <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-1">
           <h3>
-            {" "}
             Select your skill(s) to kickstart your Learning Journey as a{" "}
             <span className="text-primary fw-bold">{roleDetails.roleName}</span>
           </h3>
@@ -101,7 +100,7 @@ export default function ViewSkills() {
           </span>
 
           <p className="mt-4">
-            Click on <i className="bi bi-info-circle-fill text-primary  "/> to view the skill description
+            Click on <i className="bi bi-info-circle-fill text-primary  " /> to view the skill description
           </p>
         </div>
 
@@ -109,60 +108,47 @@ export default function ViewSkills() {
           <Image src="/view-skill-learner.svg" height={350} width={350} />
         </div>
       </div>
-
-      <div className="row mx-4">
-        {skills?.length > 0 &&
-          skills.map((skill) => (
+      <div style={{ maxHeight: "400px", overflowY: "auto", overflowX: "hidden" }} className="p-2">
+        <div className="row">
+          {skills?.map((skill) => (
             <div
-              className="col-12 col-md-4 mb-5"
+              className="col-xs-12 col-sm-6 col-md-4 col-lg-3 mb-1"
               style={{ overflowWrap: "break-word" }}
               key={skill.Skill_ID}
             >
-              <div
+              <button
                 className={
                   selectedSkill.includes(skill.Skill_ID)
-                    ? "rounded border border-white bg-primary text-white p-3 d-flex"
-                    : "rounded border border-primary p-3 d-flex"
+                    ? "btn btn-outline-primary mb-3 w-100 active d-flex justify-content-between p-3"
+                    : "btn btn-outline-primary mb-3 w-100 d-flex justify-content-between p-3"
                 }
               >
                 <input
                   type="checkbox"
-                  className="mx-1"
+                  className="form-check-input mx-1"
                   id={skill.Skill_ID}
                   value={skill.Skill_ID}
                   onChange={handleChange}
                 />
-                {skill.Skill_Name}
-                
+                <label htmlFor={skill.Skill_ID} style={{ cursor: "pointer" }}>
+                  {skill.Skill_Name}
+                </label>
                 <span style={{ marginLeft: "auto", marginRight: "0px" }}>
-                <Tooltip description={skill.Skill_Description ? skill.Skill_Description : "No description"} />
+                  <Tooltip description={skill.Skill_Description ? skill.Skill_Description : "No description"} />
                 </span>
-              </div>
+              </button>
             </div>
           ))}
-      </div>
-
-
-      <div className="container mt-5">
-        {/* Go back to Previous Page: Learning Journey */}
-        <div className="row">
-          <div className="col-6 justify-content-start">
-                <button type="button" className="btn btn-primary btn-lg" onClick={checkPreviousPage} style={{"width":150}}>{" "} Back {" "}</button>
-          </div>
-
-
-          {/* Go to next page */}
-          <div className="col-6 d-flex justify-content-end">
-            <button type="button" className="btn btn-primary btn-lg" onClick={checkSubmit} style={{"width":150}}>{" "} Next {" "}</button>
-          </div>
         </div>
-
-
-
       </div>
-
-
-
+      <div className="row px-2">
+        <div className="col-6 justify-content-start">
+          <button type="button" className="btn btn-primary px-5" onClick={checkPreviousPage}>Back</button>
+        </div>
+        <div className="col-6 d-flex justify-content-end">
+          <button type="button" className="btn btn-primary px-5" onClick={checkSubmit}>Next</button>
+        </div>
+      </div>
       <div
         className="toast position-fixed bottom-0 end-0 p-2 m-4 text-white bg-danger"
         ref={toast}

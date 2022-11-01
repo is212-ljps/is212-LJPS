@@ -11,7 +11,6 @@ export default function ViewCourses() {
   const toast = useRef();
 
   const [skillDetails, setSkillDetails] = useState([]);
-
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [confirmSubmit, setConfirmSubmit] = useState(false);
@@ -89,7 +88,7 @@ export default function ViewCourses() {
   };
 
   return (
-    <>
+    <div className="container">
       <CourseModal
         checkSubmit={confirmSubmit}
         roleId={roleID}
@@ -98,15 +97,14 @@ export default function ViewCourses() {
         courses={selectedCourses}
       />
       <div className="row m-4">
-        <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-5">
+        <div className="col-md-5 col-sm-12 d-flex flex-column justify-content-center p-2">
           <h3>
-            {" "}
-            Select courses to fulfill your selected skill for:{" "}
+            Select courses to fulfill your selected skill for:
             {skillDetails.length == 1 && (
               <span className="text-primary fw-bold">
                 {skillDetails[0].Skill_Name}
               </span>
-            )}{" "}
+            )}
           </h3>
 
           {skillDetails.length > 1 && (
@@ -126,30 +124,23 @@ export default function ViewCourses() {
       </div>
       <div className="container mx-6 px-3">
         <div className="row">
-          {" "}
           {courses?.length > 0 &&
             courses.map((course) => (
               <div className="col-12 col-md-6 col-xl-4" key={course.Course_ID}>
-                <div className="card mt-2 shadow border-0">
+                <div className="card mb-3 shadow border-0">
                   <div className="card-header bg-primary text-light">
-                    {" "}
-                    <b>{course.Course_Name}</b>{" "}
+                    <b>{course.Course_Name}</b>
                   </div>
                   <div className="row p-3">
-                    <div className="col-9">
-                      {" "}
+                    <div className="col-8">
                       <b>Course ID: {course.Course_ID}</b>
                     </div>
-
-                    <div className="col-3" align="right">
-                    <div className=" badge bg-light text-black">
-                        {" "}
-                        {course.Course_Category}{" "}
+                    <div className="col-4" align="right">
+                      <div className=" badge bg-light text-black">
+                        {course.Course_Category}
                       </div>
-         
                     </div>
                   </div>
-
                   <div className="row p-3">
                     <div className="col-12">
                       {course.skills?.map((skill) => (
@@ -162,17 +153,12 @@ export default function ViewCourses() {
                       ))}
                     </div>
                   </div>
-
                   <div className="row mx-1">
                     <div className="col-10">
-                      {" "}
-                      <p>{course.Course_Desc}</p>{" "}
+                      <p>{course.Course_Desc}</p>
                     </div>
                     <div className="col-2" align="right">
-                    <label
-                        style={{ cursor: "pointer" }}
-                        htmlFor={course.Course_ID}
-                      >
+                      <label style={{ cursor: "pointer" }} htmlFor={course.Course_ID}>
                         Add
                       </label>
                       <div>
@@ -191,21 +177,13 @@ export default function ViewCourses() {
         </div>
       </div>
 
-      <div className="container p-3" style={{ marginTop: 50 }}>
+      <div className="container p-3 mt-2">
         <div className="row">
           <div className="col-6">
-            <button
-              type="button"
-              value="back"
-              onClick={checkPreviousPage}
-              className="btn btn-primary"
-              style={{ width: 150 }}
-            >
-              {" "}
-              Back{" "}
+            <button type="button" value="back" onClick={checkPreviousPage} className="btn btn-primary px-4"  >
+              Back
             </button>
           </div>
-
           <div className="col-6 justify-content-end d-flex ">
             <button
               type="button"
@@ -213,11 +191,9 @@ export default function ViewCourses() {
               onClick={checkSubmit}
               data-bs-toggle="modal"
               data-bs-target="#role-modal"
-              className="btn btn-primary"
-              style={{ width: 150 }}
+              className="btn btn-primary px-4"
             >
-              {" "}
-              Create{" "}
+              Create
             </button>
           </div>
         </div>
@@ -235,6 +211,6 @@ export default function ViewCourses() {
           <div className="toast-body">Please select at least one course!</div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

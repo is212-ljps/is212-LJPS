@@ -60,7 +60,6 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
   useEffect(() => {
     if (!skillID) return
     axios.get(`${process.env.NEXT_PUBLIC_BACKEND}/api/skills/${skillID}/courses`).then((res) => {
-      console.log(res.data.data.map(item => item.Course_ID))
       setAssignedCourses(res.data.data.map(item => item.Course_ID))
     })
   }, [skillID])
@@ -160,7 +159,7 @@ export default function SkillModal({ selectedSkill, onSkillsUpdate, resetSelecte
                 <div className="row">
                   {courses.map((item, index) => {
                     const {Course_Name, Course_ID} = item
-                    return <div className="col-6" key={Course_ID}>
+                    return <div className="col-12" key={Course_ID}>
                     <div className="form-check">
                       <input onChange={(e)=>handleChangeItem(e)} checked={assignedCourses.includes(Course_ID)}className="form-check-input" name="course-checkbox" type="checkbox" id={"course-checkbox-" + Course_ID} value={Course_ID} />
                       <label className="form-check-label" htmlFor={"course-checkbox-" + Course_ID}>{Course_Name}</label>

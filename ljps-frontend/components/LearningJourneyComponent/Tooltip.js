@@ -7,7 +7,7 @@ export default function Tooltip({ description }) {
     if (!tooltipRef?.current) return
     setTimeout(() => {
       bootstrap.Tooltip.getOrCreateInstance(tooltipRef.current)
-    }, 100);
+    }, 200);
   }, [tooltipRef.current, tooltipRef])
 
 
@@ -17,7 +17,6 @@ export default function Tooltip({ description }) {
     data-bs-placement="bottom"
     ref={tooltipRef}
     data-trigger="manual"
-    data-bs-title={description}
-    
-  ></i>
+    data-bs-title={description}  
+  />
 }
