@@ -33,6 +33,6 @@ jobs:
         run: |
           cd ./backend && gcloud run deploy $APP_ID \
             --set-env-vars host=$HOST \
-            --set-env-vars username=$USER \
+            --set-env-vars user=$USER \
             --set-env-vars password=$PASSWORD \
             --image gcr.io/$PROJECT_ID/$APP_ID:$GITHUB_SHA --platform managed --region $RUN_REGION --allow-unauthenticated
