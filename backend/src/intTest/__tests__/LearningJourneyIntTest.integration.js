@@ -28,7 +28,6 @@ describe("Integration test for courses", () => {
       courses
     });
     const learningJourneyId = createLearningJourneyRes._body.data
-    console.log(learningJourneyId)
     const getLearningJourneyRes = await request(server).get("/api/learning-journey/" + learningJourneyId)
     var resultArr = []
     for (var course of getLearningJourneyRes._body.data.courses) {
