@@ -70,20 +70,19 @@ export default function SelectRole() {
                 style={{ overflowWrap: "break-word" }}
                 key={role.Job_Role_ID}
               >
-                <button
-                  type="button"
+                <div
                   id={role.Job_Role_ID}
                   key={role.Job_Role_ID}
                   className={
                     role.Job_Role_ID === Number(selectedRole)
-                      ? "btn btn-outline-primary my-3 w-100 active"
-                      : "btn btn-outline-primary my-3 w-100"
+                      ? "btn btn-outline-primary my-3 w-100 active d-flex justify-content-between p-3"
+                      : "btn btn-outline-primary my-3 w-100 d-flex justify-content-between p-3"
                   }
                   onClick={toggleButton}
                 >
                   {role.Job_Role_Name}
                   <Tooltip description={role.Job_Role_Description ? role.Job_Role_Description : "No description"} />
-                </button>
+                </div>
               </div>
             ))}
         </div>

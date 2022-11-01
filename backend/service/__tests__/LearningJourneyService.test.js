@@ -217,8 +217,8 @@ describe("Tests for Learning Journey Service", () => {
   });
 
   it("Get Learning Journey Based on Courses and Skills Without Learning Journey ID", async () => {
-    let response2 = await service.getLearningJourney();
-    expect(response2).toBe(false);
+    let response = await service.getLearningJourney();
+    expect(response).toBe(false);
   });
 
   it("Get Learning Journey by Id With One Course", async () => {

@@ -101,9 +101,13 @@ function rolesRoutes(service) {
 
   router.get('/:roleID/skills', async (req, res) => {
     let roleID = req.params.roleID
+
+    if(!roleID){
+      return false
+    }
+
     try {
       const data = await service.getSkillsAssignedToRole(roleID);
-      console.log(data)
       res.status(200).send({
         success: true,
         data: data
@@ -125,7 +129,6 @@ function rolesRoutes(service) {
     const jobDepartment = req.body.jobDepartment
     const assignedSkills = req.body.skills
 
-    console.log(jobDepartment)
     try {
       const data = await service.updateRoleDetails(roleID, roleName, roleDescription, jobDepartment, assignedSkills)
       res.status(200).send({

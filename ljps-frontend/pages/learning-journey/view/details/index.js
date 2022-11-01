@@ -68,7 +68,6 @@ export default function LearningJourneyDetails() {
           </div>
         </div>
 
-
         <div className="col-md-7 d-flex justify-content-center">
           <Player
             src="https://assets3.lottiefiles.com/packages/lf20_DMgKk1.json"
