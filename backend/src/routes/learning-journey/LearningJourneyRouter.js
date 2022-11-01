@@ -12,7 +12,7 @@ function learningJourneyRoutes(service) {
     try {
       const learningJourneyId = await service.createLearningJourney(
         learningJourneyName,
-        skillId,
+        staffId,
         jobRoleId,
         courses,
         skillId
@@ -20,6 +20,7 @@ function learningJourneyRoutes(service) {
       res.status(201).send({
         success: true,
         message: "Learning Journey Created",
+        data: learningJourneyId
       });
     } catch (err) {
       console.log(err);
