@@ -14,7 +14,7 @@ function database(databaseName) {
   } else {
     connection = mysql.createPool({
       host: process.env.host,
-      user: process.env.username,
+      user: process.env.user,
       password: process.env.password,
       database: databaseName,
     })
