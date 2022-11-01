@@ -19,7 +19,7 @@ export default function ViewCourses() {
 
   useEffect(() => {
     if (skills && roleID) {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/skills/${skills}`
+      const url = `${process.env.NEXT_PUBLIC_BACKEND}/api/skills/multiple/${skills}`
       const axiosFn = axios.get;
       axiosFn(url)
         .then(function (response) {
@@ -46,7 +46,7 @@ export default function ViewCourses() {
         .catch(function (error) {
           console.log(error);
         });
-      const skillUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/courses/multiple/skill/${skills}`;
+      const skillUrl = `${process.env.NEXT_PUBLIC_BACKEND}/api/courses/skills/${skills}`;
       axiosFn(skillUrl)
         .then(function (response) {
           if (response.data.success) {
