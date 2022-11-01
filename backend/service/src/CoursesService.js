@@ -1,3 +1,5 @@
+const utils = require('../../util')
+
 function coursesService(database) {
   const coursesService = {};
 
@@ -21,16 +23,20 @@ function coursesService(database) {
   };
 
   coursesService.getCoursesByMultipleSkill = async (skills) => {
+
     const courseBySkills = {};
 
+    if(utils.checkLength(1,9999, skills)){
+      return false
+    }
+
+
     try {
+      
       var courseDetails = await database.getCoursesByMultipleSkill(skills);
-
       courseBySkills.courseDetails = courseDetails;
-
       const courses = courseDetails.map(({ Course_ID }) => Course_ID);
       const coursesSkillsResult = await database.getCoursesSkills(courses);
-
       const courseSkills = coursesSkillsResult.map(
         ({ Skill_Name, Course_ID }) => {
           return { Skill_Name, Course_ID };
@@ -50,7 +56,6 @@ function coursesService(database) {
           }
         }
       }
-
       
       return courseBySkills;
     } catch (err) {

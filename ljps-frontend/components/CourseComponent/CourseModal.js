@@ -96,7 +96,7 @@ export default function CourseModal({
                   </label>
                   <ul>
                     {skillDetails.map((skill) => (
-                      <li> {skill.Skill_Name}</li>
+                      <li key={skill.Skill_Name}> {skill.Skill_Name}</li>
                     ))}
                   </ul>
 

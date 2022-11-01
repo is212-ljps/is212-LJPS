@@ -5,7 +5,6 @@ function learningJourneyService(database){
 
   learningJourneyService.createLearningJourney = async (learningJourneyName, staffId, jobRoleId, courses, skills) => {
 
-    console.log(!jobRoleId)
 
     if(!jobRoleId || !learningJourneyName || !staffId || !courses || !skills){
       return false

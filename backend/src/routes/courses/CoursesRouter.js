@@ -38,7 +38,7 @@ function courseRoutes(service) {
     }  
   }) 
 
-  router.get('/multiple/skill/:skills', async (req, res) => {
+  router.get('/skills/:skills', async (req, res) => {
     let skills = req.params.skills
 
     try {
