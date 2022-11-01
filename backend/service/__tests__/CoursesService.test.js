@@ -24,9 +24,9 @@ describe("Tests for Courses Service", () => {
     getCourses.mockReset()
     getCoursesBySkill.mockReset()
     getCoursesFromLearningJourney.mockReset()
-    getLearningJourneyCourses.mockReset(),
-      getLearningJourneySkills.mockReset(),
-      getCoursesByMultipleSkill.mockReset(),
+    getLearningJourneyCourses.mockReset()
+      getLearningJourneySkills.mockReset()
+      getCoursesByMultipleSkill.mockReset()
       getCoursesSkills.mockReset()
   })
 
@@ -174,88 +174,88 @@ describe("Tests for Courses Service", () => {
 
     let getCoursesSkillsMock = [
       {
-        Course_ID:"COR002",
-        Course_Name:"Lean Six Sigma Green Belt Certification",
-        Course_Desc:"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
-        Course_Status:"Active",
-        Course_Type:"Internal",
-        Course_Category:"Core",
-        Skill_ID:10,
-        Skill_Name:"test1221212",
-        Skill_Description:"test2",
-        Is_Active:"1"
+        Course_ID: "COR002",
+        Course_Name: "Lean Six Sigma Green Belt Certification",
+        Course_Desc: "Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
+        Course_Status: "Active",
+        Course_Type: "Internal",
+        Course_Category: "Core",
+        Skill_ID: 10,
+        Skill_Name: "test1221212",
+        Skill_Description: "test2",
+        Is_Active: "1"
       },
       {
-        Course_ID:"COR002",
-        Course_Name:"Lean Six Sigma Green Belt Certification",
-        Course_Desc:"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
-        Course_Status:"Active",
-        Course_Type:"Internal",
-        Course_Category:"Core",
-        Skill_ID:10,
-        Skill_Name:"test111",
-        Skill_Description:"test",
-        Is_Active:"1"
+        Course_ID: "COR002",
+        Course_Name: "Lean Six Sigma Green Belt Certification",
+        Course_Desc: "Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
+        Course_Status: "Active",
+        Course_Type: "Internal",
+        Course_Category: "Core",
+        Skill_ID: 10,
+        Skill_Name: "test111",
+        Skill_Description: "test",
+        Is_Active: "1"
       },
       {
-        Course_ID:"COR002",
-        Course_Name:"Lean Six Sigma Green Belt Certification",
-        Course_Desc:"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
-        Course_Status:"Active",
-        Course_Type:"Internal",
-        Course_Category:"Core",
-        Skill_ID:24,
-        Skill_Name:"123123",
-        Skill_Description:"",
-        Is_Active:"1"
+        Course_ID: "COR002",
+        Course_Name: "Lean Six Sigma Green Belt Certification",
+        Course_Desc: "Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
+        Course_Status: "Active",
+        Course_Type: "Internal",
+        Course_Category: "Core",
+        Skill_ID: 24,
+        Skill_Name: "123123",
+        Skill_Description: "",
+        Is_Active: "1"
       },
       {
-        Course_ID:"COR002",
-        Course_Name:"Lean Six Sigma Green Belt Certification",
-        Course_Desc:"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
-        Course_Status:"Active",
-        Course_Type:"Internal",
-        Course_Category:"Core",
-        Skill_ID:25,
-        Skill_Name:"test123",
-        Skill_Description:"test123",
-        Is_Active:"1"
+        Course_ID: "COR002",
+        Course_Name: "Lean Six Sigma Green Belt Certification",
+        Course_Desc: "Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
+        Course_Status: "Active",
+        Course_Type: "Internal",
+        Course_Category: "Core",
+        Skill_ID: 25,
+        Skill_Name: "test123",
+        Skill_Description: "test123",
+        Is_Active: "1"
       },
       {
-        Course_ID:"COR002",
-        Course_Name:"Lean Six Sigma Green Belt Certification",
-        Course_Desc:"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
-        Course_Status:"Active",
-        Course_Type:"Internal",
-        Course_Category:"Core",
-        Skill_ID:26,
-        Skill_Name:"teest123",
-        Skill_Description:"test",
-        Is_Active:"1"
+        Course_ID: "COR002",
+        Course_Name: "Lean Six Sigma Green Belt Certification",
+        Course_Desc: "Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
+        Course_Status: "Active",
+        Course_Type: "Internal",
+        Course_Category: "Core",
+        Skill_ID: 26,
+        Skill_Name: "teest123",
+        Skill_Description: "test",
+        Is_Active: "1"
       },
       {
-        Course_ID:"COR002",
-        Course_Name:"Lean Six Sigma Green Belt Certification",
-        Course_Desc:"Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
-        Course_Status:"Active",
-        Course_Type:"Internal",
-        Course_Category:"Core",
-        Skill_ID:29,
-        Skill_Name:"Test skill 1",
-        Skill_Description:"test",
-        Is_Active:"1"
+        Course_ID: "COR002",
+        Course_Name: "Lean Six Sigma Green Belt Certification",
+        Course_Desc: "Apply Lean Six Sigma methodology and statistical tools such as Minitab to be used in process analytics",
+        Course_Status: "Active",
+        Course_Type: "Internal",
+        Course_Category: "Core",
+        Skill_ID: 29,
+        Skill_Name: "Test skill 1",
+        Skill_Description: "test",
+        Is_Active: "1"
       },
       {
-        Course_ID:"MGT002",
-        Course_Name:"Workplace Conflict Management for Professionals",
-        Course_Desc:"This course will address the gaps to build consensus and utilise knowledge of conflict management techniques to diffuse tensions and achieve resolutions effectively in the best interests of the organisation.",
-        Course_Status:"Active",
-        Course_Type:"External",
-        Course_Category:"Management",
-        Skill_ID:10,
-        Skill_Name:"test1221212",
-        Skill_Description:"test2",
-        Is_Active:"1"
+        Course_ID: "MGT002",
+        Course_Name: "Workplace Conflict Management for Professionals",
+        Course_Desc: "This course will address the gaps to build consensus and utilise knowledge of conflict management techniques to diffuse tensions and achieve resolutions effectively in the best interests of the organisation.",
+        Course_Status: "Active",
+        Course_Type: "External",
+        Course_Category: "Management",
+        Skill_ID: 10,
+        Skill_Name: "test1221212",
+        Skill_Description: "test2",
+        Is_Active: "1"
       },
     ]
 
@@ -267,7 +267,7 @@ describe("Tests for Courses Service", () => {
         Course_Status: 'Active',
         Course_Type: 'Internal',
         Course_Category: 'Core',
-        Skills: [ 'test1221212','test111', '123123', 'test123', 'teest123', 'Test skill 1']
+        Skills: ['test1221212', 'test111', '123123', 'test123', 'teest123', 'Test skill 1']
       },
       {
         Course_ID: 'MGT002',
@@ -276,7 +276,7 @@ describe("Tests for Courses Service", () => {
         Course_Status: 'Active',
         Course_Type: 'External',
         Course_Category: 'Management',
-        Skills: [ 'test1221212' ]
+        Skills: ['test1221212']
       }
     ]
 
