@@ -5,6 +5,9 @@
 ![Unit Tests](https://github.com/lanceljr/is212-LJPS/actions/workflows/unit_test_merge.yml/badge.svg)
 ![Vercel](https://therealsujitk-vercel-badge.vercel.app/?app=ljps)
 
+# User Interface
+Link to Figma: https://www.figma.com/file/Mu5TuKbGplga9Y9dJkAbc2/SPM---LJPS-UI?node-id=397%3A749
+
 # Pre-requisites
 ### Clone codebase
 Clone our repository or download the zip file.
